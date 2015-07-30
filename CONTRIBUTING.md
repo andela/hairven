@@ -18,14 +18,6 @@
 * Make sure you have added the necessary tests for your changes.
 * Run _all_ the tests to assure nothing else was accidentally broken.
 
-## Making Trivial Changes
-
-### Documentation
-
-For changes of a trivial nature to comments and documentation, it is not
-always necessary to create a new ticket in Jira. In this case, it is
-appropriate to start the first line of a commit with '(doc)'.
-
 ## Submitting Changes
 
 * Push your changes to a topic branch in your fork of the repository.
