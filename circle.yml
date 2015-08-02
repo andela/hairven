@@ -1,0 +1,9 @@
+deployment:
+  prod:
+    branch: master
+    heroku:
+      appname: hairven
+  staging:
+    branch: staging
+    heroku:
+      appname: hairven-staging
