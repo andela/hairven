@@ -1,0 +1,44 @@
+{
+  "name": "hairven",
+  "version": "1.0.0",
+  "description": "Hairstyle app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andela/hairven.git"
+  },
+  "author": "Andela",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andela/hairven/issues"
+  },
+  "homepage": "https://github.com/andela/hairven",
+  "devDependencies": {
+    "bower": "^1.4.1",
+    "jasmine-core": "^2.3.3",
+    "karma": "^0.12.31",
+    "karma-chrome-launcher": "^0.1.10",
+    "karma-jasmine": "^0.3.5",
+    "protractor": "^2.0.0",
+    "supertest": "^1.0.1",
+    "http-server": "latest",
+    "mongoose": "latest",
+    "method-override": "latest",
+    "body-parser": "latest",
+    "passport": "~0.1.17",
+    "passport-local": "~0.1.6"
+  },
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "cloudinary": "^1.2.2",
+    "cookie-parser": "^1.3.5",
+    "dotenv": "^1.2.0",
+    "express": "^4.13.3",
+    "morgan": "^1.6.1",
+    "multer": "^1.0.1"
+  }
+}
