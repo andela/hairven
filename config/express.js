@@ -1,7 +1,7 @@
+var env = require('./env.config.js');
 var dotenv = require('dotenv');
 
-//will be commented out when the .env file has been configured
-//dotenv.load();
+dotenv.load(env.development);
 
 var express = require('express');
 var app = express();
