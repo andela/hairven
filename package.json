@@ -28,6 +28,7 @@
     "supertest": "^1.0.1",
     "http-server": "latest",
     "mongoose": "latest",
+    "jasmine-node": "^1.14.5",
     "method-override": "latest",
     "body-parser": "latest",
     "passport": "~0.1.17",
