@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jasmine-node ./app/test/server-spec.js --forceexit",
-    "test-staging": "if [ '$NODE_ENV' = 'production' ]; then echo \"test not required\" && exit 1; else jasmine-node ./app/test/server-spec.js; fi --forceexit",
+    "test-staging": "if [ '$NODE_ENV' = 'production' ]; then echo \"test not required\" && exit 1; else jasmine-node ./app/test/server-spec.js --forceexit; fi",
     "start": "if [ '$NODE_ENV' = 'production' ]; then node server.js; else PORT=3030 nodemon server.js; fi"
   },
   "repository": {
