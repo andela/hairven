@@ -5,6 +5,7 @@ dotenv.load(env.development);
 
 var express = require('express');
 var app = express();
+var router = require('../app/routes/router');
 
 
 var methodOverride = require('method-override');
@@ -42,6 +43,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //route trough api
-//app.use('/api');
+app.use('/api', router);
 
 exports = module.exports = app;
