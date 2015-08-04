@@ -7,16 +7,14 @@ var app = require('../../server.js');
 describe("server test", function() {
 
   it('should respond on connetion /',
-  function(done) {
+    function(done) {
 
-    request(app)
-      .get('/')
-      .expect(200)
-      .end(function(err, res) {
-        if (err) return done(err);
-        done()
-      });
-
-  });
-
+      request(app)
+        .get('/api')
+        .expect(200)
+        .end(function(err, res) {
+          if (err) return done(err);
+          done();
+        });
+    });
 });
