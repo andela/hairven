@@ -6,7 +6,7 @@ var app = require('../../server.js');
 
 describe("server test", function() {
 
-  it('should respond on connetion /',
+  it('should respond on connection /api',
     function(done) {
 
       request(app)
