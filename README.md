@@ -1,5 +1,4 @@
-Hairven is an app for users to view collections of hairstyles and book appointments with saloons. Sounds boring. Let's complete this app.
-
+Hairven is an app for users to view collections of hairstyles and book appointments with salons. 
 
 ## Contributing
 
