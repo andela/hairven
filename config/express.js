@@ -1,4 +1,4 @@
-var env = require('./config.js');
+var env = require('./config');
 var dotenv = require('dotenv');
 
 dotenv.load(env.development);
@@ -9,12 +9,8 @@ var router = require('../app/routes/router');
 
 
 var methodOverride = require('method-override');
-var mongoose = require('mongoose');
 var passport = require('passport');
 var morgan = require('morgan');
-var multer = require('multer');
-var path = require('path');
-var cloudinary = require('cloudinary');
 
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -31,7 +27,9 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-// override with the X-HTTP-Method-Override header in the request. simulate DELETE/PUT
+/*override with the X-HTTP-Method-Override 
+header in the request. simulate DELETE/PUT
+*/
 app.use(methodOverride('X-HTTP-Method-Override'));
 
 // set up our express application
