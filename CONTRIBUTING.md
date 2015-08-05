@@ -6,7 +6,6 @@
  - [Making Changes](#mc)
  - [Git Commit Guidelines](#commit)
  - [Submitting Changes](#sc)
- - [Feature Requests](#feature)
  - [Code Guidelines](#cg)
  - [Additional Resources](#ar)
 
@@ -35,11 +34,17 @@ If your issue appears to be a bug, and hasn't been reported, open a new issue, b
 Providing the following information will increase the chances of your issue being dealt with quickly:
 
 * **Overview of the Issue** - if an error is being thrown a non-minified stack trace helps
-* **Motivation for or Use Case** - explain why this is a bug for you
-* **Browsers and Operating System** - is this a problem with all browsers or only IE8?
 * **Reproduce the Error** - provide a live example (using [Plunker][plunker] or[JSFiddle][jsfiddle]) or a unambiguous set of steps.
-* **Related Issues** - has a similar issue been reported before?
 * **Suggest a Fix** - if you can't fix the bug yourself, perhaps you can point to what might be causing the problem (line of code or commit)
+
+#### Milestones
+Every **milestone** acts like a container for issues (e.g., Release MVP with simple user signup), this is important to Hairven because this is how we asscociate issues with specific features or project phase. You should check the milestones to see the issues that are open and needs to be fixed.
+
+#### Assignee
+One **assignee** is responsible for working on the issue at any given time.
+
+#### Comments
+**Comments** allow anyone with access to the repository to provide feedback.
 
 
 ## <a name="mc"></a> Making Changes
@@ -117,10 +122,6 @@ A detailed explanation can be found in this [article](http://adamsimpson.net/wri
 
 * Push your changes to a topic branch in your fork of the repository.
 * Submit a pull request to the `andela/hairven` repository.
-
-
-## <a name="feature"></a> Want a Feature?
-You can request a new feature by submitting an issue to our [GitHub Repository](https://github.com/andela/hairven/issues). If you would like to implement a new feature then consider what kind of change it is:
 
 
 ## <a name="cg"></a> Code Guidelines
