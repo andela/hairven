@@ -1,4 +1,4 @@
-var env = require('./env.config.js');
+var env = require('./config.js');
 var dotenv = require('dotenv');
 
 dotenv.load(env.development);
