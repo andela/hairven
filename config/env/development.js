@@ -1,3 +1,3 @@
 module.exports = {
-database: 'http//localhost/development'
+database: 'mongodb://localhost/hairven-db-development'
 };

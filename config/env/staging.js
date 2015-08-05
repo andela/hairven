@@ -1,3 +1,3 @@
 module.exports = {
-database: 'http//localhost/staging'
+database: process.env.MONGOLAB_URI
 };
