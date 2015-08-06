@@ -40,8 +40,8 @@ describe("User route test", function() {
     .expect(200)
     .end(function(err, res) {
       expect(err).toBe(null);
+      done();
     });
-    done();
   });
 
   it('should make a GET request and return created users', function(done) {
@@ -51,7 +51,6 @@ describe("User route test", function() {
       expect(err).toBe(null);
       done();
     });
-    done();
   });
 
   it('should make a GET request and return a single user', function(done) {
@@ -61,7 +60,6 @@ describe("User route test", function() {
       expect(err).toBe(null);
       done();
     });
-    done();
   });  
 
   it('should make a PUT request and edit a user details', function(done) {
@@ -77,7 +75,6 @@ describe("User route test", function() {
       expect(err).toBe(null);
       done();
     });
-    done(); 
   });
 
   it('should make a DELETE request and delete a user', function(done) {
@@ -87,7 +84,6 @@ describe("User route test", function() {
       expect(err).toBe(null);
       done();
     });
-    done();
   });
 
   it("should return an error when a route is not found", function(done) {
@@ -95,7 +91,6 @@ describe("User route test", function() {
    .expect(404)
    .end(function(err, res){
      expect(res.error).not.toBe(null);
-     done();
    });
    done();  
   });
