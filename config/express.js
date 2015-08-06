@@ -1,8 +1,4 @@
 var env = require('./config');
-var dotenv = require('dotenv');
-
-dotenv.load(env.development);
-
 var express = require('express');
 var app = express();
 var router = require('../app/routes/router');
