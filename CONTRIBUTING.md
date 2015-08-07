@@ -164,7 +164,8 @@ and compliance with the project's coding conventions.
 
 The plugin should be installed on any editor or IDE being used by the contributor.
 A detailed installation instruction can be found at http://jshint.com/install/.
-Further information and documentation is can be found at http://jshint.com/ and http://jshint.com/docs/.
+
+Further information and documentation is can also be found at http://jshint.com/ and http://jshint.com/docs/.
 
 
 # <a name="ar"></a> Additional Resources
