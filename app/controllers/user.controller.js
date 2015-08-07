@@ -14,7 +14,8 @@ exports.signup = function(req, res) {
     {
       if (err.code == 11000)
       {
-        return res.json({ success: false, message: 'Username already exists.'});
+        return res.json({ success: false, 
+          message: 'Username already exists.'});
       }
       else
       {
@@ -30,18 +31,25 @@ exports.signup = function(req, res) {
 
 exports.login = function(req, res) {
   User.findOne({
-    username: req.body.username}).select('username email password').exec(function(err, user) {
-    if (err) throw err;
+    username: req.body.username})
+      .select('username email password')
+      .exec(function(err, user) {
+    if (err)
+    {
+      throw err;
+    }
     if (!user) 
     {
-      res.json({ success: false, message: 'Authentication failed. User not found.' });
+      res.json({ success: false, 
+        message: 'Authentication failed. User not found.' });
     } 
     else if (user) 
     {
       var validPassword = user.comparePassword(req.body.password);
       if (!validPassword) 
       {
-        res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+        res.json({ success: false, 
+          message: 'Authentication failed. Wrong password.' });
       } 
       else 
       {
@@ -59,13 +67,16 @@ exports.login = function(req, res) {
 };
 
 exports.middleware = function(req, res, next) {
-  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+  var token = req.body.token || 
+    req.query.token || 
+    req.headers['x-access-token'];
   if (token) 
   {
     jwt.verify(token, db.secret, function(err, decoded) {      
       if (err) 
       {
-        return res.json({ success: false, message: 'Failed to authenticate token.' });    
+        return res.json({ success: false, 
+          message: 'Failed to authenticate token.' });    
       } 
       else 
       {
@@ -85,12 +96,12 @@ exports.middleware = function(req, res, next) {
 };
 
 
-exports.home = function(req, res) {
+exports.home = function(res) {
   res.json({ message: 'API' });
 };
 
-exports.users = function(req, res) {
-  User.find(function(err, users) {
+exports.users = function(res) {
+  User.find(function(users) {
     res.json(users);
   });
 };
