@@ -2,12 +2,9 @@ var env = require('./config');
 var express = require('express');
 var app = express();
 var router = require('../app/routes/router');
-
-
 var methodOverride = require('method-override');
 var passport = require('passport');
 var morgan = require('morgan');
-
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
@@ -38,5 +35,10 @@ app.use(passport.session());
 
 //route trough api
 app.use('/api', router);
+
+// basic route
+app.get('/', function(req, res){
+    res.send('Welcome to Hairven');
+});
 
 exports = module.exports = app;

@@ -1,3 +1,4 @@
 module.exports = {
-database: 'mongodb://localhost/hairven-db-development'
+database: 'mongodb://localhost/hairven-db-development',
+secret: 'rosco'
 };
