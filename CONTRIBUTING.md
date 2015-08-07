@@ -61,7 +61,6 @@ One **assignee** is responsible for working on the issue at any given time.
 * Make sure you have added the necessary tests for your changes.
 * Run _all_ the tests to assure nothing else was accidentally broken.
 
-
 ## <a name="commit"></a> Git Commit Guidelines
 
 We have very precise rules over how our git commit messages can be formatted.  This leads to **more readable messages** that are easy to follow when looking through the **project history**.
@@ -157,6 +156,15 @@ To ensure consistency throughout the source code, keep these rules in mind as yo
     console.log('Success');
   };
 ```
+
+#### Use of JSHint is Required
+
+Contributing to this project required the use of JSHint for javascript syntax error identification 
+and compliance with the project's coding conventions.
+
+The plugin should be installed on any editor or IDE being used by the contributor.
+A detailed installation instruction can be found at http://jshint.com/install/.
+Further information and documentation is can be found at http://jshint.com/ and http://jshint.com/docs/.
 
 
 # <a name="ar"></a> Additional Resources
