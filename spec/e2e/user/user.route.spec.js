@@ -17,7 +17,6 @@ describe('User route test', function() {
       expect(err).toBe(null);
       done();
     }); 
-    done();
   });
 
   it('should make a POST request and login a user', function(done) {
@@ -32,7 +31,6 @@ describe('User route test', function() {
       expect(err).toBe(null);
       done();
     });
-    done(); 
   });
 
   it('should make a GET request and return the home page', function(done) {
@@ -68,7 +66,7 @@ describe('User route test', function() {
       email: 'badman@gmail.com',
       password:'badbad'
     };
-    request.put('/api/users/:user_id?token='+token)
+    request.put('/api/users/user_id?token='+token)
     .send(user.username)
     .expect(200)
     .end(function(err, res){

@@ -13,11 +13,18 @@ exports.signup = function(req, res) {
     if (err) 
     {
       if (err.code == 11000)
+      {
         return res.json({ success: false, message: 'Username already exists.'});
-    else
-        res.send(err);
+      }
+      else
+      {
+          res.send(err);
+      }
     }
+    else
+    {
     res.json({ message: 'User created!' });
+    }
   }); 
 };
 
@@ -104,16 +111,25 @@ exports.editProfile = function(req, res) {
     {
       res.send(err);
     }
+
     if (req.body.username)
+    {
       user.username = req.body.username;
+    }
     if (req.body.email) 
+    {
       user.email = req.body.email; 
+    }
     if (req.body.password) 
+    {
       user.password = req.body.password;
+    }
 
     user.save(function(err) {
     if (err) 
+    {
       res.send(err);
+    }
     });
 
     res.json({ message: 'User updated!' });
@@ -124,7 +140,9 @@ exports.deleteUser = function(req, res) {
   User.remove({_id: req.params.user_id}, 
     function(err) {
     if (err) 
+    {
       return res.send(err);                   
+    }
     res.json({ message: 'Successfully deleted' });
   }); 
 };

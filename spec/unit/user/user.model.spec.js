@@ -1,5 +1,4 @@
 var User = require('../../../app/models/user');
-var mongoose = require('mongoose');
 
 var user;
 
