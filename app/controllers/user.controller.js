@@ -121,12 +121,10 @@ exports.editProfile = function(req, res) {
 };
 
 exports.deleteUser = function(req, res) {
-  User.remove({
-    _id: req.params.user_id
-}, function(err, user) {
+  User.remove({_id: req.params.user_id}, 
+    function(err) {
     if (err) 
-      return res.send(err);
-                        
+      return res.send(err);                   
     res.json({ message: 'Successfully deleted' });
   }); 
 };

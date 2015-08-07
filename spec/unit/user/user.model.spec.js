@@ -1,12 +1,11 @@
 var User = require('../../../app/models/user');
 var mongoose = require('mongoose');
-var userModel = mongoose.model('User');
 
 var user;
 
-describe('User Model', function(done){
+describe('User Model', function(){
   beforeEach(function(done){
-    user = new userModel();
+    user = new User();
     done();
   });
 

@@ -1,8 +1,8 @@
 var app = require('../../../server');
 var request = require('supertest')(app);
-var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1NWMzMjM1Yjg3Yjk3YzM3MjgwMDAwMDEiLCJwYXNzd29yZCI6IiQyYSQxMCRZblFmcnVFMFo2OG0xWkxoR3NsenkudjlCb21nMkpTaFk1eUZIOGo0TDA3aERTUkJETlpQLiIsImVtYWlsIjoiYmFkbWFuQGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiYmFkbWFuIn0.KxW6mIuv99exEWUpnr9QZ-9RwBs6s6w1FzHbc6cwdvw';
+var token = require('../../../app/controllers/user.controller');
 
-describe("User route test", function() {
+describe('User route test', function() {
 
   it('should make a POST request and create new user', function(done) {
     var user = {
@@ -68,7 +68,7 @@ describe("User route test", function() {
       email: 'badman@gmail.com',
       password:'badbad'
     };
-    request.put('/api/users/55c3498bfc10f1ae4fc728c2?token='+token)
+    request.put('/api/users/:user_id?token='+token)
     .send(user.username)
     .expect(200)
     .end(function(err, res){
@@ -86,7 +86,7 @@ describe("User route test", function() {
     });
   });
 
-  it("should return an error when a route is not found", function(done) {
+  it('should return an error when a route is not found', function(done) {
    request.get('/?token='+token)
    .expect(404)
    .end(function(err, res){
