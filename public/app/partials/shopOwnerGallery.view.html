@@ -1,0 +1,124 @@
+<section id="container">
+  <!--sidebar start-->
+  <aside>
+    <div id="sidebar" class="nav-collapse ">
+      <!-- sidebar menu start-->
+      <ul class="sidebar-menu" id="nav-accordion">
+        <p class="centered">
+          <a ui-sref="home"><img src="../assets/images/ui-zac.jpg" class="img-circle" width="60"></a>
+        </p>
+        <h5 class="centered">Marcel Newman</h5>
+        <li class="mt">
+          <a ui-sref="dashboard">
+            <i class="fa fa-dashboard"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="sub-menu">
+          <a class="active" ui-sref="gallery">
+            <i class="fa fa-camera-retro"></i>
+            <span>Gallery</span>
+          </a>
+        </li>
+        <li class="sub-menu">
+          <a ui-sref="lock_screen">
+            <i class="fa fa-desktop"></i>
+            <span>Lock Screen</span>
+          </a>
+        </li>
+      </ul>
+      <!-- sidebar menu end-->
+    </div>
+  </aside>
+  <!--sidebar end-->
+
+  <!--main content start-->
+  <section id="main-content">
+    <section class="wrapper">
+    <div class="row mt">
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
+      </div>
+      <!-- col-lg-4 -->
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
+        <div class="project-wrapper">
+          <div class="add-photo">
+            <div class="photo">
+              <a data-toggle="modal" href="#add"><img class="img-responsive" src="../assets/images/add-more.png" alt=""></a>
+            </div>
+            <div class="overlay"></div>
+          </div>
+        </div>
+      </div>
+      <!-- col-lg-4 -->
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc"></div>
+      <!-- col-lg-4 -->
+    </div>
+      <div class="row mt">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
+          <div class="project-wrapper">
+            <div class="add-photo">
+              <div class="photo">
+                <a class="fancybox" href="../assets/images/portfolio/port05.jpg"><img class="img-responsive" src="../assets/images/portfolio/port05.jpg" alt=""></a>
+              </div>
+              <div class="overlay"></div>
+            </div>
+          </div>
+        </div>
+        <!-- col-lg-4 -->
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
+          <div class="project-wrapper">
+            <div class="project">
+              <div class="photo-wrapper">
+                <div class="photo">
+                  <a class="fancybox" href="../assets/images/portfolio/port05.jpg"><img class="img-responsive" src="../assets/images/portfolio/port05.jpg" alt=""></a>
+                </div>
+                <div class="overlay"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- col-lg-4 -->
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
+          <div class="project-wrapper">
+            <div class="project">
+              <div class="photo-wrapper">
+                <div class="photo">
+                  <a class="fancybox" href="../assets/images/portfolio/port06.jpg"><img class="img-responsive" src="../assets/images/portfolio/port06.jpg" alt=""></a>
+                </div>
+                <div class="overlay"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- col-lg-4 -->
+      </div>
+    </section>
+    <!-- /wrapper -->
+
+    <!-- add -->
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="add" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Add Image</h4>
+          </div>
+          <div class="modal-body">
+            <input type="text" class="form-control" placeholder="Title" autofocus>
+            <br>
+            <textarea type="text" class="form-control" placeholder="Description"></textarea>
+            <br>
+            <input type="file" class="form-control">
+          </div>
+          <div class="modal-footer">
+            <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+            <button class="btn btn-success" type="button">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal -->
+  </section>
+  <!-- /MAIN CONTENT -->
+  <!--main content end-->
+</section>
