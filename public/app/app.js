@@ -14,10 +14,10 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
             url: "/",
             views: {
                 '': {
-                    templateUrl: 'app/views/nav.view.html'
+                    templateUrl: 'app/partials/nav.view.html'
                 },
                 'theView@home': {
-                    templateUrl: 'app/views/home.view.html',
+                    templateUrl: 'app/partials/home.view.html',
                     controller: 'HomeCtrl'
                 }
             }
@@ -26,10 +26,10 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
             url: "/hair",
             views: {
                 '': {
-                    templateUrl: 'app/views/nav.view.html'
+                    templateUrl: 'app/partials/nav.view.html'
                 },
                 'theView@hair': {
-                    templateUrl: 'app/views/hair.view.html',
+                    templateUrl: 'app/partials/hair.view.html',
                     controller: 'HairCtrl'
                 }
             }
@@ -38,10 +38,10 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
             url: "/dashboard",
             views: {
                 '': {
-                    templateUrl: 'app/views/nav.view.html'
+                    templateUrl: 'app/partials/nav.view.html'
                 },
                 'theView@dashboard': {
-                    templateUrl: 'app/views/dashboard.view.html'
+                    templateUrl: 'app/partials/dashboard.view.html'
                 }
             }
         })
@@ -49,10 +49,10 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
             url: "/Userdashboard",
             views: {
                 '': {
-                    templateUrl: 'app/views/nav.view.html'
+                    templateUrl: 'app/partials/nav.view.html'
                 },
                 'theView@Userdashboard': {
-                    templateUrl: 'app/views/Userdashboard.view.html'
+                    templateUrl: 'app/partials/Userdashboard.view.html'
                 }
             }
         })
@@ -60,10 +60,10 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
             url: "/gallery",
             views: {
                 '': {
-                    templateUrl: 'app/views/nav.view.html'
+                    templateUrl: 'app/partials/nav.view.html'
                 },
                 'theView@gallery': {
-                    templateUrl: 'app/views/gallery.view.html'
+                    templateUrl: 'app/partials/gallery.view.html'
                 }
             }
         })
@@ -71,10 +71,10 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
             url: "/usergallery",
             views: {
                 '': {
-                    templateUrl: 'app/views/nav.view.html'
+                    templateUrl: 'app/partials/nav.view.html'
                 },
                 'theView@usergallery': {
-                    templateUrl: 'app/views/usergallery.view.html'
+                    templateUrl: 'app/partials/usergallery.view.html'
                 }
             }
         })
@@ -82,25 +82,25 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
             url: "/booking",
             views: {
                 '': {
-                    templateUrl: 'app/views/nav.view.html'
+                    templateUrl: 'app/partials/nav.view.html'
                 },
                 'theView@booking': {
-                    templateUrl: 'app/views/booking.view.html'
+                    templateUrl: 'app/partials/booking.view.html'
                 }
             }
         })
         .state('lock_screen', {
             url: "/lock_screen",
-            templateUrl: "app/views/lock_screen.view.html",
+            templateUrl: "app/partials/lock_screen.view.html",
         })
         .state('login', {
             url: "/login",
             views: {
                 '': {
-                    templateUrl: 'app/views/nav.view.html'
+                    templateUrl: 'app/partials/nav.view.html'
                 },
                 'theView@login': {
-                    templateUrl: 'app/views/login.view.html'
+                    templateUrl: 'app/partials/login.view.html'
                 }
             }
         });
