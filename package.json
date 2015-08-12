@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jasmine-node ./app/test/e2e/core/server-spec.js --forceexit",
     "test-staging": "if [ '$NODE_ENV' = 'production' ]; then echo \"test not required\" && exit 1; else jasmine-node ./app/test/e2e/core/server-spec.js --forceexit; fi",
-     "start": "http-server -a localhost -p 5000 -c-1"
+    "start": "if [ '$NODE_ENV' = 'production' ]; then node server.js; else PORT=3030 nodemon server.js; fi"
   },
   "repository": {
     "type": "git",

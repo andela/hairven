@@ -9,8 +9,8 @@
 // // shoutout to the user                     
 // console.log(port + ' up and running');
 
-// // expose app           
-// exports = module.exports = app;
+// export app           
+
 
 var express     = require('express'),
     app         = express();
@@ -33,3 +33,5 @@ app.get('*', function(req, res) {
 
 app.listen(port);
 console.log('now listening on port: ' + port);
+
+module.exports = app;
