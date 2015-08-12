@@ -1,9 +1,5 @@
 "use strict"
-/**
- *  Module
- *
- * Description
- */
+
 var app = angular.module('hairvenApp', ['ui.router']);
 
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
