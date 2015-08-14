@@ -4,7 +4,7 @@ var userModel = mongoose.model('User');
 
 var user;
 
-describe('User Model', function(done){
+describe('User Model', function(){
   beforeEach(function(done){
     user = new userModel();
     done();
@@ -12,6 +12,8 @@ describe('User Model', function(done){
 
   it('should not register if username field is empty', function(done){
     user.username = '';
+    user.email = 'badman@gmail.com';
+    user.password = 'badbad';
     user.save(function(err){
       expect(err).not.toBe(null);
       done();
@@ -19,7 +21,9 @@ describe('User Model', function(done){
   });
 
   it('should not register if email field is empty', function(done){
+    user.username = 'badman';
     user.email = '';
+    user.password = 'badbad';
     user.save(function(err){
       expect(err).not.toBe(null);
       done();
@@ -27,6 +31,8 @@ describe('User Model', function(done){
   });
 
   it('should not register if password field is empty', function(done){
+    user.username = 'badman';
+    user.email = 'badman@gmail.com';
     user.password = '';
     user.save(function(err){
       expect(err).not.toBe(null);
@@ -40,8 +46,14 @@ describe('User Model', function(done){
     user.password = 'badbad';
     user.save(function(err){
       expect(err).toBe(null); 
+      done();
     });
-    done();
+  });
+
+  afterEach(function(done) {
+    User.remove({}, function () {
+      done();
+    });
   });
 
 });

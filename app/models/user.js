@@ -4,13 +4,7 @@ var bcrypt = require('bcrypt-nodejs');
 var db = require('../../config/config');
 var connect = mongoose.connection;
 
-connect.on('error', console.error.bind(console, 'connection error!'));
-connect.once('open', function(callback) {
-    console.log('connected to database');
-});
-
 mongoose.connect(db.database);
-
 
 var userSchema = new Schema({
     username: {
@@ -18,7 +12,8 @@ var userSchema = new Schema({
         required: true,
         index: {
             unique: true
-        }
+        },
+        unique: true
     },
     email: {
         type: String,
@@ -36,8 +31,9 @@ var userSchema = new Schema({
 userSchema.pre('save', function(next) {
     var user = this;
 
-    if (!user.isModified('password'))
+    if (!user.isModified('password')) {
         return next();
+    }
     bcrypt.hash(user.password, null, null, function(err, hash) {
         if (err) {
             return next(err);
