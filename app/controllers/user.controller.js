@@ -2,7 +2,6 @@ var jwt = require('jsonwebtoken');
 var User = require('../models/user');
 var db = require('../../config/config');
 
-
 exports.signup = function(req, res) { 
   var user = new User();
   user.username = req.body.username; 
@@ -10,34 +9,50 @@ exports.signup = function(req, res) {
   user.password = req.body.password;
 
   user.save(function(err) {
-    if (err) 
-    {
-      if (err.code == 11000)
-        return res.json({ success: false, message: 'Username already exists.'});
-    else
-        res.send(err);
+    if (err) {
+      if (err.code === 11000) {
+        return res.status(401).send({ 
+          success: false, 
+          message: 'User already exists.'});
+      }
+      else if (user.username === undefined ||
+              user.email === undefined ||
+              user.password === undefined) {
+        return res.status(401).send({ 
+          success: false, 
+          message: 'Invalid Username/Email/Password.'});
+      }
+      else { 
+          return res.status(401).send(err); 
+      }
     }
+    else {
     res.json({ message: 'User created!' });
+    }
   }); 
 };
 
 exports.login = function(req, res) {
   User.findOne({
-    username: req.body.username}).select('username email password').exec(function(err, user) {
-    if (err) throw err;
-    if (!user) 
-    {
-      res.json({ success: false, message: 'Authentication failed. User not found.' });
+    username: req.body.username})
+      .select('username password')
+      .exec(function(err, user) {
+    if (err) {
+      throw err;
+    }
+    if (!user) {
+      return res.status(401).send({ 
+        success: false,
+        message: 'Authentication failed. User not found.' });
     } 
-    else if (user) 
-    {
+    else {
       var validPassword = user.comparePassword(req.body.password);
-      if (!validPassword) 
-      {
-        res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+      if (!validPassword) {
+        return res.status(401).send({ 
+          success: false, 
+          message: 'Authentication failed. Wrong password.' });
       } 
-      else 
-      {
+      else {
         var token = jwt.sign(user, db.secret, {
           expiresInMinutes: 1440 
         });
@@ -52,24 +67,22 @@ exports.login = function(req, res) {
 };
 
 exports.middleware = function(req, res, next) {
-  var token = req.body.token || req.query.token || req.headers['x-access-token'];
-  if (token) 
-  {
+  var token = req.body.token || 
+    req.query.token || 
+    req.headers['x-access-token'];
+  if (token) {
     jwt.verify(token, db.secret, function(err, decoded) {      
-      if (err) 
-      {
-        return res.json({ success: false, message: 'Failed to authenticate token.' });    
+      if (err) {
+        return res.json({ success: false, 
+          message: 'Failed to authenticate token.' });    
       } 
-      else 
-      {
+      else {
         req.decoded = decoded;    
         next();
       }
     });
-
   } 
-  else 
-  {
+  else {
     return res.status(403).send({ 
         success: false, 
         message: 'No token provided.' 
@@ -77,21 +90,9 @@ exports.middleware = function(req, res, next) {
   }
 };
 
-
-exports.home = function(req, res) {
-  res.json({ message: 'API' });
-};
-
-exports.users = function(req, res) {
-  User.find(function(err, users) {
-    res.json(users);
-  });
-};
-
 exports.getUser = function(req, res) { 
-  User.findById(req.params.user_id, function(err, user) { 
-    if (err) 
-    {
+  User.find({username: req.params.username}, function(err, user) { 
+    if (err) {
       res.send(err);
     }
     res.json(user);
@@ -99,34 +100,18 @@ exports.getUser = function(req, res) {
 };
 
 exports.editProfile = function(req, res) {
-  User.findById(req.params.user_id, function(err, user) { 
-    if (err) 
-    {
-      res.send(err);
-    }
-    if (req.body.username)
-      user.username = req.body.username;
-    if (req.body.email) 
-      user.email = req.body.email; 
-    if (req.body.password) 
-      user.password = req.body.password;
-
-    user.save(function(err) {
-    if (err) 
-      res.send(err);
-    });
-
+  User.update({username: req.params.username}, 
+    req.body, function() { 
     res.json({ message: 'User updated!' });
   }); 
 };
 
 exports.deleteUser = function(req, res) {
-  User.remove({
-    _id: req.params.user_id
-}, function(err, user) {
-    if (err) 
-      return res.send(err);
-                        
+  User.remove({username: req.params.username}, 
+    function(err) {
+    if (err) {
+      return res.send(err);                   
+    }
     res.json({ message: 'Successfully deleted' });
   }); 
 };

@@ -10,17 +10,11 @@ router.route('/signup')
 router.route('/login')
   .post(ctrl.login);
 
-router.use(ctrl.middleware);
+// middleware
+router.use(ctrl.middleware); 
 
-// localhost/api
-router.route('/')
-  .get(ctrl.home); 
-
-// route to return all users 
-router.route('/users')
-  .get(ctrl.users);  
-
-router.route('/users/:user_id')
+// single user routes
+router.route('/v1/users/:username')
   .get(ctrl.getUser)
   .put(ctrl.editProfile)
   .delete(ctrl.deleteUser);

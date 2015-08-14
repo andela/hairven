@@ -33,12 +33,12 @@ app.use(cookieParser()); // read cookies (needed for auth)
 app.use(passport.initialize());
 app.use(passport.session());
 
-//route trough api
-app.use('/api', router);
-
 // basic route
 app.get('/', function(req, res){
     res.send('Welcome to Hairven');
 });
+
+//route trough api
+app.use('/', router);
 
 exports = module.exports = app;
