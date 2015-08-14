@@ -49,7 +49,7 @@ exports.login = function(req, res) {
       var validPassword = user.comparePassword(req.body.password);
       if (!validPassword) {
         return res.status(401).send({ 
-          success: false, 
+          success: false,
           message: 'Authentication failed. Wrong password.' });
       } 
       else {

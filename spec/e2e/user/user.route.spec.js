@@ -72,7 +72,7 @@ describe('User route test', function() {
           message: 'Invalid Username/Email/Password.'
       }));
       done();
-    }); 
+    });
   });
 
   it('should not create new user with undefined password', function(done) {
@@ -181,7 +181,7 @@ describe('User route test', function() {
       }));
       done();
     });
-  }); 
+  });
 
   it('should edit a user details', function(done) {
     user = {
