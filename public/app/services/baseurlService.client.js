@@ -4,5 +4,5 @@ angular.module('hairvenApp')
     .value('baseUrl', 'https://localhost:5000');
 
 // angular.module('hairvenApp')
-//     .value('baseUrl', 'https://hairven.herokuapp.com');
+//     .value('baseUrl', 'https://hairven-staging.herokuapp.com');
 
