@@ -8,6 +8,8 @@ var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+app.use(express.static(__dirname + '/public'));
+
 //parse body contents as a JSON objects
 app.use(bodyParser.json());
 
@@ -40,5 +42,9 @@ app.get('/', function(req, res){
 
 //route trough api
 app.use('/', router);
+
+app.get('*', function(req, res) {
+    res.sendFile(process.cwd() + '/public/index.html');
+});
 
 exports = module.exports = app;
