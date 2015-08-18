@@ -22,7 +22,7 @@ describe('User route test', function() {
     }); 
   });
 
-  it('should create new user with duplicate credentials', function(done) {
+  it('should not create new user with duplicate credentials', function(done) {
     user = {
       username: 'straight',
       email: 'outta@gmail.com',
@@ -186,7 +186,7 @@ describe('User route test', function() {
   it('should edit a user details', function(done) {
     user = {
       username:'curve'
-    }
+    };
     request.put('/v1/users/straight')
     .set('x-access-token', token)
     .expect(200)
