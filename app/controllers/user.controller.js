@@ -11,7 +11,16 @@ exports.signup = function(req, res) {
   user.save(function(err) {
     if (err) {
       if (err.code === 11000) {
-        return res.status(401).send(err);
+        return res.status(401).send({ 
+          success: false, 
+          message: 'User already exists.'});
+      }
+      else if (user.username === undefined ||
+              user.email === undefined ||
+              user.password === undefined) {
+        return res.status(401).send({ 
+          success: false, 
+          message: 'Invalid Username/Email/Password.'});
       }
       else { 
           return res.status(401).send(err); 
@@ -32,14 +41,15 @@ exports.login = function(req, res) {
       throw err;
     }
     if (!user) {
-      res.json({ 
+      return res.status(401).send({ 
+        success: false,
         message: 'Authentication failed. User not found.' });
     } 
     else {
       var validPassword = user.comparePassword(req.body.password);
       if (!validPassword) {
-        res.status(401).send({ 
-          success: false, 
+        return res.status(401).send({ 
+          success: false,
           message: 'Authentication failed. Wrong password.' });
       } 
       else {
@@ -80,10 +90,6 @@ exports.middleware = function(req, res, next) {
   }
 };
 
-exports.home = function(res) {
-  res.json({ message: 'API' });
-};
-
 exports.getUser = function(req, res) { 
   User.find({username: req.params.username}, function(err, user) { 
     if (err) {
@@ -95,7 +101,7 @@ exports.getUser = function(req, res) {
 
 exports.editProfile = function(req, res) {
   User.update({username: req.params.username}, 
-    req.body, function(err, user) { 
+    req.body, function() { 
     res.json({ message: 'User updated!' });
   }); 
 };

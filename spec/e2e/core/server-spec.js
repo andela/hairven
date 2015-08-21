@@ -1,5 +1,4 @@
 'use strict';
-
 var request = require('supertest');
 var app = require('../../../server');
 
@@ -9,7 +8,7 @@ describe('server test', function() {
     function(done) {
 
     request(app)
-    .get('/api')
+    .get('/')
     .expect(200)
     .end(function(err) {
       if (err) {
