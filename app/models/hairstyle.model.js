@@ -1,9 +1,4 @@
 var mongoose = require('mongoose');
-var database = require('../../config/config').database;
-
-// grab the mongoose module
-
-mongoose.connect(database);
 
 //schema for hairstyles
 

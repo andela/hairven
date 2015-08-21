@@ -1,14 +1,14 @@
-
-
 module.exports = {
-database: 'mongodb://localhost/hairven-db-development',
+  database: 'mongodb://localhost/hairven-db-development',
 
-secret: 'rosco',
+  secret: 'rosco',
 
-cloudinary: { 
-  cloud_name: 'dabdvstcm', 
-  api_key: '698755435318455', 
-  api_secret: 'u8rgw6cy82gs6beY6Bo8EZvmJHs' 
-}
+  cloudinary: {
+    cloud_name: 'hairven',
+    api_key: '452146767177853',
+    api_secret: 'jzOMpeohryKMimUbT6ptG_jcnq4',
+      enhance_image_tag: true,
+    static_image_support: false
+  }
 
 };

@@ -8,6 +8,10 @@ var passport = require('passport');
 var morgan = require('morgan');
 var multer = require('multer');
 var cloudinary = require('cloudinary');
+var mongoose = require('mongoose');
+
+// connect to database
+mongoose.connect(env.database);
 
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
