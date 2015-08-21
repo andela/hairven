@@ -1,16 +1,9 @@
-var Db = require('mongodb').Db;
 var mongoose = require('mongoose');
-var database = require('../../config/config');
+var database = require('../../config/config').database;
 
 // grab the mongoose module
 
-var db = mongoose.connection;
-
-db.on('error', console.error.bind(console, 'error connecting:'));
-db.once('open', function(callback) {
-  console.log('connected!');
-
-});
+mongoose.connect(database);
 
 //schema for hairstyles
 
@@ -35,18 +28,13 @@ var hairStyle = new mongoose.Schema({
     type: Date,
     default: Date.now('dd/mm/yyyy')
   },
-  saloons: {
-    saloonName: {
-      type: String,
-    },
-    saloonAddress: {
-      type: String
-    }
+  saloon: {
+    userId: Number,
+    saloonName: String,
+    saloonAddress: String,
   },
-  meta: {
-    upVotes: Number,
-    downVotes: Number
-  },
+  rating: Number
+  
 
 });
 

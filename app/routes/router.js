@@ -20,4 +20,17 @@ router.route('/v1/users/:username')
   .put(ctrl.editProfile)
   .delete(ctrl.deleteUser);
 
+router.route('/hairstyles')
+		//request for all hairstyles, updating the gallery
+  .get(hairCntrl.getAllHairStyles)
+
+  //request for new hair creation
+  .post(hairCntrl.createHairStyle);
+
+//requests for single hairstyle
+router.route('/hairstyles/:name')
+  .get(hairCntrl.getByName)
+  .put(hairCntrl.updateHairStyle)
+  .delete(hairCntrl.removeHairStyle);
+
 module.exports = router;
