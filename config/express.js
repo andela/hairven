@@ -8,9 +8,11 @@ var passport = require('passport');
 var morgan = require('morgan');
 var multer = require('multer');
 var cloudinary = require('cloudinary');
-
+var mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
+mongoose.connect(env.database);
 
 app.use(express.static(__dirname + '/../public'));
 
@@ -55,8 +57,7 @@ app.use(passport.session());
 
 // landing page
 app.get('/', function(req, res) {
-  res.sendFile(process.cwd() + '/public/index');
-app.use(express.static(__dirname + '/../public'));
+  res.sendFile(process.cwd() + '/public/index')
 });
 
 // route trough api
