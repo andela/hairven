@@ -1,5 +1,5 @@
 var jwt = require('jsonwebtoken');
-var User = require('../models/user');
+var User = require('../models/user.model');
 var db = require('../../config/config');
 
 exports.signup = function(req, res) { 
@@ -9,18 +9,18 @@ exports.signup = function(req, res) {
   user.password = req.body.password;
 
   user.save(function(err) {
-    if (err) {
+    if (user.username === undefined ||
+      user.email === undefined ||
+      user.password === undefined) {
+        return res.status(401).send({ 
+          success: false, 
+          message: 'Invalid Username/Email/Password.'});
+    }
+    else if (err) {
       if (err.code === 11000) {
         return res.status(401).send({ 
           success: false, 
           message: 'User already exists.'});
-      }
-      else if (user.username === undefined ||
-              user.email === undefined ||
-              user.password === undefined) {
-        return res.status(401).send({ 
-          success: false, 
-          message: 'Invalid Username/Email/Password.'});
       }
       else { 
           return res.status(401).send(err); 

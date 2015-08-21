@@ -8,6 +8,8 @@ var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+app.use(express.static(__dirname + '/../public'));
+
 //parse body contents as a JSON objects
 app.use(bodyParser.json());
 
@@ -33,12 +35,12 @@ app.use(cookieParser()); // read cookies (needed for auth)
 app.use(passport.initialize());
 app.use(passport.session());
 
-// basic route
-app.get('/', function(req, res){
-    res.send('Welcome to Hairven');
+// landing page
+app.get('/', function(req, res) {
+  res.sendFile(process.cwd() + '/public/index');
 });
 
-//route trough api
+// route trough api
 app.use('/', router);
 
 exports = module.exports = app;
