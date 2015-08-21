@@ -39,7 +39,7 @@
     "express": "^4.13.3",
     "http-server": "latest",
     "jshint": "^2.8.0",
-    "jsonwebtoken": "^5.0.4",
+    "jsonwebtoken": "^5.0.5",
     "method-override": "latest",
     "mongoose": "latest",
     "morgan": "^1.6.1",

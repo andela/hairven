@@ -2,9 +2,7 @@
 var request = require('supertest');
 
 var app = require('../../../server');
-var db = require('../../../config/config');
 var Hair = require('../../../app/models/hairstyle.model');
-
 describe('Hairstyles details', function() {
 
   //empty the database after each test.
