@@ -1,88 +1,73 @@
 'use strict';
 var request = require('supertest');
+
 var app = require('../../../server');
 var db = require('../../../config/config');
+var Hair = require('../../../app/models/hairstyle.model');
 
 describe('Hairstyles details', function() {
 
   //empty the database after each test.
   afterEach(function(done) {
-    hairstyles.model.remove({}, function() {
-      done();
+    Hair.remove({}, function() {
+
     });
-
-  });
-
-  //test for to check if app prevents posting of an hairstyle without name
-  it('without name should NOT be posted', function() {
-
-    request(app)
-      .post('/hairstyles')
-      .send({
-        name: undefined,
-        image: 'hair_henna.jpg',
-        description: 'sample hairstyles'
-      })
-      .expect(401)
-      .expect({
-        success: false,
-        message: 'Please enter Hairstyle name'
-      })
-      .end(function(err) {
-        if (err) {
-          return done(err);
-        }
-        done();
-      });
-    done();
-  });
-
-  //test for to check if app prevents posting of an hairstyle without description
-  it('without description should NOT be posted', function() {
-
-    request(app)
-      .post('/hairstyles')
-      .send({
-        name: 'sampleHair',
-        image: 'hair_henna.jpg',
-        description: undefined
-      })
-      .expect(401)
-      .expect({
-        success: false,
-        message: 'please enter the Hairstyle description'
-      })
-      .end(function(err) {
-        if (err) {
-          return done(err);
-        }
-        done();
-      });
     done();
   });
 
   //test for to check if app prevents posting of an hairstyle without image
-  it('without image should NOT be posted', function() {
+  it('without image should NOT be posted', function(done) {
 
     request(app)
       .post('/hairstyles')
       .send({
         name: 'sampleHair',
-        image: undefined,
         description: 'sample hairstyles'
       })
-      .expect(401)
-      .expect({
-        success: false,
-        message: 'Please upload a photo of the Hairstyle'
-      })
-      .end(function(err) {
-        if (err) {
-          return done(err);
-        }
+      .end(function(err, response) {
+        expect(response.body).toEqual(jasmine.objectContaining({
+          success: false,
+          message: 'Please upload a photo of the Hairstyle'
+        }))
+        expect(response.statusCode).toBe(401)
         done();
       });
-    done();
+  });
+
+  it('without name should NOT be posted', function(done) {
+
+    request(app)
+      .post('/hairstyles')
+      .field('name', '')
+      .field('description', 'sample hairstyles')
+      .attach('hairPhoto', 'hair_henna.jpg')
+      .end(function(err, response) {
+        expect(response.body).toEqual(jasmine.objectContaining({
+          success: false,
+          message: 'Please enter Hairstyle name'
+        }))
+        expect(response.statusCode).toBe(401)
+        done();
+      });
+  });
+
+  //test for to check if app prevents posting of an hairstyle without description
+  it('without description should NOT be posted', function(done) {
+
+    request(app)
+      .post('/hairstyles')
+      .set('Accept', 'application/json')
+      .field('name', 'sampleHair')
+      .field('description', '')
+      .attach('hairPhoto', 'hair_henna.jpg')
+      .end(function(err, response) {
+        expect(response.body).toEqual(jasmine.objectContaining({
+          success: false,
+          message: 'Please enter a description for the Hairstyle'
+        }))
+        expect(response.statusCode).toBe(401)
+        done();
+      });
   });
 
 
@@ -91,210 +76,207 @@ describe('Hairstyles details', function() {
 
 describe('Hairstyles', function() {
 
-  //save hairstyle details in database before each test 
-  beforeEach(function() {
-    var testHair = {
+  //create test data before each test.
+  beforeEach(function(done) {
+    var sampleHair = {
       name: 'fineHair',
-      details: 'a sample hairstyle for tests',
+      description: 'a sample hairstyle for tests',
       image: 'hair_henna.jpg',
-      meta: {
-        upVotes: 23,
-        downVotes: 5
-      },
-      saloons: {
-        index: 1,
+      rating: 4,
+      saloon: {
+        userId: 1,
         saloonName: 'Beauty Palace',
         saloonAddress: 'Sabo, Yaba Lagos.'
       }
-    }
-    testHair = new Hair();
+    };
+    var testHair = new Hair(sampleHair);
+    testHair.save(function(err) {
+      if (err) {
+        console.log(err);
+      }
+    });
+    done();
   });
+
 
   //empty the database after each test.
   afterEach(function(done) {
-    hairstyles.model.remove({}, function() {
-      done();
-    });
-
+    Hair.remove({}, function() {});
+    done();
   });
 
-  //hairstyle posting test
-  it('should POST successfully', function() {
+
+
+  // //hairstyle posting test
+  it('should POST successfully', function(done) {
 
     request(app)
       .post('/hairstyles')
-      .send(testHair)
+      .field('name', 'uglyHair')
+      .field('description', 'a sample hairstyle for tests')
+      .field('rating', 4)
+      .field('saloon', '{ "index": 1,"saloonName": "Beauty Palace","saloonAddress": "Sabo, Yaba Lagos."}')
       .attach('hairPhoto', 'hair_henna.jpg')
-      .expect(200)
-      .expect({
-        success: true,
-        message: 'Hairstyle saved!'
-      })
-      .end(function(err) {
-        if (err) {
-          return done(err);
-        }
+      .end(function(err, response) {
+        expect(response.body).toEqual(jasmine.objectContaining({
+          success: true,
+          message: 'Hairstyle Saved!'
+        }))
+        expect(response.statusCode).toBe(200)
         done();
       });
-    done();
-
   });
 
-  //test to check if app prevent posting of same hairstyle more than once
-  it('should NOT be posted if name is already in database', function() {
+  //   //test to check if app prevent posting of same hairstyle more than once
+  //  it('should NOT be posted if name is already in database', function() {
 
-    testHair.save();
-    request(app)
-      .post('/hairstyles')
-      .send(testHair)
-      .attach('hairPhoto', 'hair_henna.jpg')
-      .expect(401)
-      .expect({
-        success: false,
-        message: 'Hairstyle already exists, kindly search the gallery if you will like to update it.'
-      })
-      .end(function(err) {
-        if (err) {
-          return done(err);
-        }
-        done();
-      });
-    done();
+  //     var sampleHair = {
+  //       name: 'fineHair',
+  //       details: 'a sample hairstyle for tests',
+  //       image: 'hair_henna.jpg',
+  //       meta: {
+  //         upVotes: 23,
+  //         downVotes: 5
+  //       },
+  //       saloons: {
+  //         index: 1,
+  //         saloonName: 'Beauty Palace',
+  //         saloonAddress: 'Sabo, Yaba Lagos.'
+  //       }
+  //     };
 
-  });
+  //     var testHair = new Hair(sampleHair);
+  //     testHair.save();
+
+  //     request(app)
+  //     .post('/hairstyles')
+  //     .field('name', 'fineHair')
+  //     .field('description', 'a sample hairstyle for tests')
+  //     .field('meta', '{"upVotes": 23,"downVotes": 5}')
+  //     .field('saloons', '{ "index": 1,"saloonName": "Beauty Palace","saloonAddress": "Sabo, Yaba Lagos."}')
+  //   .attach('hairPhoto', 'hair_henna.jpg')
+  //     .end(function(err, response) {
+  //       expect(response.body).toEqual(jasmine.objectContaining({
+  //         success: false,
+  //         message: 'Hairstyle already exists, kindly search the gallery if you will like to update it.'
+  //       }))
+  //       expect(response.statusCode).toBe(401)
+  //       done();
+  //     });
+  // });
 
   //get for getting all hairstyles in database (i.e, for populating the gallery in view)
-  it('GET request should return all successfully', function() {
-
-    var testHairTwo = {
+  it('GET request should return all successfully', function(done) {
+    var sampleHairTwo = {
       name: 'uglyHair',
-      details: 'another sample hairstyle for tests',
+      description: 'another sample hairstyle for tests',
       image: 'hair_henna.jpg',
       date: Date.now(),
-      meta: {
-        upvotes: 3,
-        downvotes: 26
-      },
-      saloons: {
-        index: 2,
+      rating: 1,
+      saloon: {
+        userId: 2,
         saloonName: 'Iya Basira Beauty Center',
         saloonAddress: 'Onigbogbo Area, Okoko Lagos.'
       }
-    }
+    };
 
-    testHair.save();
-    testHairTwo.save();
+    var testHairTwo = new Hair(sampleHairTwo);
+
+    testHairTwo.save(function(err) {
+      if (err) {
+        console.log(err)
+      }
+    });
 
     request(app)
       .get('/hairstyles')
-      .expect(200)
       .expect('Content-Type', /json/)
-      .expect(testHair.name).toEqual('fineHair')
-      .expect(testHairTwo.name).toEqual('uglyHair')
-      .end(function(err) {
+      .end(function(err, response) {
+        expect(response.statusCode).toBe(200)
+        expect(response.body[0].name).toEqual('fineHair')
+        expect(response.body[1].name).toEqual('uglyHair')
         if (err) {
-          return done(err);
+          console.log(err)
         }
         done();
       });
-    done();
-
   });
 
   //test for get single hairstyle (for viewing a particular hairstyle details)
-  it('GET request for a hairstyle should return the hairstyle', function() {
+  it('GET request for a hairstyle should return the hairstyle', function(done) {
 
-    testHair.save();
     request(app)
-      .get('/hairstyles/:name')
-      .expect(200)
+      .get('/hairstyles/fineHair')
       .expect('Content-Type', /json/)
-      .expect(testHair.name).toEqual('fineHair')
-      .end(function(err) {
+      .end(function(err, response) {
+        expect(response.statusCode).toBe(200)
+        expect(response.body[0].name).toEqual('fineHair')
+        expect(response.body[0].description).toEqual('a sample hairstyle for tests')
+        expect(response.body[0].rating).toEqual(4)
         if (err) {
-          return done(err);
+          console.log(err)
         }
         done();
       });
-    done();
-
   });
 
-  //hairstyle update test
-  it('details should update successfully', function() {
-
-    testHair.save();
-    var newDetails = {
-      name: 'Shuku',
-      meta: {
-        upVotes: 55
-      },
-      date: Date.now()
-    };
+  //   //hairstyle update test
+  it('details should update successfully', function(done) {
 
     request(app)
-      .put('/hairstyles/:name')
-      .send(newDetails.name, newDetails.meta.upVotes, newDetails.date)
-      .expect(200)
-      .expect({
-        success: false,
-        message: 'Hairstyle details updated!'
-      })
-      .end(function(req, res, err) {
+      .put('/hairstyles/fineHair')
+      .field('name', 'Shuku')
+      .field('rating', 3)
+      .field('date', Date.now())
+      .attach('hairPhoto', 'hair_henna.jpg')
+      .end(function(err, response) {
+        expect(response.body).toEqual(jasmine.objectContaining({
+          success: true,
+          message: 'Hairstyle Details Updated!'
+        }))
+        expect(response.statusCode).toBe(200)
         request(app)
-          .get('/hairstyles/:name')
-          .expect(200)
-          .expect(testHair.name).toEqual('Shuku')
-          .expect(testHair.meta.upVotes).toEqual(55)
-          .expect(date).toEqual(Date.now())
-          .end(function(err) {
+          .get('/hairstyles/Shuku')
+          .end(function(err, response) {
+            expect(response.statusCode).toBe(200)
             if (err) {
-              return done(err);
+              console.log(err);
             }
             done();
-          });
+          })
         if (err) {
-          return done(err);
+          console.log(err);
         }
         done();
       });
-    done();
-
   });
 
   //hairstyle remove test
-  it('should delete successfully', function() {
+  it('should delete successfully', function(done) {
 
-    testHair.save();
     request(app)
       .delete('/hairstyles/fineHair')
-      .expect(200)
-      .expect({
-        success: false,
-        message: 'Hairstyle details updated!'
-      })
-      .end(function(req, res, err) {
+      .end(function(err, response) {
+        expect(response.body).toEqual(jasmine.objectContaining({
+          success: true,
+          message: 'Hairstyle Deleted Successfully!'
+        }))
+        expect(response.statusCode).toBe(200)
         request(app)
           .get('/hairstyles/fineHair')
-          .expect(200)
-          .expect(testHair.name).toEqual('')
-          .expect(testHair).toEqual([])
-          .expect({
-            success: false,
-            message: 'hairstyle not found'
-          })
-          .end(function(err) {
+          .end(function(err, response) {
+            expect(response.statusCode).toBe(200)
+            expect(response.body).toEqual([])
             if (err) {
-              return done(err);
+              console.log(err);
             }
             done();
-          });
+          })
         if (err) {
-          return done(err);
+          console.log(err);
         }
         done();
       });
-    done();
-
   });
+
 });
