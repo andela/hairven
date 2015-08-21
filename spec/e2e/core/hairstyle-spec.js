@@ -125,44 +125,6 @@ describe('Hairstyles', function() {
       });
   });
 
-  //   //test to check if app prevent posting of same hairstyle more than once
-  //  it('should NOT be posted if name is already in database', function() {
-
-  //     var sampleHair = {
-  //       name: 'fineHair',
-  //       details: 'a sample hairstyle for tests',
-  //       image: 'hair_henna.jpg',
-  //       meta: {
-  //         upVotes: 23,
-  //         downVotes: 5
-  //       },
-  //       saloons: {
-  //         index: 1,
-  //         saloonName: 'Beauty Palace',
-  //         saloonAddress: 'Sabo, Yaba Lagos.'
-  //       }
-  //     };
-
-  //     var testHair = new Hair(sampleHair);
-  //     testHair.save();
-
-  //     request(app)
-  //     .post('/hairstyles')
-  //     .field('name', 'fineHair')
-  //     .field('description', 'a sample hairstyle for tests')
-  //     .field('meta', '{"upVotes": 23,"downVotes": 5}')
-  //     .field('saloons', '{ "index": 1,"saloonName": "Beauty Palace","saloonAddress": "Sabo, Yaba Lagos."}')
-  //   .attach('hairPhoto', 'hair_henna.jpg')
-  //     .end(function(err, response) {
-  //       expect(response.body).toEqual(jasmine.objectContaining({
-  //         success: false,
-  //         message: 'Hairstyle already exists, kindly search the gallery if you will like to update it.'
-  //       }))
-  //       expect(response.statusCode).toBe(401)
-  //       done();
-  //     });
-  // });
-
   //get for getting all hairstyles in database (i.e, for populating the gallery in view)
   it('GET request should return all successfully', function(done) {
     var sampleHairTwo = {
