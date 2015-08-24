@@ -19,7 +19,7 @@ describe('User route test', function() {
     .end(function(err){
       expect(err).toBe(null);
       done();
-    }); 
+    });
   });
 
   it('should not create new user with duplicate credentials', function(done) {
@@ -32,11 +32,11 @@ describe('User route test', function() {
     .send(user)
     .expect(401)
     .end(function(err, response) {
-      expect(response.body).toEqual(jasmine.objectContaining({ 
-          success: false, 
+      expect(response.body).toEqual(jasmine.objectContaining({
+          success: false,
           message: 'User already exists.'}));
       done();
-    }); 
+    });
   });
 
   it('should not create new user with undefined username', function(done) {
@@ -49,12 +49,12 @@ describe('User route test', function() {
     .send(user)
     .expect(401)
     .end(function(err, response) {
-      expect(response.body).toEqual(jasmine.objectContaining({ 
-          success: false, 
+      expect(response.body).toEqual(jasmine.objectContaining({
+          success: false,
           message: 'Invalid Username/Email/Password.'
       }));
       done();
-    }); 
+    });
   });
 
   it('should not create new user with undefined email', function(done) {
@@ -67,8 +67,8 @@ describe('User route test', function() {
     .send(user)
     .expect(401)
     .end(function(err, response) {
-      expect(response.body).toEqual(jasmine.objectContaining({ 
-          success: false, 
+      expect(response.body).toEqual(jasmine.objectContaining({
+          success: false,
           message: 'Invalid Username/Email/Password.'
       }));
       done();
@@ -85,12 +85,12 @@ describe('User route test', function() {
     .send(user)
     .expect(401)
     .end(function(err, response) {
-      expect(response.body).toEqual(jasmine.objectContaining({ 
-          success: false, 
+      expect(response.body).toEqual(jasmine.objectContaining({
+          success: false,
           message: 'Invalid Username/Email/Password.'
       }));
       done();
-    }); 
+    });
   });
 
   it('should login a user with correct credentials', function(done) {
@@ -104,7 +104,7 @@ describe('User route test', function() {
     .end(function(err){
       expect(err).toBe(null);
       done();
-    }); 
+    });
   });
 
   it('should not login a user with incorrect username', function(done) {
@@ -121,7 +121,7 @@ describe('User route test', function() {
         message: 'Authentication failed. User not found.'
       }));
       done();
-    }); 
+    });
   });
 
   it('should not login a user with wrong password', function(done) {
@@ -133,19 +133,19 @@ describe('User route test', function() {
     .send(user)
     .expect(401)
     .end(function(err, response) {
-      expect(response.body).toEqual(jasmine.objectContaining({ 
-        success: false, 
+      expect(response.body).toEqual(jasmine.objectContaining({
+        success: false,
         message: 'Authentication failed. Wrong password.'
       }));
       done();
-    }); 
+    });
   });
 
   it('should return an error when a route is not found', function(done) {
     request.get('/blablablaRoute')
     .expect(404)
     .end(function(err){
-      expect(err).not.toBe(null);   
+      expect(err).not.toBe(null);
     done();
     });
   });
@@ -169,15 +169,15 @@ describe('User route test', function() {
       expect(err).toBe(null);
       done();
     });
-  }); 
+  });
 
   it('should not return a user without token', function(done) {
     request.get('/v1/users/:username')
     .expect(403)
     .end(function(err, response) {
-      expect(response.body).toEqual(jasmine.objectContaining( { 
-        success: false, 
-        message: 'No token provided.' 
+      expect(response.body).toEqual(jasmine.objectContaining( {
+        success: false,
+        message: 'No token provided.'
       }));
       done();
     });
@@ -203,7 +203,7 @@ describe('User route test', function() {
     .expect(200)
     .end(function(err){
       expect(err).toBe(null);
-      done();  
+      done();
     });
   });
 
