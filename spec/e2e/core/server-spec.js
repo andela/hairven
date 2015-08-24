@@ -4,7 +4,7 @@ var app = require('../../../server');
 
 describe('server test', function() {
 
-  it('should respond on connection /api',
+  it('should respond on connection',
     function(done) {
 
     request(app)
