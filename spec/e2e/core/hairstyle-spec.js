@@ -3,6 +3,7 @@ var request = require('supertest');
 
 var app = require('../../../server');
 var Hair = require('../../../app/models/hairstyle.model');
+
 describe('Hairstyles details', function() {
 
   //empty the database after each test.
@@ -26,8 +27,8 @@ describe('Hairstyles details', function() {
         expect(response.body).toEqual(jasmine.objectContaining({
           success: false,
           message: 'Please upload a photo of the Hairstyle'
-        }))
-        expect(response.statusCode).toBe(401)
+        }));
+        expect(response.statusCode).toBe(401);
         done();
       });
   });
@@ -43,8 +44,8 @@ describe('Hairstyles details', function() {
         expect(response.body).toEqual(jasmine.objectContaining({
           success: false,
           message: 'Please enter Hairstyle name'
-        }))
-        expect(response.statusCode).toBe(401)
+        }));
+        expect(response.statusCode).toBe(401);
         done();
       });
   });
@@ -62,8 +63,8 @@ describe('Hairstyles details', function() {
         expect(response.body).toEqual(jasmine.objectContaining({
           success: false,
           message: 'Please enter a description for the Hairstyle'
-        }))
-        expect(response.statusCode).toBe(401)
+        }));
+        expect(response.statusCode).toBe(401);
         done();
       });
   });
@@ -77,15 +78,11 @@ describe('Hairstyles', function() {
   //create test data before each test.
   beforeEach(function(done) {
     var sampleHair = {
+      _id: '55dc7552485fdd167d689439',
       name: 'fineHair',
       description: 'a sample hairstyle for tests',
       image: 'hair_henna.jpg',
-      rating: 4,
-      saloon: {
-        userId: 1,
-        saloonName: 'Beauty Palace',
-        saloonAddress: 'Sabo, Yaba Lagos.'
-      }
+      rating: 4
     };
     var testHair = new Hair(sampleHair);
     testHair.save(function(err) {
@@ -110,17 +107,17 @@ describe('Hairstyles', function() {
 
     request(app)
       .post('/hairstyles')
+      .field('_id', '55dc7552485fdd152d689439')
       .field('name', 'uglyHair')
       .field('description', 'a sample hairstyle for tests')
       .field('rating', 4)
-      .field('saloon', '{ "index": 1,"saloonName": "Beauty Palace","saloonAddress": "Sabo, Yaba Lagos."}')
       .attach('hairPhoto', 'hair_henna.jpg')
       .end(function(err, response) {
         expect(response.body).toEqual(jasmine.objectContaining({
           success: true,
           message: 'Hairstyle Saved!'
-        }))
-        expect(response.statusCode).toBe(200)
+        }));
+        expect(response.statusCode).toBe(200);
         done();
       });
   });
@@ -132,12 +129,7 @@ describe('Hairstyles', function() {
       description: 'another sample hairstyle for tests',
       image: 'hair_henna.jpg',
       date: Date.now(),
-      rating: 1,
-      saloon: {
-        userId: 2,
-        saloonName: 'Iya Basira Beauty Center',
-        saloonAddress: 'Onigbogbo Area, Okoko Lagos.'
-      }
+      rating: 1
     };
 
     var testHairTwo = new Hair(sampleHairTwo);
@@ -152,9 +144,13 @@ describe('Hairstyles', function() {
       .get('/hairstyles')
       .expect('Content-Type', /json/)
       .end(function(err, response) {
-        expect(response.statusCode).toBe(200)
-        expect(response.body[0].name).toEqual('fineHair')
-        expect(response.body[1].name).toEqual('uglyHair')
+        expect(response.statusCode).toBe(200);
+        expect(response.body[0].name).toEqual('fineHair');
+        expect(response.body[0].description).toEqual('a sample hairstyle for tests');
+        expect(response.body[0].rating).toEqual(4);
+        expect(response.body[1].name).toEqual('uglyHair');
+        expect(response.body[1].description).toEqual('another sample hairstyle for tests');
+        expect(response.body[1].rating).toEqual(1);
         if (err) {
           console.log(err)
         }
@@ -164,27 +160,25 @@ describe('Hairstyles', function() {
 
   //test for get single hairstyle (for viewing a particular hairstyle details)
   it('GET request for a hairstyle should return the hairstyle', function(done) {
-
+    var id = '55dc7552485fdd167d689439';
     request(app)
-      .get('/hairstyles/fineHair')
+      .get('/hairstyles/' + id)
       .expect('Content-Type', /json/)
       .end(function(err, response) {
-        expect(response.statusCode).toBe(200)
-        expect(response.body[0].name).toEqual('fineHair')
-        expect(response.body[0].description).toEqual('a sample hairstyle for tests')
-        expect(response.body[0].rating).toEqual(4)
+        expect(response.statusCode).toBe(200);
         if (err) {
           console.log(err)
         }
         done();
       });
+
   });
 
   //   //hairstyle update test
   it('details should update successfully', function(done) {
-
+    var id = '55dc7552485fdd167d689439';
     request(app)
-      .put('/hairstyles/fineHair')
+      .put('/hairstyles/' + id)
       .field('name', 'Shuku')
       .field('rating', 3)
       .field('date', Date.now())
@@ -193,12 +187,12 @@ describe('Hairstyles', function() {
         expect(response.body).toEqual(jasmine.objectContaining({
           success: true,
           message: 'Hairstyle Details Updated!'
-        }))
-        expect(response.statusCode).toBe(200)
+        }));
+        expect(response.statusCode).toBe(200);
         request(app)
-          .get('/hairstyles/Shuku')
+          .get('/hairstyles/' + id)
           .end(function(err, response) {
-            expect(response.statusCode).toBe(200)
+            expect(response.statusCode).toBe(200);
             if (err) {
               console.log(err);
             }
@@ -213,20 +207,19 @@ describe('Hairstyles', function() {
 
   //hairstyle remove test
   it('should delete successfully', function(done) {
-
+    var id = '55dc7552485fdd167d689439';
     request(app)
-      .delete('/hairstyles/fineHair')
+      .delete('/hairstyles/' + id)
       .end(function(err, response) {
         expect(response.body).toEqual(jasmine.objectContaining({
           success: true,
           message: 'Hairstyle Deleted Successfully!'
-        }))
-        expect(response.statusCode).toBe(200)
+        }));
+        expect(response.statusCode).toBe(200);
         request(app)
-          .get('/hairstyles/fineHair')
+          .get('/hairstyles/' + id)
           .end(function(err, response) {
-            expect(response.statusCode).toBe(200)
-            expect(response.body).toEqual([])
+            expect(response.statusCode).toBe(200);
             if (err) {
               console.log(err);
             }
