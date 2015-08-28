@@ -7,7 +7,6 @@ var methodOverride = require('method-override');
 var passport = require('passport');
 var morgan = require('morgan');
 var multer = require('multer');
-var cloudinary = require('cloudinary');
 var mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -57,7 +56,7 @@ app.use(passport.session());
 
 // landing page
 app.get('/', function(req, res) {
-  res.sendFile(process.cwd() + '/public/index')
+  res.sendFile(process.cwd() + '/public/index');
 });
 
 // route trough api
