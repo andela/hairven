@@ -125,6 +125,7 @@ describe('Hairstyles', function() {
   //get for getting all hairstyles in database (i.e, for populating the gallery in view)
   it('GET request should return all successfully', function(done) {
     var sampleHairTwo = {
+      _id: '55dc7552485fdd167d681111',
       name: 'uglyHair',
       description: 'another sample hairstyle for tests',
       image: 'hair_henna.jpg',
