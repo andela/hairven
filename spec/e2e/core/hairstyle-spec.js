@@ -14,7 +14,8 @@ describe('Hairstyles details', function() {
     done();
   });
 
-  //test for to check if app prevents posting of an hairstyle without image
+  //test for to check if app prevents posting of an
+  //hairstyle without image
   it('without image should NOT be posted', function(done) {
 
     request(app)
@@ -50,7 +51,8 @@ describe('Hairstyles details', function() {
       });
   });
 
-  //test for to check if app prevents posting of an hairstyle without description
+  //test for to check if app prevents posting of an hairstyle
+  //without description
   it('without description should NOT be posted', function(done) {
 
     request(app)
@@ -122,7 +124,8 @@ describe('Hairstyles', function() {
       });
   });
 
-  //get for getting all hairstyles in database (i.e, for populating the gallery in view)
+  //get for getting all hairstyles in database (i.e, for populating
+  //the gallery in view)
   it('GET request should return all successfully', function(done) {
     var sampleHairTwo = {
       _id: '55dc7552485fdd167d681111',
@@ -137,7 +140,7 @@ describe('Hairstyles', function() {
 
     testHairTwo.save(function(err) {
       if (err) {
-        console.log(err)
+        console.log(err);
       }
     });
 
@@ -153,7 +156,7 @@ describe('Hairstyles', function() {
         expect(response.body[1].description).toEqual('another sample hairstyle for tests');
         expect(response.body[1].rating).toEqual(1);
         if (err) {
-          console.log(err)
+          console.log(err);
         }
         done();
       });
@@ -168,7 +171,7 @@ describe('Hairstyles', function() {
       .end(function(err, response) {
         expect(response.statusCode).toBe(200);
         if (err) {
-          console.log(err)
+          console.log(err);
         }
         done();
       });
@@ -198,7 +201,7 @@ describe('Hairstyles', function() {
               console.log(err);
             }
             done();
-          })
+          });
         if (err) {
           console.log(err);
         }
@@ -225,7 +228,7 @@ describe('Hairstyles', function() {
               console.log(err);
             }
             done();
-          })
+          });
         if (err) {
           console.log(err);
         }
