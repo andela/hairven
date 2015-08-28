@@ -5,15 +5,15 @@ var router = express.Router();
 
 
 router.route('/hairstyles')
-    //request for all hairstyles, updating the gallery
+  //request for all hairstyles, updating the gallery
   .get(hairCtrl.getAllHairStyles)
 
-  //request for new hair creation
-  .post(hairCtrl.createHairStyle);
+//request for new hair creation
+.post(hairCtrl.createHairStyle);
 
 //requests for single hairstyle
-router.route('/hairstyles/:name')
-  .get(hairCtrl.getByName)
+router.route('/hairstyles/:id')
+  .get(hairCtrl.getById)
   .put(hairCtrl.updateHairStyle)
   .delete(hairCtrl.removeHairStyle);
 
@@ -26,7 +26,7 @@ router.route('/login')
   .post(userCtrl.login);
 
 // middleware
-router.use(userCtrl.middleware); 
+router.use(userCtrl.middleware);
 
 // single user routes
 router.route('/v1/users/:username')
