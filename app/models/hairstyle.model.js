@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
-
+var saloons = require('./saloon.model');
+var Schema = mongoose.Schema;
 //schema for hairstyles
 
-var hairStyle = new mongoose.Schema({
+var hairStyle = new Schema({
   name: {
     type: String,
-    unique: true,
     require: true,
     required: 'Please enter Hairstyle name'
   },
@@ -24,12 +24,11 @@ var hairStyle = new mongoose.Schema({
     default: Date.now('dd/mm/yyyy')
   },
   saloon: {
-    userId: Number,
-    saloonName: String,
-    saloonAddress: String,
+    type: Number,
+    ref: 'Saloon'
   },
   rating: Number
-  
+
 
 });
 
