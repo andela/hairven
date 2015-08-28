@@ -1,7 +1,6 @@
 'use strict';
 
 var Hairstyle = require('../../../app/models/hairstyle.model');
-var db = require('../../../config/config');
 
 describe('hairstyle Schema', function() {
 
