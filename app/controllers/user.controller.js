@@ -9,9 +9,7 @@ exports.signup = function(req, res) {
   user.password = req.body.password;
 
   user.save(function(err) {
-    if (user.username === undefined ||
-      user.email === undefined ||
-      user.password === undefined) {
+    if (!user.username || !user.email || !user.password) {
         return res.status(401).send({ 
           success: false, 
           message: 'Invalid Username/Email/Password.'});
