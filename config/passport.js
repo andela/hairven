@@ -9,7 +9,7 @@ module.exports = function(passport) {
     clientID: configAuth.facebookAuth.clientID,
     clientSecret: configAuth.facebookAuth.clientSecret,
     callbackURL: configAuth.facebookAuth.callbackURL,
-    profileFields: ["emails", "first_name"],
+    profileFields: ['emails', 'first_name'],
     enableProof: false
   },
 
@@ -26,9 +26,9 @@ module.exports = function(passport) {
           else {
             var generatePassword = function () {
               var passLength = 8;
-              var alphaNum = "0123456789abcdefghijklnopqrstuvwxyz\
-              ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-              var facebookPass = "";
+              var alphaNum = '0123456789abcdefghijklnopqrstuvwxyz\
+              ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+              var facebookPass = '';
               for (var i = 0; i < passLength; ++i) {
                 facebookPass += alphaNum.charAt(Math.floor(
                   Math.random() * alphaNum.length));
