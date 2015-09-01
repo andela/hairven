@@ -10,22 +10,16 @@ var saloons = new Schema({
     required: 'Please enter Saloon name'
   },
   address: {
-
-    details: {
-      type: String,
-      unique: true,
-      require: true,
-      required: 'Please enter the address of your saloon'
-    },
-    state: String
+    type: String,
+    unique: true,
+    require: true,
+    required: 'Please enter the address of your saloon'
   },
 
   hairstyles: {
     type: Schema.Types.ObjectId,
     ref: 'Hair'
-  },
-  upVotes: Number,
-  downVotes: Number
+  }
 
 });
 
