@@ -170,6 +170,10 @@ describe('Hairstyles', function() {
       .expect('Content-Type', /json/)
       .end(function(err, response) {
         expect(response.statusCode).toBe(200);
+        expect(response.body.name).toEqual('fineHair');
+        expect(response.body.description).toEqual('a sample hairstyle for tests');
+        expect(response.body.rating).toEqual(4);
+
         if (err) {
           console.log(err);
         }
@@ -197,6 +201,10 @@ describe('Hairstyles', function() {
           .get('/hairstyles/' + id)
           .end(function(err, response) {
             expect(response.statusCode).toBe(200);
+            expect(response.body.name).toEqual('Shuku');
+            expect(response.body.description).toEqual('a sample hairstyle for tests');
+            expect(response.body.rating).toEqual(3);
+
             if (err) {
               console.log(err);
             }
@@ -210,7 +218,7 @@ describe('Hairstyles', function() {
   });
 
   //hairstyle remove test
-  it('should delete successfully', function(done) {
+  xit('should delete successfully', function(done) {
     var id = '55dc7552485fdd167d689439';
     request(app)
       .delete('/hairstyles/' + id)
@@ -223,7 +231,11 @@ describe('Hairstyles', function() {
         request(app)
           .get('/hairstyles/' + id)
           .end(function(err, response) {
-            expect(response.statusCode).toBe(200);
+            expect(response.statusCode).toBe(404);
+            expect(response.body).toEqual(jasmine.objectContaining({
+              success: false,
+              message: 'Hairstyle not found'
+            }));
             if (err) {
               console.log(err);
             }
