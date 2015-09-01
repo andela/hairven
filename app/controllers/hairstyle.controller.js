@@ -67,7 +67,7 @@ module.exports = {
       .populate('saloon')
       .exec(function(err, hairstyles) {
         // if there is an error retrieving, send the error.
-        if (err)
+        if (err || !hairstyles)
           res.send(err);
         // return all hairstyles in JSON format
         res.json(hairstyles);
@@ -77,7 +77,7 @@ module.exports = {
   //get a specific hairstyle
   getById: function(req, res) {
     Hair.findById(req.params.id, function(err, hairstyle) {
-      if (err) {
+      if (err || !hairstyle) {
         res.status(404).send({
           success: false,
           message: 'Hairstyle not found'
