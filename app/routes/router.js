@@ -1,8 +1,8 @@
 var express = require('express');
 var hairCtrl = require('../controllers/hairstyle.controller');
+var saloonCtrl = require('../controllers/saloon.controller');
 var userCtrl = require('../controllers/user.controller');
 var router = express.Router();
-
 
 router.route('/hairstyles')
   //request for all hairstyles, updating the gallery
