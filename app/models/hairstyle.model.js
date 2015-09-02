@@ -24,7 +24,7 @@ var hairStyle = new Schema({
     default: Date.now('dd/mm/yyyy')
   },
   saloon: {
-    type: Number,
+    type: String,
     ref: 'Saloon'
   },
   rating: Number
