@@ -36,7 +36,7 @@ module.exports = {
           // create a new instance of the HairStyle model
           var hairStyle = new Hair(newHair);
           hairStyle.image = response.secure_url;
-          hairStyle.save(function(err, response) {
+          hairStyle.save(function(err) {
             if (err) {
               res.send(err);
             } else {
@@ -76,15 +76,18 @@ module.exports = {
 
   //get a specific hairstyle
   getById: function(req, res) {
-    Hair.findById(req.params.id, function(err, hairstyle) {
-      if (err || !hairstyle) {
-        res.status(404).send({
-          success: false,
-          message: 'Hairstyle not found'
-        });
-      }
-      res.json(hairstyle);
-    });
+    Hair.findById(req.params.id)
+      .populate('saloon')
+      .exec(function(err, hairstyle) {
+        // if there is an error retrieving, send the error.
+        if (err || !hairstyle) {
+          res.status(404).send({
+            success: false,
+            message: 'Hairstyle not found'
+          });
+        }
+        res.json(hairstyle);
+      });
   },
 
   //edit details of a haistyle
