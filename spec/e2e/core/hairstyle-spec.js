@@ -218,7 +218,7 @@ describe('Hairstyles', function() {
   });
 
   //hairstyle remove test
-  xit('should delete successfully', function(done) {
+  it('should delete successfully', function(done) {
     var id = '55dc7552485fdd167d689439';
     request(app)
       .delete('/hairstyles/' + id)
@@ -229,7 +229,7 @@ describe('Hairstyles', function() {
         }));
         expect(response.statusCode).toBe(200);
         request(app)
-          .get('/hairstyles/' + id)
+          .get('/hairstyles/:id')
           .end(function(err, response) {
             expect(response.statusCode).toBe(404);
             expect(response.body).toEqual(jasmine.objectContaining({
@@ -237,15 +237,14 @@ describe('Hairstyles', function() {
               message: 'Hairstyle not found'
             }));
             if (err) {
-              console.log(err);
+              return err;
             }
             done();
           });
         if (err) {
-          console.log(err);
+          return err;
         }
         done();
       });
-  });
-
+    });
 });
