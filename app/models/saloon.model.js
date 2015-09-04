@@ -17,7 +17,7 @@ var saloons = new Schema({
   },
 
   hairstyles: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Hair'
   }
 

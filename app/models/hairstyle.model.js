@@ -24,7 +24,7 @@ var hairStyle = new Schema({
     default: Date.now('dd/mm/yyyy')
   },
   saloon: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Saloon'
   },
   rating: Number
