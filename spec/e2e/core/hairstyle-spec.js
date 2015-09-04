@@ -3,6 +3,7 @@ var request = require('supertest');
 
 var app = require('../../../server');
 var Hair = require('../../../app/models/hairstyle.model');
+var Saloon = require('../../../app/models/saloon.model');
 
 describe('Hairstyles details', function() {
 
@@ -182,6 +183,59 @@ describe('Hairstyles', function() {
 
   });
 
+  //saloon populate test
+  it('should populate saloon list of the hairstyle', function(done) {
+    var saloonSample = new Saloon({
+      name: 'Beauty Shop',
+      address: '324, Herbert Macaulay Way, Yaba Lagos'
+    });
+
+    saloonSample.save(function(err) {
+      if (err) console.log(err)
+    });
+
+
+    var sampleHairTwo = {
+      _id: '55dc7552485fdd167d681111',
+      name: 'uglyHair',
+      description: 'another sample hairstyle for tests',
+      image: 'hair_henna.jpg',
+      saloon: saloonSample._id,
+      date: Date.now(),
+      rating: 1
+    };
+
+    var testHairTwo = new Hair(sampleHairTwo);
+
+    testHairTwo.save(function(err) {
+      if (err) {
+        console.log(err);
+      }
+    });
+
+    var id = '55dc7552485fdd167d681111';
+    request(app)
+      .get('/hairstyles/' + id)
+      .expect('Content-Type', /json/)
+      .end(function(err, response) {
+        expect(response.body.name).toEqual('uglyHair');
+        expect(response.statusCode).toBe(200);
+        expect(response.body.saloon).toBeDefined();
+        expect(response.body.saloon.name).toEqual('Beauty Shop');
+        expect(response.body.saloon.address).toEqual('324, Herbert Macaulay Way, Yaba Lagos');
+        if (err) {
+          console.log(err);
+        }
+        done();
+      });
+
+    afterEach(function(done) {
+      Saloon.remove({}, function() {});
+      done();
+    });
+
+  });
+
   //   //hairstyle update test
   it('details should update successfully', function(done) {
     var id = '55dc7552485fdd167d689439';
@@ -246,5 +300,5 @@ describe('Hairstyles', function() {
         }
         done();
       });
-    });
+  });
 });
