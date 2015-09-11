@@ -717,3 +717,41 @@ span.roll {
     padding-top: 2em;
     color: red;
 }
+
+#view {
+    height: 300px;
+    width: 260px;
+}
+
+#fullView {
+    height: 500px;
+    width: 260px;
+}
+
+.hair-view {
+    padding-right: 20em;
+}
+
+#about-hair {
+    width: 850px;
+    margin-left: 1em;
+    padding-top: 3em
+}
+
+.sbutton {
+    padding-top: 5em;
+    margin-left: 27em;
+}
+
+.reviews {
+    padding-top: 2em
+}
+
+li.reviews {
+    padding-top: 2em;
+}
+
+.message {
+    padding-top: 2em;
+    padding-bottom: 1em
+}
