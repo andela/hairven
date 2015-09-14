@@ -7,7 +7,8 @@ var saloons = new Schema({
     type: String,
     unique: true,
     require: true,
-    required: 'Please enter Saloon name'
+    required: 'Please enter Saloon name',
+    index: true
   },
   address: {
     type: String,
@@ -18,7 +19,8 @@ var saloons = new Schema({
 
   hairstyles: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Hair'
+    ref: 'Hair',
+    index: true
   }
 
 });
