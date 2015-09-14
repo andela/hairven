@@ -186,7 +186,7 @@ describe('Hairstyles', function() {
   //saloon populate test
   it('should populate saloon list of the hairstyle', function(done) {
     var saloonSample = new Saloon({
-      name: 'Beauty Shop',
+      name: 'Beauty Place',
       address: '324, Herbert Macaulay Way, Yaba Lagos'
     });
 
@@ -221,7 +221,7 @@ describe('Hairstyles', function() {
         expect(response.body.name).toEqual('uglyHair');
         expect(response.statusCode).toBe(200);
         expect(response.body.saloon).toBeDefined();
-        expect(response.body.saloon.name).toEqual('Beauty Shop');
+        expect(response.body.saloon.name).toEqual('Beauty Place');
         expect(response.body.saloon.address).toEqual('324, Herbert Macaulay Way, Yaba Lagos');
         if (err) {
           console.log(err);
