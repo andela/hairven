@@ -7,7 +7,8 @@ var hairStyle = new Schema({
   name: {
     type: String,
     require: true,
-    required: 'Please enter Hairstyle name'
+    required: 'Please enter Hairstyle name',
+    index: true
   },
   description: {
     type: String,
@@ -21,14 +22,18 @@ var hairStyle = new Schema({
   },
   date: {
     type: Date,
-    default: Date.now('dd/mm/yyyy')
+    default: Date.now('dd/mm/yyyy'),
+    index: true
   },
   saloon: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Saloon'
+    ref: 'Saloon',
+    index: true
   },
-  rating: Number
-
+  rating: {
+    type: Number,
+    index: true
+  }
 
 });
 
