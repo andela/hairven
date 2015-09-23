@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="hairvenApp">
+<head>
+
+  <base href="/" />
+  <title>Hairven</title>
+  <meta name="viewport" content="initial-scale=1" />
+
+  <!-- FONTS -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+
+  <!-- STYLESHEETS -->
+  <!-- BOOTSTRAP -->
+  <link href="libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+  
+  <!-- FONT AWESOME -->
+  <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+  <!-- CUSTOM -->
+  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/css/style-responsive.css" rel="stylesheet">
+  
+  <!-- FANCYBOX -->
+  <link href="assets/js/fancybox/jquery.fancybox.css" rel="stylesheet" />
+</head>
+<body>
+    <div ui-view></div> 
+
+<!-- LIBRARIES -->
+  <!-- ANGULAR JS -->
+  <script type="text/javascript" src="libs/angular/angular.min.js"></script>
+
+  <!-- ANGULAR UI ROUTER -->
+  <script type="text/javascript" src="/libs/angular-ui-router/release/angular-ui-router.min.js"></script>
+
+<!-- SCRIPTS -->
+  <!-- MAIN -->
+  <script type="text/javascript" src="app/app.js"></script>
+
+    <!-- SERVICES -->
+  <script type="text/javascript" src="app/services/baseurlService.client.js"></script>
+  <script type="text/javascript" src="app/services/userService.client.js"></script>
+
+  <!-- CONTROLLERS -->
+  <script type="text/javascript" src="app/controllers/homeCtrl.client.js"></script>
+   <script type="text/javascript" src="app/controllers/hairCtrl.client.js"></script>
+
+  <!-- COMMON JS FILES -->
+  <script src="libs/jquery/dist/jquery.min.js"></script>
+  <script src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
+  
+  <script src="assets/js/jquery-1.8.3.min.js"></script>
+  <script type="text/javascript" src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+  <script src="assets/js/jquery.scrollTo.min.js"></script>
+  <script type="text/javascript" src="assets/js/jquery.sparkline.js"></script>
+  <script type="text/javascript" src="assets/js/gritter-conf.js"></script>
+  <script src="assets/js/fancybox/jquery.fancybox.js"></script>
+</body>
+</html>
