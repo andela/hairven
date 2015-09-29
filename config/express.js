@@ -1,7 +1,7 @@
 var env = require('./config');
 var express = require('express');
 var app = express();
-var router = require('../app/routes/router');
+var router = require('../app/routes/user.routes');
 
 var methodOverride = require('method-override');
 var passport = require('passport');
@@ -10,6 +10,7 @@ var multer = require('multer');
 var mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
 
 mongoose.connect(env.database);
 
@@ -53,6 +54,8 @@ app.use(cookieParser()); // read cookies (needed for auth)
 // session secret
 app.use(passport.initialize());
 app.use(passport.session());
+
+require('./passport')(passport);
 
 // landing page
 app.get('/', function(req, res) {

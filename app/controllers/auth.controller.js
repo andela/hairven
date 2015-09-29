@@ -1,6 +1,7 @@
 var jwt = require('jsonwebtoken');
 var User = require('../models/user.model');
 var db = require('../../config/config');
+var passport = require('passport');
 
 exports.signup = function(req, res) {
   var user = new User();
@@ -10,9 +11,9 @@ exports.signup = function(req, res) {
 
   user.save(function(err) {
     if (!user.username||!user.email||!user.password) {
-        return res.status(401).send({
-          success: false,
-          message: 'Invalid Username/Email/Password.'});
+      return res.status(401).send({
+        success: false,
+        message: 'Invalid Username/Email/Password.'});
     }
     else if (err) {
       if (err.code === 11000) {
@@ -28,6 +29,30 @@ exports.signup = function(req, res) {
     res.json({ message: 'User created!' });
     }
   });
+};
+
+exports.facebookLogin = function(strategy) {
+  return function(req, res, next) {
+    passport.authenticate(strategy, function(err, user) {
+      if (err) {
+        throw (err);
+      }
+      else if (!user) {
+        return res.status(401).send({ 
+        success: false,
+        message: 'Authentication failed. User not found.' });
+      }
+      else {
+        var token = jwt.sign(user, db.secret, {
+          expiresInMinutes: 1440
+        });
+        res.json({
+        success: true,
+        message: 'Welcome to Hairven'
+        });
+      }
+    })(req, res, next);
+  };
 };
 
 exports.login = function(req, res) {

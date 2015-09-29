@@ -1,8 +1,9 @@
 var express = require('express');
 var hairCtrl = require('../controllers/hairstyle.controller');
 var saloonCtrl = require('../controllers/saloon.controller');
-var userCtrl = require('../controllers/user.controller');
+var authCtrl = require('../controllers/auth.controller');
 var router = express.Router();
+var passport = require('passport');
 
 router.route('/hairstyles')
   //request for all hairstyles, updating the gallery
@@ -17,21 +18,31 @@ router.route('/hairstyles/:id')
   .put(hairCtrl.updateHairStyle)
   .delete(hairCtrl.removeHairStyle);
 
+// facebook login route
+router.route('/auth/facebook')
+  .get(passport.authenticate('facebook', {
+    scope: ['email']
+}));
+
+// facebook callback route
+router.route('/auth/facebook/callback')
+  .get(authCtrl.facebookLogin('facebook'));
+
 // signup
 router.route('/signup')
-  .post(userCtrl.signup);
+  .post(authCtrl.signup);
 
 // login
 router.route('/login')
-  .post(userCtrl.login);
+  .post(authCtrl.login);
 
 // middleware
-router.use(userCtrl.middleware);
+router.use(authCtrl.middleware);
 
 // single user routes
 router.route('/v1/users/:username')
-  .get(userCtrl.getUser)
-  .put(userCtrl.editProfile)
-  .delete(userCtrl.deleteUser);
+  .get(authCtrl.getUser)
+  .put(authCtrl.editProfile)
+  .delete(authCtrl.deleteUser);
 
 module.exports = router;
