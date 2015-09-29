@@ -92,6 +92,7 @@ describe('Hairstyles details', function() {
 describe('Hairstyles', function() {
 
   var id;
+
   //create test data before each test.
   beforeEach(function(done) {
 
@@ -100,8 +101,8 @@ describe('Hairstyles', function() {
       if (err) {
         return err;
       }
-    id = testHair.id;
     });
+    id = testHair.id;
     done();
   });
 
@@ -115,7 +116,7 @@ describe('Hairstyles', function() {
 
 
   // //hairstyle posting test
-  it('should POST successfully', function(done) {
+  xit('should POST successfully', function(done) {
 
     request(app)
       .post('/hairstyles')
@@ -168,7 +169,7 @@ describe('Hairstyles', function() {
   });
 
   //test for get single hairstyle (for viewing a particular hairstyle details)
-  xit('GET request for a hairstyle should return the hairstyle', function(done) {
+  it('GET request for a hairstyle should return the hairstyle', function(done) {
 
     request(app)
       .get('/hairstyles/' + id)
@@ -179,38 +180,41 @@ describe('Hairstyles', function() {
         expect(response.body.description)
           .toEqual('a sample hairstyle for tests');
         expect(response.body.rating).toEqual(4);
-
         if (err) {
           return err;
         }
         done();
+
       });
 
   });
 
   //saloon populate test
-  xit('should populate saloon property of the hairstyle', function(done) {
+  it('should populate saloon property of the hairstyle', function(done) {
     var saloonSample = new Saloon(saloonData[0]);
 
     saloonSample.save(function(err) {
       if (err) {
         return err;
       }
-      hairstyleData[1].saloon = saloonSample.id;
-      var testHairTwo = new Hair(hairstyleData[1]);
-
-      testHairTwo.save(function(err) {
-        if (err) {
-          return err;
-        }
-      });
     });
+
+    hairstyleData[1].saloon = saloonSample.id;
+    var testHairTwo = new Hair(hairstyleData[1]);
+
+    testHairTwo.save(function(err) {
+      if (err) {
+        return err;
+      }
+    });
+
+    id = testHairTwo.id;
 
     request(app)
       .get('/hairstyles/' + id)
       .expect('Content-Type', /json/)
       .end(function(err, response) {
-        expect(response.body.name).toEqual('uglyHair');
+         expect(response.body.name).toEqual('uglyHair');
         expect(response.statusCode).toBe(200);
         expect(response.body.saloon).toBeDefined();
         expect(response.body.saloon.name)
@@ -218,7 +222,7 @@ describe('Hairstyles', function() {
         expect(response.body.saloon.address)
           .toEqual('324, Herbert Macaulay Way, Yaba Lagos');
         if (err) {
-          console.log(err);
+          return err
         }
         done();
       });
@@ -276,21 +280,21 @@ describe('Hairstyles', function() {
           message: 'Hairstyle Deleted Successfully!'
         }));
         expect(response.statusCode).toBe(200);
-        request(app)
+         request(app)
           .get('/hairstyles/:id')
-          .end(function(err, response) {
+           .end(function(err, response) {
             expect(response.statusCode).toBe(404);
             expect(response.body).toEqual(jasmine.objectContaining({
               success: false,
               message: 'Hairstyle not found'
             }));
             if (err) {
-              return err;
+            return err
             }
-            done();
+           done();
           });
         if (err) {
-          return err;
+          return err
         }
         done();
       });
