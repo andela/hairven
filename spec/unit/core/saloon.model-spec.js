@@ -6,11 +6,11 @@ describe('Saloon Schema', function() {
   it('should not save a saloon without name', function() {
     var sampleDetails = {
       address: '314, Herbert Macaulay Way, Yaba Lagos'
-    }
+    };
     var saloonSample = new Saloon(sampleDetails);
     saloonSample.save(function(err) {
       if (err) {
-        console.log(err)
+        return err;
       }
     expect(err).not.toBe(null);
     expect(typeof err).toEqual(typeof {});
@@ -21,11 +21,11 @@ describe('Saloon Schema', function() {
   it('should not save a saloon without address details', function() {
     var sampleDetails = {
       name: 'Beauty Shop'
-    }
+    };
     var saloonSample = new Saloon(sampleDetails);
     saloonSample.save(function(err) {
       if (err) {
-        console.log(err)
+        return err;
       }
     expect(err).not.toBe(null);
     expect(typeof err).toEqual(typeof {});
@@ -37,11 +37,11 @@ describe('Saloon Schema', function() {
     var sampleDetails = {
       name: 'House of Tara',
       address: 'Kasumu Ekemode Street, Victoria Island Lagos'
-      }
+      };
     var saloonSample = new Saloon(sampleDetails);
     saloonSample.save(function(err) {
       if (err) {
-        console.log(err)
+        return err;
       }
     });
 
@@ -55,7 +55,7 @@ describe('Saloon Schema', function() {
   afterEach(function() {
     Saloon.remove({}, function(err) {
     if(err){
-      console.log(err);
+      return err;
     }
     });
   });
