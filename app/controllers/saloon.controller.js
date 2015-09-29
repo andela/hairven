@@ -38,11 +38,15 @@ module.exports = {
     .populate('hairstyles')
     .exec(function(err, saloon) {
       // if there is an error retrieving, send the error.
-      if (err || !saloon)
+      if (err){
+        res.send(err);
+      }
+      else if(!saloon){
         res.status(404).send({
           success: false,
           message: 'Saloon not found'
         });
+      }
       // return all saloon
       else {
         res.json(saloon);
