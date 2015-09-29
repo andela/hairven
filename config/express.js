@@ -1,7 +1,7 @@
 var env = require('./config');
 var express = require('express');
 var app = express();
-var router = require('../app/routes/router');
+var router = require('../app/routes/user.routes');
 
 var methodOverride = require('method-override');
 var passport = require('passport');
