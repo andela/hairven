@@ -1,9 +1,26 @@
 'use strict';
 var request = require('supertest');
+var fs = require('fs');
 
 var app = require('../../../server');
 var Saloon = require('../../../app/models/saloon.model');
 var Hair = require('../../../app/models/hairstyle.model');
+
+var hairstyleData, saloonData;
+
+fs.readFile(__dirname + '/fixtures/hairstyleData.json', function(err, data) {
+  if (err) {
+    console.log(err);
+  }
+  hairstyleData = JSON.parse(data);
+});
+
+fs.readFile(__dirname + '/fixtures/saloonData.json', function(err, data) {
+  if (err) {
+    console.log(err);
+  }
+  saloonData = JSON.parse(data);
+});
 
 describe('Saloon details', function() {
 
@@ -62,24 +79,19 @@ describe('Saloon details', function() {
 
 describe('Saloons', function() {
 
+  var id;
+
   //create test data before each test.
   beforeEach(function(done) {
-    Saloon.remove({}, function() {});
-
-    var sampleData = {
-      _id: '55dc7552485fdd167d689439',
-      name: 'Beauty Shop',
-      address: '314, Herbert Macaulay Way, Yaba Lagos'
-    };
-    var testSaloon = new Saloon(sampleData);
-    testSaloon.save(function(err) {
+    var sampleSaloon = new Saloon(saloonData[0]);
+    sampleSaloon.save(function(err) {
       if (err) {
         return err;
       }
     });
+    id = sampleSaloon.id;
     done();
   });
-
 
   //empty the database after each test.
   afterEach(function(done) {
@@ -88,7 +100,25 @@ describe('Saloons', function() {
   });
 
 
+  //test for getting the details of a saloon
+  it('GET request for a saloon should return the saloon', function(done) {
 
+    request(app)
+      .get('/saloons/' + id)
+      .expect('Content-Type', /json/)
+      .end(function(err, response) {
+        expect(response.statusCode).toBe(200);
+        expect(response.body.name).toEqual('Beauty Shop');
+        expect(response.body.address)
+          .toEqual('314, Herbert Macaulay Way, Yaba Lagos');
+        if (err) {
+          return err;
+        }
+        done();
+      });
+
+  });
+  
   //saloon posting test
   it('should POST successfully', function(done) {
 
@@ -108,41 +138,12 @@ describe('Saloons', function() {
         expect(response.statusCode).toBe(200);
         done();
       });
-      done();
-  });
-
-
-  //test for getting the details of a saloon
-  it('GET request for a saloon should return the saloon', function(done) {
-    var id = '55dc7552485fdd167d689439';
-    request(app)
-      .get('/saloons/' + id)
-      .expect('Content-Type', /json/)
-      .end(function(err, response) {
-        expect(response.statusCode).toBe(200);
-        expect(response.body.name).toEqual('Beauty Shop');
-        expect(response.body.address)
-          .toEqual('314, Herbert Macaulay Way, Yaba Lagos');
-        if (err) {
-          return err;
-        }
-        done();
-      });
-
+    done();
   });
 
   it('should populate hairstyles\' list of the saloon', function(done) {
 
-    var sampleHair= {
-      _id: '55dc7552485fdd167d681111',
-      name: 'uglyHair',
-      description: 'another sample hairstyle for tests',
-      image: 'hair_henna.jpg',
-      date: Date.now(),
-      rating: 1
-    };
-
-    var testHair = new Hair(sampleHair);
+    var testHair = new Hair(hairstyleData[1]);
 
     testHair.save(function(err) {
       if (err) {
@@ -150,20 +151,17 @@ describe('Saloons', function() {
       }
     });
 
-    var saloonSample = new Saloon({
-      _id: '55dc7552485fdd167d622222',
-      name: 'Beauty Place',
-      address: '324, Herbert Macaulay Way, Yaba Lagos',
-      hairstyles: sampleHair._id
-    });
+    saloonData[1].hairstyles = testHair.id;
+    var sampleSaloonTwo = new Saloon(saloonData[1]);
 
-    saloonSample.save(function(err) {
+    sampleSaloonTwo.save(function(err) {
       if (err) {
         return err;
       }
     });
 
-    var id = '55dc7552485fdd167d622222';
+    id = sampleSaloonTwo.id;
+
     request(app)
       .get('/saloons/' + id)
       .expect('Content-Type', /json/)
@@ -188,41 +186,9 @@ describe('Saloons', function() {
 
   });
 
-
-  //hairstyle remove test
-  it('should delete successfully', function(done) {
-    var id = '55dc7552485fdd167d689439';
-    request(app)
-      .delete('/saloons/' + id)
-      .end(function(err, response) {
-        expect(response.body).toEqual(jasmine.objectContaining({
-          success: true,
-          message: 'Saloon deleted from list'
-        }));
-        expect(response.statusCode).toBe(200);
-        request(app)
-          .get('/saloons/' + id)
-          .end(function(err, response) {
-            expect(response.statusCode).toBe(404);
-            expect(response.body).toEqual(jasmine.objectContaining({
-              success: false,
-              message: 'Saloon not found'
-            }));
-            if (err) {
-              return err;
-            }
-            done();
-          });
-        if (err) {
-          return err;
-        }
-        done();
-      });
-  });
-
   //   //hairstyle update test
   it('details should update successfully', function(done) {
-    var id = '55dc7552485fdd167d689439';
+
     var updated = {
       name: 'Beauty Shop Two',
       address: '324, Herbert Macaulay Way, Yaba Lagos'
@@ -243,6 +209,37 @@ describe('Saloons', function() {
             expect(response.body.name).toEqual('Beauty Shop Two');
             expect(response.body.address)
               .toEqual('324, Herbert Macaulay Way, Yaba Lagos');
+            if (err) {
+              return err;
+            }
+            done();
+          });
+        if (err) {
+          return err;
+        }
+        done();
+      });
+  });
+
+  //saloon remove test
+  it('should delete successfully', function(done) {
+
+    request(app)
+      .delete('/saloons/' + id)
+      .end(function(err, response) {
+        expect(response.body).toEqual(jasmine.objectContaining({
+          success: true,
+          message: 'Saloon deleted from list'
+        }));
+        expect(response.statusCode).toBe(200);
+        request(app)
+          .get('/saloons/' + id)
+          .end(function(err, response) {
+            expect(response.statusCode).toBe(404);
+            expect(response.body).toEqual(jasmine.objectContaining({
+              success: false,
+              message: 'Saloon not found'
+            }));
             if (err) {
               return err;
             }
