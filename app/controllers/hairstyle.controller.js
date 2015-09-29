@@ -67,8 +67,15 @@ module.exports = {
       .populate('saloon')
       .exec(function(err, hairstyles) {
         // if there is an error retrieving, send the error.
-        if (err || !hairstyles)
+        if (err){
           res.send(err);
+        }
+        else if(!hairstyles){
+          res.status(404).send({
+            success: false,
+            message: 'Hairstyles not found'
+          });
+        }
         // return all hairstyles in JSON format
         res.json(hairstyles);
       });
@@ -80,7 +87,10 @@ module.exports = {
       .populate('saloon')
       .exec(function(err, hairstyle) {
         // if there is an error retrieving, send the error.
-        if (err || !hairstyle) {
+        if (err){
+          res.send(err);
+        }
+        else if(!hairstyle){
           res.status(404).send({
             success: false,
             message: 'Hairstyle not found'
