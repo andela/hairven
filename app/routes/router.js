@@ -17,6 +17,17 @@ router.route('/hairstyles/:id')
   .put(hairCtrl.updateHairStyle)
   .delete(hairCtrl.removeHairStyle);
 
+router.route('/saloons')
+  //request for posting Saloon
+  .post(saloonCtrl.createSaloon);
+
+
+//request operations on a single saloon
+router.route('/saloons/:id')
+  .get(saloonCtrl.getSaloon)
+  .put(saloonCtrl.updateSaloon)
+  .delete(saloonCtrl.deleteSaloon);
+
 // signup
 router.route('/signup')
   .post(userCtrl.signup);

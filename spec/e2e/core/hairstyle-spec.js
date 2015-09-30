@@ -1,9 +1,27 @@
 'use strict';
 var request = require('supertest');
+var fs = require('fs');
 
 var app = require('../../../server');
 var Hair = require('../../../app/models/hairstyle.model');
 var Saloon = require('../../../app/models/saloon.model');
+
+var hairstyleData,
+  saloonData;
+
+fs.readFile(__dirname + '/fixtures/hairstyleData.json', function(err, data) {
+  if (err) {
+    console.log(err);
+  }
+  hairstyleData = JSON.parse(data);
+});
+
+fs.readFile(__dirname + '/fixtures/saloonData.json', function(err, data) {
+  if (err) {
+    console.log(err);
+  }
+  saloonData = JSON.parse(data);
+});
 
 describe('Hairstyles details', function() {
 
@@ -78,21 +96,17 @@ describe('Hairstyles details', function() {
 
 describe('Hairstyles', function() {
 
+  var id;
+
   //create test data before each test.
   beforeEach(function(done) {
-    var sampleHair = {
-      _id: '55dc7552485fdd167d689439',
-      name: 'fineHair',
-      description: 'a sample hairstyle for tests',
-      image: 'hair_henna.jpg',
-      rating: 4
-    };
-    var testHair = new Hair(sampleHair);
+    var testHair = new Hair(hairstyleData[0]);
     testHair.save(function(err) {
       if (err) {
-        console.log(err);
+        return err;
       }
     });
+    id = testHair._id;
     done();
   });
 
@@ -104,8 +118,7 @@ describe('Hairstyles', function() {
   });
 
 
-
-  // //hairstyle posting test
+  //hairstyle posting test
   it('should POST successfully', function(done) {
 
     request(app)
@@ -128,20 +141,13 @@ describe('Hairstyles', function() {
   //get for getting all hairstyles in database (i.e, for populating
   //the gallery in view)
   it('GET request should return all successfully', function(done) {
-    var sampleHairTwo = {
-      _id: '55dc7552485fdd167d681111',
-      name: 'uglyHair',
-      description: 'another sample hairstyle for tests',
-      image: 'hair_henna.jpg',
-      date: Date.now(),
-      rating: 1
-    };
 
-    var testHairTwo = new Hair(sampleHairTwo);
+
+    var testHairTwo = new Hair(hairstyleData[1]);
 
     testHairTwo.save(function(err) {
       if (err) {
-        console.log(err);
+        return err;
       }
     });
 
@@ -151,13 +157,15 @@ describe('Hairstyles', function() {
       .end(function(err, response) {
         expect(response.statusCode).toBe(200);
         expect(response.body[0].name).toEqual('fineHair');
-        expect(response.body[0].description).toEqual('a sample hairstyle for tests');
+        expect(response.body[0].description)
+          .toEqual('a sample hairstyle for tests');
         expect(response.body[0].rating).toEqual(4);
         expect(response.body[1].name).toEqual('uglyHair');
-        expect(response.body[1].description).toEqual('another sample hairstyle for tests');
+        expect(response.body[1].description)
+          .toEqual('another sample hairstyle for tests');
         expect(response.body[1].rating).toEqual(1);
         if (err) {
-          console.log(err);
+          return err;
         }
         done();
       });
@@ -165,55 +173,46 @@ describe('Hairstyles', function() {
 
   //test for get single hairstyle (for viewing a particular hairstyle details)
   it('GET request for a hairstyle should return the hairstyle', function(done) {
-    var id = '55dc7552485fdd167d689439';
+
     request(app)
       .get('/hairstyles/' + id)
       .expect('Content-Type', /json/)
       .end(function(err, response) {
         expect(response.statusCode).toBe(200);
         expect(response.body.name).toEqual('fineHair');
-        expect(response.body.description).toEqual('a sample hairstyle for tests');
+        expect(response.body.description)
+          .toEqual('a sample hairstyle for tests');
         expect(response.body.rating).toEqual(4);
-
         if (err) {
-          console.log(err);
+          return err;
         }
         done();
+
       });
 
   });
 
   //saloon populate test
-  it('should populate saloon list of the hairstyle', function(done) {
-    var saloonSample = new Saloon({
-      name: 'Beauty Place',
-      address: '324, Herbert Macaulay Way, Yaba Lagos'
-    });
+  it('should populate saloon property of the hairstyle', function(done) {
+    var saloonSample = new Saloon(saloonData[1]);
 
     saloonSample.save(function(err) {
-      if (err) console.log(err)
-    });
-
-
-    var sampleHairTwo = {
-      _id: '55dc7552485fdd167d681111',
-      name: 'uglyHair',
-      description: 'another sample hairstyle for tests',
-      image: 'hair_henna.jpg',
-      saloon: saloonSample._id,
-      date: Date.now(),
-      rating: 1
-    };
-
-    var testHairTwo = new Hair(sampleHairTwo);
-
-    testHairTwo.save(function(err) {
       if (err) {
-        console.log(err);
+        return err;
       }
     });
 
-    var id = '55dc7552485fdd167d681111';
+    hairstyleData[1].saloon = saloonSample.id;
+    var testHairTwo = new Hair(hairstyleData[1]);
+
+    testHairTwo.save(function(err) {
+      if (err) {
+        return err;
+      }
+    });
+
+    id = testHairTwo.id;
+
     request(app)
       .get('/hairstyles/' + id)
       .expect('Content-Type', /json/)
@@ -221,10 +220,12 @@ describe('Hairstyles', function() {
         expect(response.body.name).toEqual('uglyHair');
         expect(response.statusCode).toBe(200);
         expect(response.body.saloon).toBeDefined();
-        expect(response.body.saloon.name).toEqual('Beauty Place');
-        expect(response.body.saloon.address).toEqual('324, Herbert Macaulay Way, Yaba Lagos');
+        expect(response.body.saloon.name)
+          .toEqual('Beauty Place');
+        expect(response.body.saloon.address)
+          .toEqual('334, Herbert Macaulay Way, Yaba Lagos');
         if (err) {
-          console.log(err);
+          return err;
         }
         done();
       });
@@ -236,9 +237,8 @@ describe('Hairstyles', function() {
 
   });
 
-  //   //hairstyle update test
+  //hairstyle update test
   it('details should update successfully', function(done) {
-    var id = '55dc7552485fdd167d689439';
     request(app)
       .put('/hairstyles/' + id)
       .field('name', 'Shuku')
@@ -256,40 +256,10 @@ describe('Hairstyles', function() {
           .end(function(err, response) {
             expect(response.statusCode).toBe(200);
             expect(response.body.name).toEqual('Shuku');
-            expect(response.body.description).toEqual('a sample hairstyle for tests');
+            expect(response.body.description)
+              .toEqual('a sample hairstyle for tests');
             expect(response.body.rating).toEqual(3);
 
-            if (err) {
-              console.log(err);
-            }
-            done();
-          });
-        if (err) {
-          console.log(err);
-        }
-        done();
-      });
-  });
-
-  //hairstyle remove test
-  it('should delete successfully', function(done) {
-    var id = '55dc7552485fdd167d689439';
-    request(app)
-      .delete('/hairstyles/' + id)
-      .end(function(err, response) {
-        expect(response.body).toEqual(jasmine.objectContaining({
-          success: true,
-          message: 'Hairstyle Deleted Successfully!'
-        }));
-        expect(response.statusCode).toBe(200);
-        request(app)
-          .get('/hairstyles/:id')
-          .end(function(err, response) {
-            expect(response.statusCode).toBe(404);
-            expect(response.body).toEqual(jasmine.objectContaining({
-              success: false,
-              message: 'Hairstyle not found'
-            }));
             if (err) {
               return err;
             }
@@ -301,4 +271,24 @@ describe('Hairstyles', function() {
         done();
       });
   });
+
+  //hairstyle remove test
+  //saloon remove test
+  it('should delete successfully', function(done) {
+
+    request(app)
+      .delete('/hairstyles/' + id)
+      .end(function(err, response) {
+        expect(response.body).toEqual(jasmine.objectContaining({
+          success: true,
+          message: 'Hairstyle Deleted Successfully!'
+        }));
+        expect(response.statusCode).toBe(200);
+        if (err) {
+          return err;
+        }
+        done();
+      });
+  });
+
 });

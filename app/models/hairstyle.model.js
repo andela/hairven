@@ -22,17 +22,15 @@ var hairStyle = new Schema({
   },
   date: {
     type: Date,
-    default: Date.now('dd/mm/yyyy'),
-    index: true
+    default: Date.now('dd/mm/yyyy')
   },
+
   saloon: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Saloon',
-    index: true
+    ref: 'Saloon'
   },
   rating: {
-    type: Number,
-    index: true
+    type: Number
   }
 
 });
