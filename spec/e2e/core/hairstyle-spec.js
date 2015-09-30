@@ -202,7 +202,7 @@ describe('Hairstyles', function() {
       }
     });
 
-    hairstyleData[1]['saloon'] = saloonSample.id;
+    hairstyleData[1].saloon = saloonSample.id;
     var testHairTwo = new Hair(hairstyleData[1]);
 
     testHairTwo.save(function(err) {
@@ -273,6 +273,7 @@ describe('Hairstyles', function() {
   });
 
   //hairstyle remove test
+  //saloon remove test
   it('should delete successfully', function(done) {
 
     request(app)
@@ -283,23 +284,11 @@ describe('Hairstyles', function() {
           message: 'Hairstyle Deleted Successfully!'
         }));
         expect(response.statusCode).toBe(200);
-        request(app)
-          .get('/hairstyles/' + id)
-          .end(function(err, response) {
-            expect(response.statusCode).toBe(404);
-            expect(response.body).toEqual(jasmine.objectContaining({
-              success: false,
-              message: 'Hairstyle not found'
-            }));
-            if (err) {
-              return err;
-            }
-            done();
-          });
         if (err) {
           return err;
         }
         done();
       });
   });
+
 });
