@@ -7,7 +7,7 @@ var Hair = require('../../../app/models/hairstyle.model');
 var Saloon = require('../../../app/models/saloon.model');
 
 var hairstyleData,
- saloonData;
+  saloonData;
 
 fs.readFile(__dirname + '/fixtures/hairstyleData.json', function(err, data) {
   if (err) {
@@ -118,7 +118,7 @@ describe('Hairstyles', function() {
   });
 
 
-   //hairstyle posting test
+  //hairstyle posting test
   it('should POST successfully', function(done) {
 
     request(app)
@@ -237,7 +237,7 @@ describe('Hairstyles', function() {
 
   });
 
-  //   //hairstyle update test
+  //hairstyle update test
   it('details should update successfully', function(done) {
     request(app)
       .put('/hairstyles/' + id)
