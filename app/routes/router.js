@@ -26,7 +26,7 @@ router.route('/saloons')
 router.route('/saloons/:id')
   .get(saloonCtrl.getSaloon)
   .put(saloonCtrl.updateSaloon)
-  .delete(saloonCtrl.deleteSaloon)
+  .delete(saloonCtrl.deleteSaloon);
 
 // signup
 router.route('/signup')
