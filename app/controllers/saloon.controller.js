@@ -35,14 +35,18 @@ module.exports = {
   getSaloon: function(req, res) {
     // use mongoose to get all saloons in the database
     Saloon.findById(req.params.id)
-    .populate('hairstyle')
+    .populate('hairstyles')
     .exec(function(err, saloon) {
       // if there is an error retrieving, send the error.
-      if (err || !saloon)
+      if (err){
+        res.send(err);
+      }
+      else if(!saloon){
         res.status(404).send({
           success: false,
           message: 'Saloon not found'
         });
+      }
       // return all saloon
       else {
         res.json(saloon);

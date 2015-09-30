@@ -17,11 +17,10 @@ var saloons = new Schema({
     required: 'Please enter the address of your saloon'
   },
 
-  hairstyles: {
+  hairstyles: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Hair',
-    index: true
-  }
+    ref: 'Hair'
+  }]
 
 });
 
