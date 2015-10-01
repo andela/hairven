@@ -1,7 +1,8 @@
-var env = require('./config');
+var config = require('./config');
 var express = require('express');
 var app = express();
-var router = require('../app/routes/router');
+var router = express.Router();
+var routes = require('../app/routes/');
 
 var methodOverride = require('method-override');
 var passport = require('passport');
@@ -10,8 +11,12 @@ var multer = require('multer');
 var mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var session = require('express-session');
 
-mongoose.connect(env.database);
+mongoose.connect(config.database);
+
+routes(router);
 
 app.use(express.static(__dirname + '/../public'));
 
@@ -25,6 +30,12 @@ app.use(bodyParser.json({
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
   extended: true
+}));
+
+app.use(session({
+  secret: 'rosco',
+  saveUninitialized: true,
+  resave: false
 }));
 
 //multer properties for saving into file with an assigned name.
@@ -53,6 +64,8 @@ app.use(cookieParser()); // read cookies (needed for auth)
 // session secret
 app.use(passport.initialize());
 app.use(passport.session());
+
+require('./passport')(passport);
 
 // landing page
 app.get('/', function(req, res) {
