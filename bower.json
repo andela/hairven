@@ -1,0 +1,23 @@
+{
+  "name": "hairven",
+  "version": ".0.0",
+  "homepage": "https://github.com/andela/hairven",
+  "authors": [
+    "Andela"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-router": "~0.2.15",
+    "angular": "~1.4.3",
+    "bootstrap": "~3.3.5",
+    "ui-router": "~0.2.15"
+  }
+}
