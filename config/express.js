@@ -60,6 +60,6 @@ app.get('/', function(req, res) {
 });
 
 // route trough api
-app.use('/', router);
+app.use('/api', router);
 
 exports = module.exports = app;
