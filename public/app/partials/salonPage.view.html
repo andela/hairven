@@ -18,6 +18,18 @@
         </div>
         <hr></hr>
         <span><h4><b>Hairstyle:</b></h4></span>
+        <div class="row">
+           <div class="input-field col s6">
+                <input type="text" class="ui-datepicker" ng-model="session.date" min="{{Date.now()}}" required>
+                <input ui-datepicker ng-model="session.date" min="{{Date.now()}}" required>
+                <!-- <label for="icon_prefix">Date</label> -->
+              </div>
+            <!--  <div class="input-field col s6">
+                <i class="medium mdi-action-description prefix"></i>
+                <input ui-timepicker name="smartererimgname" id="icon_prefix" type="text" ng-model="session.time" required>
+                <label for="icon_prefix">Time</label>
+            </div> -->
+        </div>
     </div>
     <div class="col-md-3"></div>
 </div>
