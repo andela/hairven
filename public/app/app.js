@@ -85,6 +85,28 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
                 }
             }
         })
+        .state('salongallery', {
+            url: "/salongallery",
+            views: {
+                '': {
+                    templateUrl: 'app/partials/nav.view.html'
+                },
+                'theView@salongallery': {
+                    templateUrl: 'app/partials/shopOwnerGallery.view.html'
+                }
+            }
+        })
+        .state('salon', {
+            url: "/salon",
+            views: {
+                '': {
+                    templateUrl: 'app/partials/nav.view.html'
+                },
+                'theView@salon': {
+                    templateUrl: 'app/partials/salonPage.view.html'
+                }
+            }
+        })
         .state('lock_screen', {
             url: "/lock_screen",
             templateUrl: "app/partials/lock_screen.view.html",

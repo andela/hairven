@@ -704,3 +704,16 @@ span.roll {
 .panel-primary {
     margin-top: 9em;
 }
+
+#salon-name {
+    padding-top: 2em
+}
+
+.book {
+    padding-top: 2em;
+}
+
+.check {
+    padding-top: 2em;
+    color: red;
+}
