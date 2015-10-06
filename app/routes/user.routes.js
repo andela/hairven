@@ -1,10 +1,10 @@
-var authCtrl = require('../controllers/user.controller');
+var userCtrl = require('../controllers/user.controller');
 
-function authRoutes (router) {
+function userRoutes (router) {
   router.route('/v1/users/:username')
-    .get(authCtrl.middleware, authCtrl.getUser)
-    .put(authCtrl.middleware, authCtrl.editProfile)
-    .delete(authCtrl.middleware, authCtrl.deleteUser);
+    .get(userCtrl.authMiddleware, userCtrl.getUser)
+    .put(userCtrl.authMiddleware, userCtrl.editProfile)
+    .delete(userCtrl.authMiddleware, userCtrl.deleteUser);
 }
 
-module.exports = authRoutes;
+module.exports = userRoutes;
