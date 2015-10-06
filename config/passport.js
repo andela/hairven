@@ -10,12 +10,12 @@ var generatePassword = function () {
   var passLength = 8;
   var alphaNum = '0123456789abcdefghijklnopqrstuvwxyz'+
   'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$^&%*()+=-[]{}|:<>?,.';
-  var facebookPass = '';
+  var password = '';
   for (var i = 0; i < passLength; ++i) {
-    facebookPass += alphaNum.charAt(Math.floor(
+    password += alphaNum.charAt(Math.floor(
       Math.random() * alphaNum.length));
   }
-  return facebookPass;
+  return password;
 };
 
 module.exports = function(passport) {
