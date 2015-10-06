@@ -8,13 +8,12 @@ var methodOverride = require('method-override');
 var passport = require('passport');
 var morgan = require('morgan');
 var multer = require('multer');
-var mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var session = require('express-session');
+var db = require('./db');
 
-mongoose.connect(config.database);
 
 routes(router);
 
