@@ -43,9 +43,6 @@ exports.facebookLogin = function(strategy) {
         message: 'Invalid Username or Password!' });
       }
       else {
-        var token = jwt.sign(user, config.secret, {
-          expiresInMinutes: 1440
-        });
         res.json({
           success: true,
           message: 'Welcome to Hairven'
@@ -67,9 +64,6 @@ exports.twitterLogin = function(strategy) {
         message: 'Invalid Username or Password!' });
       }
       else {
-        var token = jwt.sign(user, config.secret, {
-          expiresInMinutes: 1440 
-        });
         res.json({
           success: true,
           message: 'Welcome to Hairven'
