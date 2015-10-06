@@ -2,7 +2,7 @@ var jwt = require('jsonwebtoken');
 var User = require('../models/user.model');
 var config = require('../../config/config');
 
-exports.middleware = function(req, res, next) {
+exports.authMiddleware = function(req, res, next) {
   var token = req.body.token ||
     req.query.token ||
     req.headers['x-access-token'];
