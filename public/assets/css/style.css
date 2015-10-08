@@ -82,8 +82,8 @@ a:focus {
   margin: 0 !important;
 }
 
-.pt3 {
-  padding-top: 30px;
+.pt2 {
+  padding-top: 20px;
 }
 
 .padding10 {
@@ -92,6 +92,11 @@ a:focus {
 
 .enable_cursor {
   cursor: pointer;
+}
+
+.divider {
+  width: 80%;
+  margin: 50px auto
 }
 
 /*NAVBAR STYLE*/
@@ -155,19 +160,19 @@ a.logo span {
 }
 
 @media (min-width: 768px) {
-  .centered {
+  .centered_nav_opt {
     padding: 0 5% 0 18%;
   }
 }
 
 @media (min-width: 998px) {
-  .centered {
+  .centered_nav_opt {
     padding: 0 10% 0 25%;
   }
 }
 
 @media (min-width: 1200px) {
-  .centered {
+  .centered_nav_opt {
     padding: 0 25% 0 25%;
   }
 }
@@ -177,17 +182,17 @@ a.logo span {
 .form-login {
   max-width: 460px;
   margin: auto;
-  margin-top: 100px;
+  margin-top: 80px;
   background: #FFFFFF;
 }
 
 .login-wrap {
-  padding: 60px;
+  padding: 30px;
 }
 
 .login-social-link {
   display: block;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .login-social-link .twitter {
@@ -255,7 +260,9 @@ a.logo span {
   margin: 310px auto;
 }
 
-#services h1.services_title, #gallery h1.gallery_title {
+#services h1.services_title, 
+#gallery h1.gallery_title,
+#contact h1.contact_title {
   font-size: 20px;
   font-family: Helvetica;
   font-weight: 500;
@@ -296,6 +303,55 @@ a.logo span {
   height: 400px !important;
   width: 400px !important;
 }
+
+#gallery span.roll {
+  position: absolute;
+  height: 340px;
+  width: 400px;
+  z-index: 10;
+  -webkit-box-shadow: 0px 0px 4px #000;
+  -moz-box-shadow: 0px 0px 4px #000;
+  box-shadow: 0px 0px 4px #000;
+}
+
+#gallery .hair-caption {
+  margin-top: 150px;
+  color: white;
+}
+
+.hairven_contact_form {
+  background: rgba(255, 255, 255, 0.87);
+}
+
+.centered-button {
+  text-align: center;
+  padding-top: 2em
+}
+
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+#contact button, #gallery button {
+  border-radius: 100%;
+  height: 80px;
+  width: 80px;
+}
+
+#contact button:hover,
+#contact button:focus, 
+#gallery button:hover,
+#gallery button:focus {
+  background: none;
+  border: 2px solid rgba(65, 73, 92, 0.91);
+  outline: none;
+}
+
+.hairven__divider {
+  margin-bottom: 50px;
+}
+
 
 /* Bootstrap Modifications */
 
@@ -628,61 +684,6 @@ ul.sidebar-menu li a.active i {
   border: 1px solid #999;
   border: 1px solid rgba(0, 0, 0, .2);
 }
-
-
-/* CONTACT FORM*/
-
-.hairven__form {
-  background: rgba(255, 255, 255, 0.87);
-}
-
-.centered-button {
-  text-align: center;
-  padding-top: 2em
-}
-
-.form-container {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-
-/* OTHERS*/
-
-span.roll {
-  position: absolute;
-  height: 340px;
-  width: 380px;
-  z-index: 10;
-  -webkit-box-shadow: 0px 0px 4px #000;
-  -moz-box-shadow: 0px 0px 4px #000;
-  box-shadow: 0px 0px 4px #000;
-}
-
-.hair-caption {
-  margin-top: 150px;
-  color: white;
-}
-
-
-
-#contact button {
-  border-radius: 100%;
-  height: 80px;
-  width: 80px;
-}
-
-#contact button:hover,
-#contact button:focus {
-  background: none;
-  border: 2px solid rgba(65, 73, 92, 0.91);
-  outline: none;
-}
-
-.hairven__divider {
-  margin-bottom: 50px;
-}
-
 
 /*footer*/
 
