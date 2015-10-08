@@ -1,7 +1,7 @@
 var jwt = require('jsonwebtoken');
 var app = require('../../../server');
 var request = require('supertest')(app);
-var db = require('../../../config/config');
+var config = require('../../../config/config');
 
 var user;
 
@@ -34,7 +34,7 @@ describe('User route test', function() {
     .end(function(err, response) {
       expect(response.body).toEqual(jasmine.objectContaining({
           success: false,
-          message: 'User already exists.'}));
+          message: 'Username already exists!'}));
       done();
     });
   });
@@ -51,7 +51,7 @@ describe('User route test', function() {
     .end(function(err, response) {
       expect(response.body).toEqual(jasmine.objectContaining({
           success: false,
-          message: 'Invalid Username/Email/Password.'
+          message: 'Invalid Username or Email or Password!'
       }));
       done();
     });
@@ -69,7 +69,7 @@ describe('User route test', function() {
     .end(function(err, response) {
       expect(response.body).toEqual(jasmine.objectContaining({
           success: false,
-          message: 'Invalid Username/Email/Password.'
+          message: 'Invalid Username or Email or Password!'
       }));
       done();
     });
@@ -87,7 +87,7 @@ describe('User route test', function() {
     .end(function(err, response) {
       expect(response.body).toEqual(jasmine.objectContaining({
           success: false,
-          message: 'Invalid Username/Email/Password.'
+          message: 'Invalid Username or Email or Password!'
       }));
       done();
     });
@@ -118,7 +118,7 @@ describe('User route test', function() {
     .end(function(err, response) {
       expect(response.body).toEqual(jasmine.objectContaining({
         success: false,
-        message: 'Authentication failed. User not found.'
+        message: 'Invalid Username or Password!'
       }));
       done();
     });
@@ -135,21 +135,11 @@ describe('User route test', function() {
     .end(function(err, response) {
       expect(response.body).toEqual(jasmine.objectContaining({
         success: false,
-        message: 'Authentication failed. Wrong password.'
+        message: 'Invalid Username or Password!'
       }));
       done();
     });
   });
-
-  it('should return an error when a route is not found', function(done) {
-    request.get('/blablablaRoute')
-    .expect(404)
-    .end(function(err){
-      expect(err).not.toBe(null);
-    done();
-    });
-  });
-
 });
 
 var token;
@@ -157,7 +147,7 @@ var token;
 describe('User route test', function() {
 
    beforeEach(function(done) {
-    token = jwt.sign(user, db.secret, { expiresInMinutes: 1440 });
+    token = jwt.sign(user, config.secret, { expiresInMinutes: 1440 });
     done();
   });
 
@@ -206,5 +196,4 @@ describe('User route test', function() {
       done();
     });
   });
-
 });
