@@ -1,15 +1,16 @@
 module.exports = {
 
-  'facebookAuth': {
-    'clientID': process.env.FACEBOOK_CLIENT_ID,
-    'clientSecret': process.env.FACEBOOK_CLIENT_SECRET,
-    'callbackURL': process.env.FACEBOOK_CALLBACK_URL
+  facebookAuth: {
+    clientID: '1863446777214443',
+    clientSecret: '9d077e90655b6cef098b8e779d1afeca',
+    callbackURL: 'http://localhost:5000/auth/facebook/callback'
   },
 
-  'twitterAuth' : {
-    'consumerKey': process.env.TWITTER_CONSUMER_KEY,
-    'consumerSecret': process.env.TWITTER_CONSUMER_SECRET,
-    'callbackURL': process.env.TWITTER_CALLBACK_URL
+  twitterAuth: {
+    consumerKey: 'rX5BNnCcFEsyoP2WTnjg98MP2',
+    consumerSecret: 'QzuIMMHFT9aeI4wIKRda2HbPmMJ0SZrWNjQMQrrqhFVkLZSIge',
+    callbackURL: 'http://localhost:5000/auth/twitter/callback'
   }
+
 
 };

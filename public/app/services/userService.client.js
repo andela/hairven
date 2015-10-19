@@ -1,25 +1,64 @@
 "use strict"
 
-angular.module('hairvenApp')
-    .factory('UserService', ['http', 'baseUrl', function($http, baseUrl) {
-        var User = {};
+var app = angular.module('hairvenApp')
+app.factory('UserService', ['$http', 'baseUrl', '$localStorage', function($http, baseUrl, $localStorage) {
 
-        User.getOne = function(id) {
-            return $http.get('baseUrl' + '/users/' + id).then(function(res) {
-                return res.data;
-            });
-        };
+  var currentUser = getTokenInformation();
+  var User = {
+    register: function(data) {
+      return $http.post('baseUrl' + '/signup', data)
+    },
+    login: function(data) {
+      return $http.post('baseUrl' + '/login', data)
+    },
+    logout: function(success) {
+      changeUser({});
+      delete $localStorage.token;
+      success();
+    },
+    currentUser: function() {
+      return getTokenInformation();
+    },
+    updateUser: function(id, success, error) {
+      $http.put('baseUrl' + '/users/' + id).success(success).error(error)
+    },
+    deleteUser: function(id, success, error) {
+      $http.delete('baseUrl' + '/users/' + id).success(success).error(error)
+    }
+  };
 
-        User.updateOne = function(id) {
-            return $http.put('baseUrl' + '/users/' + id).then(function(res) {
-                return res.data;
-            });
-        };
+  //function decodes response from the data base which contains signed token in base64
+  function base64Decode(token) {
+    var output = token.replace('-', '+').replace('_', '/');
+    switch (output.length % 4) {
+      case 0:
+        break;
+      case 2:
+        output += '==';
+        break;
+      case 3:
+        output += '=';
+        break;
+      default:
+        throw 'Illegal base64url string!';
+    }
+    return window.atob(output);
+  };
 
-        User.deleteOne = function(id) {
-            return $http.delete('baseUrl' + '/users/' + id).then(function(res) {
-                return res.data;
-            });
-        };
-        return User;
-    }])
+  //this method gets the token information
+  function getTokenInformation() {
+    var token = $localStorage.token;
+    var user = {};
+    if (typeof token !== 'undefined') {
+      var encoded = token.split('.')[1];
+      user = JSON.parse(base64Decode(encoded));
+    }
+    return user;
+  };
+
+  function changeUser(user) {
+    angular.extend(User.currentUser, user);
+  }
+  return User;
+
+}]);
