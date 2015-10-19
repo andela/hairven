@@ -45,6 +45,17 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
                 }
             }
         })
+        .state('contact', {
+            url: "/contact",
+            views: {
+                '': {
+                    templateUrl: 'app/partials/nav.view.html'
+                },
+                'theView@contact': {
+                    templateUrl: 'app/partials/contact.view.html'
+                }
+            }
+        })
         .state('Userdashboard', {
             url: "/Userdashboard",
             views: {
