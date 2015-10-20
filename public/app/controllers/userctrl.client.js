@@ -63,6 +63,7 @@ angular.module('hairvenApp')
           window.location = '/';
         }, function() {
           console.log('failed to logout!');
+        }
         });
       };
       $scope.token = $localStorage.token;
