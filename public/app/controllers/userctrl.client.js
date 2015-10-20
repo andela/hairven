@@ -56,16 +56,15 @@ angular.module('hairvenApp')
         });
       };
 
-      $scope.currentUser = UserService.currentUser();
       $rootScope.logout = function() {
         $auth.removeToken();
         UserService.logout(function() {
           window.location = '/';
         }, function() {
           console.log('failed to logout!');
-        }
         });
       };
+
       $scope.token = $localStorage.token;
 
       $rootScope.authenticate = function(provider) {
