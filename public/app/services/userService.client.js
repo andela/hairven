@@ -1,15 +1,21 @@
 "use strict"
 
-var app = angular.module('hairvenApp')
+var app = angular.module('hairvenApp');
 app.factory('UserService', ['$http', 'baseUrl', '$localStorage', function($http, baseUrl, $localStorage) {
 
   var currentUser = getTokenInformation();
   var User = {
     register: function(data) {
-      return $http.post('baseUrl' + '/signup', data)
+      return $http.post(baseUrl + '/signup', data);
     },
     login: function(data) {
-      return $http.post('baseUrl' + '/login', data)
+      return $http.post(baseUrl + '/login', data);
+    },
+    facebookLogin: function() {
+      $http.get(baseUrl + '/auth/facebook/');
+    },
+    twitterLogin: function() {
+      $http.get(baseUrl + '/auth/twitter/');
     },
     logout: function(success) {
       changeUser({});
@@ -19,11 +25,12 @@ app.factory('UserService', ['$http', 'baseUrl', '$localStorage', function($http,
     currentUser: function() {
       return getTokenInformation();
     },
+
     updateUser: function(id, success, error) {
-      $http.put('baseUrl' + '/users/' + id).success(success).error(error)
+      $http.put(baseUrl + '/users/' + id).success(success).error(error);
     },
     deleteUser: function(id, success, error) {
-      $http.delete('baseUrl' + '/users/' + id).success(success).error(error)
+      $http.delete(baseUrl + '/users/' + id).success(success).error(error);
     }
   };
 
