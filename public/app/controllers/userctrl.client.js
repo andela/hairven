@@ -15,32 +15,6 @@ angular.module('hairvenApp')
           alert('You are in!');
         }
       };
-
-      $rootScope.facebookSignin = function() {
-        UserService.facebookLogin(function(res) {
-          if (res.type === false) {
-            console.log('error loggin in');
-          } else {
-
-          }
-
-        });
-
-      };
-
-      $rootScope.twitterSignin = function() {
-
-        UserService.twitterLogin(function(res) {
-          if (res.status === 200) {
-            $location.path('https://api.twitter.com/oauth/authenticate?oauth_token=_nQU2gAAAAAAg6_NAAABUIEdzWg');
-          } else {
-
-          }
-
-        });
-
-
-      };
       $rootScope.signin = function() {
 
         var data = {
@@ -48,12 +22,12 @@ angular.module('hairvenApp')
           password: $scope.password
         };
         UserService.login(data, function(res) {
-          $auth.setToken();
+
           if (res.type === false) {
             console.log('authentication failed', data);
           } else {
-            console.log(res.data.token);
-            $localStorage.token = res.token;
+            $auth.setToken(res.token);
+
             console.log('you are signed in');
           }
         }, function(err) {
@@ -100,17 +74,12 @@ angular.module('hairvenApp')
             $window.localStorage.currentUser = JSON.stringify(response.access_token);
             $rootScope.currentUser = JSON.parse($window.localStorage.currentUser);
           })
-          .catch(function(response) {
-          });
+          .catch(function(response) {});
       };
 
       $rootScope.isAuthenticated = function() {
 
-        $auth.isAuthenticated().then(function() {
-          return true;
-        }).catch(function() {
-          return false;
-        });
+        $auth.isAuthenticated();
       };
     }
   ]);
