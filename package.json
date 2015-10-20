@@ -46,6 +46,9 @@
     "multer": "^1.0.1",
     "passport": "~0.1.17",
     "passport-facebook": "^2.0.0",
-    "passport-local": "~0.1.6"
+    "passport-local": "~0.1.6",
+    "qs": "^5.2.0",
+    "querystring": "^0.2.0",
+    "request": "^2.65.0"
   }
 }
