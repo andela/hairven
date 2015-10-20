@@ -13,7 +13,7 @@ describe('User route test', function() {
       email: 'outta@gmail.com',
       password: 'compton'
     };
-    request.post('/signup')
+    request.post('/api/signup')
     .send(user)
     .expect(200)
     .end(function(err){
@@ -28,7 +28,7 @@ describe('User route test', function() {
       email: 'outta@gmail.com',
       password: 'compton'
     };
-    request.post('/signup')
+    request.post('/api/signup')
     .send(user)
     .expect(401)
     .end(function(err, response) {
@@ -45,7 +45,7 @@ describe('User route test', function() {
       email: 'outta@gmail.com',
       password: 'compton'
     };
-    request.post('/signup')
+    request.post('/api/signup')
     .send(user)
     .expect(401)
     .end(function(err, response) {
@@ -63,7 +63,7 @@ describe('User route test', function() {
       email: undefined,
       password: 'compton'
     };
-    request.post('/signup')
+    request.post('/api/signup')
     .send(user)
     .expect(401)
     .end(function(err, response) {
@@ -81,7 +81,7 @@ describe('User route test', function() {
       email: 'outta@gmail.com',
       password: undefined
     };
-    request.post('/signup')
+    request.post('/api/signup')
     .send(user)
     .expect(401)
     .end(function(err, response) {
@@ -98,7 +98,7 @@ describe('User route test', function() {
       username: 'straight',
       password: 'compton'
     };
-    request.post('/login')
+    request.post('/api/login')
     .send(user)
     .expect(200)
     .end(function(err){
@@ -112,7 +112,7 @@ describe('User route test', function() {
       username: 'bent',
       password: 'compton'
     };
-    request.post('/login')
+    request.post('/api/login')
     .send(user)
     .expect(401)
     .end(function(err, response) {
@@ -129,7 +129,7 @@ describe('User route test', function() {
       username: 'straight',
       password: 'inglewood'
     };
-    request.post('/login')
+    request.post('/api/login')
     .send(user)
     .expect(401)
     .end(function(err, response) {
@@ -152,7 +152,7 @@ describe('User route test', function() {
   });
 
   it('should return a single user', function(done) {
-    request.get('/v1/users/:username')
+    request.get('/api/v1/users/:username')
     .set('x-access-token', token)
     .expect(200)
     .end(function(err){
@@ -162,7 +162,7 @@ describe('User route test', function() {
   });
 
   it('should not return a user without token', function(done) {
-    request.get('/v1/users/:username')
+    request.get('/api/v1/users/:username')
     .expect(403)
     .end(function(err, response) {
       expect(response.body).toEqual(jasmine.objectContaining( {
@@ -177,7 +177,7 @@ describe('User route test', function() {
     user = {
       username:'curve'
     };
-    request.put('/v1/users/straight')
+    request.put('/api/v1/users/straight')
     .set('x-access-token', token)
     .expect(200)
     .send(user)
@@ -188,7 +188,7 @@ describe('User route test', function() {
   });
 
   it('should delete a user', function(done) {
-    request.delete('/v1/users/curve')
+    request.delete('/api/v1/users/curve')
     .set('x-access-token', token)
     .expect(200)
     .end(function(err){
