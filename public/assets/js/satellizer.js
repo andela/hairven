@@ -19,9 +19,9 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
       tokenRoot: null,
       cordova: false,
       baseUrl: 'http://localhost:3030/',
-      loginUrl: '/login',
-      signupUrl: '/signup',
-      unlinkUrl: '/auth/unlink/',
+      loginUrl: '/api/login',
+      signupUrl: '/api/signup',
+      unlinkUrl: '/api/auth/unlink/',
       tokenName: 'token',
       tokenPrefix: 'satellizer',
       authHeader: 'Authorization',
@@ -30,7 +30,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
       providers: {
         facebook: {
           name: 'facebook',
-          url: '/auth/facebook',
+          url: '/api/auth/facebook',
           authorizationEndpoint: 'https://www.facebook.com/v2.3/dialog/oauth',
           redirectUri: (window.location.origin || window.location.protocol + '//' + window.location.host) + '/',
           requiredUrlParams: ['display', 'scope'],
@@ -45,7 +45,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
         },
         google: {
           name: 'google',
-          url: '/auth/google',
+          url: '/api/auth/google',
           authorizationEndpoint: 'https://accounts.google.com/o/oauth2/auth',
           redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
           requiredUrlParams: ['scope'],
@@ -62,7 +62,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
         },
         github: {
           name: 'github',
-          url: '/auth/github',
+          url: '/api/auth/github',
           authorizationEndpoint: 'https://github.com/login/oauth/authorize',
           redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
           optionalUrlParams: ['scope'],
@@ -76,7 +76,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
         },
         instagram: {
           name: 'instagram',
-          url: '/auth/instagram',
+          url: '/api/auth/instagram',
           redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
           requiredUrlParams: ['scope'],
           scope: ['basic'],
@@ -85,7 +85,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
         },
         linkedin: {
           name: 'linkedin',
-          url: '/auth/linkedin',
+          url: '/api/auth/linkedin',
           authorizationEndpoint: 'https://www.linkedin.com/uas/oauth2/authorization',
           redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
           requiredUrlParams: ['state'],
@@ -100,7 +100,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
         },
         twitter: {
           name: 'twitter',
-          url: '/auth/twitter',
+          url: '/api/auth/twitter',
           authorizationEndpoint: 'https://api.twitter.com/oauth/authenticate',
           redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
           type: '1.0',
@@ -111,7 +111,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
         },
         twitch: {
           name: 'twitch',
-          url: '/auth/twitch',
+          url: '/api/auth/twitch',
           authorizationEndpoint: 'https://api.twitch.tv/kraken/oauth2/authorize',
           redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
           requiredUrlParams: ['scope'],
@@ -126,7 +126,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
         },
         live: {
           name: 'live',
-          url: '/auth/live',
+          url: '/api/auth/live',
           authorizationEndpoint: 'https://login.live.com/oauth20_authorize.srf',
           redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
           requiredUrlParams: ['display', 'scope'],
@@ -141,7 +141,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
         },
         yahoo: {
           name: 'yahoo',
-          url: '/auth/yahoo',
+          url: '/api/auth/yahoo',
           authorizationEndpoint: 'https://api.login.yahoo.com/oauth2/request_auth',
           redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
           scope: [],
