@@ -143,7 +143,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
     });
 
     $authProvider.twitter({
-      url: '/auth/twitter'
+      url: '/api/auth/twitter'
     });
   }
 
