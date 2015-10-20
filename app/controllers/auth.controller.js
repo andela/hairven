@@ -179,7 +179,7 @@ exports.twitterSignin = function(req, res) {
 
         // Step 5a. Link user accounts.
         if (req.headers.authorization) {
-          User.findById({
+          User.findOne({
             firstname: profile.firstname
           }, function(err, user) {
             if (!user) {
@@ -218,7 +218,7 @@ exports.facebookSignin = function(req, res) {
   var params = {
     code: req.body.code,
     client_id: req.body.clientId,
-    client_secret: auth.twitterAuth.clientSecret,
+    client_secret: auth.facebookAuth.clientSecret,
     redirect_uri: req.body.redirectUri
   };
 
