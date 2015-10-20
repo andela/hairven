@@ -6,16 +6,16 @@ app.factory('UserService', ['$http', 'baseUrl', '$localStorage', function($http,
   var currentUser = getTokenInformation();
   var User = {
     register: function(data) {
-      return $http.post(baseUrl + '/signup', data);
+      return $http.post(baseUrl + '/api/signup', data);
     },
     login: function(data) {
-      return $http.post(baseUrl + '/login', data);
+      return $http.post(baseUrl + '/api/login', data);
     },
     facebookLogin: function() {
-      $http.get(baseUrl + '/auth/facebook/');
+      $http.get(baseUrl + '/api/auth/facebook/');
     },
     twitterLogin: function() {
-      $http.get(baseUrl + '/auth/twitter/');
+      $http.get(baseUrl + '/api/auth/twitter/');
     },
     logout: function(success) {
       changeUser({});
@@ -27,10 +27,10 @@ app.factory('UserService', ['$http', 'baseUrl', '$localStorage', function($http,
     },
 
     updateUser: function(id, success, error) {
-      $http.put(baseUrl + '/users/' + id).success(success).error(error);
+      $http.put(baseUrl + '/api/users/' + id).success(success).error(error);
     },
     deleteUser: function(id, success, error) {
-      $http.delete(baseUrl + '/users/' + id).success(success).error(error);
+      $http.delete(baseUrl + '/api/users/' + id).success(success).error(error);
     }
   };
 
