@@ -1,9 +1,9 @@
 "use strict"
 
-var app = angular.module('hairvenApp', ['ui.router', 'ngStorage']);
+var app = angular.module('hairvenApp', ['ui.router', 'ngStorage', 'satellizer']);
 
-app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
-  function($stateProvider, $urlRouterProvider, $locationProvider) {
+app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authProvider',
+  function($stateProvider, $urlRouterProvider, $locationProvider, $authProvider) {
 
     $stateProvider
       .state('home', {
@@ -129,35 +129,46 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
             templateUrl: 'app/partials/nav.view.html'
           },
           'theView@login': {
-            templateUrl: 'app/partials/login.view.html'
+            templateUrl: 'app/partials/login.view.html',
+            controller: 'UserCtrl'
           }
         }
       });
 
     $urlRouterProvider.otherwise("/");
     $locationProvider.html5Mode(true);
+
+    $authProvider.facebook({
+      clientId: '1863446777214443'
+    });
+
+    $authProvider.twitter({
+      url: '/auth/twitter'
+    });
   }
+
 ]);
 
 
-app.config(function($httpProvider) {
-  $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function($q, $location, $localStorage) {
-    return {
-      'request': function(config) {
-        config.headers = config.headers || {};
-        if ($localStorage.token) {
-          console.log($localStorage.token);
-          config.headers.Authorization = 'Bearer' + $localStorage.token;
-        }
-        return config;
-      },
-      'responseError': function(response) {
-        if (response.status === 401 || response.status === 403) {
-          console.log('login failed', response.status)
-          $location.path('/login')
-        }
-        return $q.reject(response);
-      }
-    };
-  }]);
-});
+// app.config(function($httpProvider) {
+//   $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function($q, $location, $localStorage) {
+
+//     return {
+//       'request': function(config) {
+//         config.headers = config.headers || {};
+//         if ($localStorage.token) {
+
+//           config.headers.Authorization = 'Bearer' + $localStorage.token;
+//         }
+//         return config;
+//       },
+//       'responseError': function(response) {
+//         if (response.status === 401 || response.status === 403) {
+//           console.log('login failed', response.status);
+//           $location.path('/login');
+//         }
+//         return $q.reject(response);
+//       }
+//     };
+//   }]);
+// });
