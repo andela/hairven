@@ -38,7 +38,7 @@ describe('Hairstyles details', function() {
   it('without image should NOT be posted', function(done) {
 
     request(app)
-      .post('/hairstyles')
+      .post('/api/hairstyles')
       .send({
         name: 'sampleHair',
         description: 'sample hairstyles'
@@ -56,7 +56,7 @@ describe('Hairstyles details', function() {
   it('without name should NOT be posted', function(done) {
 
     request(app)
-      .post('/hairstyles')
+      .post('/api/hairstyles')
       .field('name', '')
       .field('description', 'sample hairstyles')
       .attach('hairPhoto', 'hair_henna.jpg')
@@ -75,7 +75,7 @@ describe('Hairstyles details', function() {
   it('without description should NOT be posted', function(done) {
 
     request(app)
-      .post('/hairstyles')
+      .post('/api/hairstyles')
       .set('Accept', 'application/json')
       .field('name', 'sampleHair')
       .field('description', '')
@@ -94,7 +94,7 @@ describe('Hairstyles details', function() {
 });
 
 
-describe('Hairstyles', function() {
+describe('api/hairstyles', function() {
 
   var id;
 
@@ -122,7 +122,7 @@ describe('Hairstyles', function() {
   it('should POST successfully', function(done) {
 
     request(app)
-      .post('/hairstyles')
+      .post('/api/hairstyles')
       .field('_id', '55dc7552485fdd152d689439')
       .field('name', 'uglyHair')
       .field('description', 'a sample hairstyle for tests')
@@ -152,7 +152,7 @@ describe('Hairstyles', function() {
     });
 
     request(app)
-      .get('/hairstyles')
+      .get('/api/hairstyles')
       .expect('Content-Type', /json/)
       .end(function(err, response) {
         expect(response.statusCode).toBe(200);
@@ -252,7 +252,7 @@ describe('Hairstyles', function() {
         }));
         expect(response.statusCode).toBe(200);
         request(app)
-          .get('/hairstyles/' + id)
+          .get('api/hairstyles/' + id)
           .end(function(err, response) {
             expect(response.statusCode).toBe(200);
             expect(response.body.name).toEqual('Shuku');
@@ -277,7 +277,7 @@ describe('Hairstyles', function() {
   it('should delete successfully', function(done) {
 
     request(app)
-      .delete('/hairstyles/' + id)
+      .delete('api/hairstyles/' + id)
       .end(function(err, response) {
         expect(response.body).toEqual(jasmine.objectContaining({
           success: true,
