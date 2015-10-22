@@ -15,7 +15,7 @@ angular.module('hairvenApp')
           alert('You are in!');
         }
       };
-      $rootScope.signin = function() {
+      $scope.signin = function() {
 
         var data = {
           username: $scope.username,
@@ -36,7 +36,7 @@ angular.module('hairvenApp')
         });
       };
 
-      $rootScope.signup = function() {
+      $scope.signup = function() {
         var data = {
           username: $scope.username,
           email: $scope.email,
@@ -56,7 +56,7 @@ angular.module('hairvenApp')
         });
       };
 
-      $rootScope.logout = function() {
+      $scope.logout = function() {
         $auth.removeToken();
         UserService.logout(function() {
           window.location = '/';
@@ -67,7 +67,7 @@ angular.module('hairvenApp')
 
       $scope.token = $localStorage.token;
 
-      $rootScope.authenticate = function(provider) {
+      $scope.authenticate = function(provider) {
         $auth.authenticate(provider)
           .then(function(response) {
 
@@ -77,7 +77,7 @@ angular.module('hairvenApp')
           .catch(function(response) {});
       };
 
-      $rootScope.isAuthenticated = function() {
+      $scope.isAuthenticated = function() {
 
         $auth.isAuthenticated();
       };
