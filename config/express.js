@@ -5,12 +5,10 @@ var router = express.Router();
 var routes = require('../app/routes/');
 
 var methodOverride = require('method-override');
-var passport = require('passport');
 var morgan = require('morgan');
 var multer = require('multer');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var passport = require('passport');
 var session = require('express-session');
 var db = require('./db');
 
@@ -59,10 +57,6 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 // set up our express application
 app.use(morgan('dev'));
 app.use(cookieParser()); // read cookies (needed for auth)
-
-// session secret
-app.use(passport.initialize());
-app.use(passport.session());
 
 require('./passport')(passport);
 
