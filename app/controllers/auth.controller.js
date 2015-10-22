@@ -2,7 +2,6 @@ var jwt = require('jsonwebtoken');
 var User = require('../models/user.model');
 var config = require('../../config/config');
 var auth = require('../../config/auth');
-var passport = require('passport');
 var request = require('request');
 var qs = require('qs');
 
@@ -47,43 +46,6 @@ exports.signup = function(req, res) {
       });
     }
   });
-};
-
-exports.facebookLogin = function(strategy) {
-  return function(req, res, next) {
-    passport.authenticate(strategy, function(err, user) {
-      if (err) {
-        throw (err);
-      } else if (!user) {
-        return res.status(401).send({
-          success: false,
-          message: 'Invalid Username or Password!'
-        });
-      } else {
-        console.log(strategy);
-        res.send({
-          status: 'success'
-        });
-      }
-    })(req, res, next);
-  };
-};
-
-exports.twitterLogin = function(strategy) {
-  return function(req, res, next) {
-    passport.authenticate(strategy, function(err, user) {
-      if (err) {
-        throw (err);
-      } else if (!user) {
-        return res.status(401).send({
-          success: false,
-          message: 'Invalid Username or Password!'
-        });
-      } else {
-        res.redirect('/');
-      }
-    })(req, res, next);
-  };
 };
 
 exports.login = function(req, res) {
