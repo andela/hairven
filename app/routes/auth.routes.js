@@ -4,22 +4,12 @@ var passport = require('passport');
 function authRoutes(router) {
 
   // facebook login route
-  router.route('/auth/facebook')
-    .get(passport.authenticate('facebook', {
-      scope: ['email']
-  }));
+  router.route('/auth/facebook/')
+    .post(authCtrl.facebookSignin);
 
-  // facebook callback route
-  router.route('/auth/facebook/callback')
-    .get(authCtrl.facebookLogin('facebook'));
-
-  // twitter login route
-  router.route('/auth/twitter')
-    .get(passport.authenticate('twitter'));
-
-  // twitter callback route
-  router.route('/auth/twitter/callback')
-    .get(authCtrl.twitterLogin('twitter'));
+ // twitter login route
+  router.route('/auth/twitter/')
+    .post(authCtrl.twitterSignin);
 
   // signup
   router.route('/signup')
