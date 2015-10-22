@@ -58,8 +58,6 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(morgan('dev'));
 app.use(cookieParser()); // read cookies (needed for auth)
 
-require('./passport')(passport);
-
 // landing page
 app.get('/', function(req, res) {
   res.sendFile(process.cwd() + '/public/index');
