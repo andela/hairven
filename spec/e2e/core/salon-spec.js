@@ -3,10 +3,10 @@ var request = require('supertest');
 var fs = require('fs');
 
 var app = require('../../../server');
-var Saloon = require('../../../app/models/saloon.model');
+var Salon = require('../../../app/models/salon.model');
 var Hair = require('../../../app/models/hairstyle.model');
 
-var hairstyleData, saloonData;
+var hairstyleData, salonData;
 
 fs.readFile(__dirname + '/fixtures/hairstyleData.json', function(err, data) {
   if (err) {
@@ -15,29 +15,29 @@ fs.readFile(__dirname + '/fixtures/hairstyleData.json', function(err, data) {
   hairstyleData = JSON.parse(data);
 });
 
-fs.readFile(__dirname + '/fixtures/saloonData.json', function(err, data) {
+fs.readFile(__dirname + '/fixtures/salonData.json', function(err, data) {
   if (err) {
     console.log(err);
   }
-  saloonData = JSON.parse(data);
+  salonData = JSON.parse(data);
 });
 
-describe('Saloon details', function() {
+describe('salon details', function() {
 
   //empty the database after each test.
   afterEach(function(done) {
-    Saloon.remove({}, function() {
+    Salon.remove({}, function() {
 
     });
     done();
   });
 
   //test for to check if app prevents posting of a
-  //saloon without name
+  //salon without name
   it('without name should NOT be posted', function(done) {
 
     request(app)
-      .post('/saloons')
+      .post('/api/salons')
       .send({
         name: undefined,
         address: '314, Herbert Macaulay Way, Yaba Lagos'
@@ -45,7 +45,7 @@ describe('Saloon details', function() {
       .end(function(err, response) {
         expect(response.body).toEqual(jasmine.objectContaining({
           success: false,
-          message: 'Please enter the name of your saloon'
+          message: 'Please enter the name of your salon'
         }));
         expect(response.statusCode).toBe(401);
         done();
@@ -57,7 +57,7 @@ describe('Saloon details', function() {
   it('without address details should NOT be posted', function(done) {
 
     request(app)
-      .post('/saloons')
+      .post('/api/salons')
       .set('Accept', 'application/json')
       .send({
         name: 'Beauty Shop',
@@ -66,7 +66,7 @@ describe('Saloon details', function() {
       .end(function(err, response) {
         expect(response.body).toEqual(jasmine.objectContaining({
           success: false,
-          message: 'Please enter the address of your saloon'
+          message: 'Please enter the address of your salon'
         }));
         expect(response.statusCode).toBe(401);
         done();
@@ -77,34 +77,34 @@ describe('Saloon details', function() {
 });
 
 
-describe('Saloons', function() {
+describe('salons', function() {
 
   var id;
 
   //create test data before each test.
   beforeEach(function(done) {
-    var sampleSaloon = new Saloon(saloonData[0]);
-    sampleSaloon.save(function(err) {
+    var samplesalon = new Salon(salonData[0]);
+    samplesalon.save(function(err) {
       if (err) {
         return err;
       }
     });
-    id = sampleSaloon.id;
+    id = samplesalon.id;
     done();
   });
 
   //empty the database after each test.
   afterEach(function(done) {
-    Saloon.remove({}, function() {});
+    Salon.remove({}, function() {});
     done();
   });
 
 
-  //test for getting the details of a saloon
-  it('GET request for a saloon should return the saloon', function(done) {
+  //test for getting the details of a salon
+  it('GET request for a salon should return the salon', function(done) {
 
     request(app)
-      .get('/saloons/' + id)
+      .get('/api/salons/' + id)
       .expect('Content-Type', /json/)
       .end(function(err, response) {
         expect(response.statusCode).toBe(200);
@@ -119,7 +119,7 @@ describe('Saloons', function() {
 
   });
   
-  //saloon posting test
+  //salon posting test
   it('should POST successfully', function(done) {
 
     var newSample = {
@@ -127,13 +127,13 @@ describe('Saloons', function() {
       address: '324, Herbert Macaulay Way, Yaba Lagos'
     };
     request(app)
-      .post('/saloons')
+      .post('/api/salons')
       .set('Accept', 'application/json')
       .send(newSample)
       .end(function(err, response) {
         expect(response.body).toEqual(jasmine.objectContaining({
           success: true,
-          message: 'your saloon successfully added to list'
+          message: 'your salon successfully added to list'
         }));
         expect(response.statusCode).toBe(200);
         done();
@@ -141,7 +141,7 @@ describe('Saloons', function() {
     done();
   });
 
-  it('should populate hairstyles\' list of the saloon', function(done) {
+  it('should populate hairstyles\' list of the salon', function(done) {
 
     var testHair = new Hair(hairstyleData[1]);
 
@@ -151,19 +151,19 @@ describe('Saloons', function() {
       }
     });
 
-    saloonData[1].hairstyles = testHair.id;
-    var sampleSaloonTwo = new Saloon(saloonData[1]);
+    salonData[1].hairstyles = testHair.id;
+    var samplesalonTwo = new Salon(salonData[1]);
 
-    sampleSaloonTwo.save(function(err) {
+    samplesalonTwo.save(function(err) {
       if (err) {
         return err;
       }
     });
 
-    id = sampleSaloonTwo.id;
+    id = samplesalonTwo.id;
 
     request(app)
-      .get('/saloons/' + id)
+      .get('/api/salons/' + id)
       .expect('Content-Type', /json/)
       .end(function(err, response) {
         expect(response.body.name).toEqual('Beauty Place');
@@ -194,16 +194,16 @@ describe('Saloons', function() {
       address: '324, Herbert Macaulay Way, Yaba Lagos'
     };
     request(app)
-      .put('/saloons/' + id)
+      .put('/api/salons/' + id)
       .send(updated)
       .end(function(err, response) {
         expect(response.body).toEqual(jasmine.objectContaining({
           success: true,
-          message: 'Saloon Updated!'
+          message: 'salon Updated!'
         }));
         expect(response.statusCode).toBe(200);
         request(app)
-          .get('/saloons/' + id)
+          .get('/api/salons/' + id)
           .end(function(err, response) {
             expect(response.statusCode).toBe(200);
             expect(response.body.name).toEqual('Beauty Shop Two');
@@ -221,24 +221,24 @@ describe('Saloons', function() {
       });
   });
 
-  //saloon remove test
+  //salon remove test
   it('should delete successfully', function(done) {
 
     request(app)
-      .delete('/saloons/' + id)
+      .delete('/api/salons/' + id)
       .end(function(err, response) {
         expect(response.body).toEqual(jasmine.objectContaining({
           success: true,
-          message: 'Saloon deleted from list'
+          message: 'salon deleted from list'
         }));
         expect(response.statusCode).toBe(200);
         request(app)
-          .get('/saloons/' + id)
+          .get('/api/salons/' + id)
           .end(function(err, response) {
             expect(response.statusCode).toBe(404);
             expect(response.body).toEqual(jasmine.objectContaining({
               success: false,
-              message: 'Saloon not found'
+              message: 'salon not found'
             }));
             if (err) {
               return err;

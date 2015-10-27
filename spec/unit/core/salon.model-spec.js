@@ -1,14 +1,14 @@
 'use strict';
 
-var Saloon = require('../../../app/models/saloon.model');
-describe('Saloon Schema', function() {
+var Salon = require('../../../app/models/salon.model');
+describe('salon Schema', function() {
 
-  it('should not save a saloon without name', function() {
+  it('should not save a salon without name', function() {
     var sampleDetails = {
       address: '314, Herbert Macaulay Way, Yaba Lagos'
     };
-    var saloonSample = new Saloon(sampleDetails);
-    saloonSample.save(function(err) {
+    var salonSample = new Salon(sampleDetails);
+    salonSample.save(function(err) {
       if (err) {
         return err;
       }
@@ -18,12 +18,12 @@ describe('Saloon Schema', function() {
 
   });
 
-  it('should not save a saloon without address details', function() {
+  it('should not save a salon without address details', function() {
     var sampleDetails = {
       name: 'Beauty Shop'
     };
-    var saloonSample = new Saloon(sampleDetails);
-    saloonSample.save(function(err) {
+    var salonSample = new Salon(sampleDetails);
+    salonSample.save(function(err) {
       if (err) {
         return err;
       }
@@ -33,27 +33,27 @@ describe('Saloon Schema', function() {
 
   });
 
-  it('should create a saloon model', function() {
+  it('should create a salon model', function() {
     var sampleDetails = {
       name: 'House of Tara',
       address: 'Kasumu Ekemode Street, Victoria Island Lagos'
       };
-    var saloonSample = new Saloon(sampleDetails);
-    saloonSample.save(function(err) {
+    var salonSample = new Salon(sampleDetails);
+    salonSample.save(function(err) {
       if (err) {
         return err;
       }
     });
 
-    expect(saloonSample).toBeDefined();
-    expect(typeof saloonSample).toEqual(typeof {});
-    expect(saloonSample.name).toEqual('House of Tara');
-    expect(saloonSample.address)
+    expect(salonSample).toBeDefined();
+    expect(typeof salonSample).toEqual(typeof {});
+    expect(salonSample.name).toEqual('House of Tara');
+    expect(salonSample.address)
       .toEqual('Kasumu Ekemode Street, Victoria Island Lagos');
   });
 
   afterEach(function() {
-    Saloon.remove({}, function(err) {
+    Salon.remove({}, function(err) {
     if(err){
       return err;
     }

@@ -1,87 +1,87 @@
 var mongoose = require('mongoose');
 var config = require('../../config/config');
-var Saloon = require('../models/saloon.model');
+var Salon = require('../models/salon.model');
 
 
 module.exports = {
 
-  createSaloon: function(req, res) {
+  createSalon: function(req, res) {
     if (!req.body.name) {
       res.status(401).send({
         success: false,
-        message: 'Please enter the name of your saloon'
+        message: 'Please enter the name of your salon'
       });
     } else if (!req.body.address) {
       res.status(401).send({
         success: false,
-        message: 'Please enter the address of your saloon'
+        message: 'Please enter the address of your salon'
       });
     } else {
-      var newSaloon = new Saloon(req.body);
+      var newSalon = new Salon(req.body);
 
-      newSaloon.save(function(err) {
+      newSalon.save(function(err) {
         if (err) {
-          res.send(err)
+          res.send(err);
         }
         res.send({
           success: true,
-          message: 'your saloon successfully added to list'
-        })
+          message: 'your salon successfully added to list'
+        });
 
-      })
+      });
     }
   },
 
-  getSaloon: function(req, res) {
-    // use mongoose to get all saloons in the database
-    Saloon.findById(req.params.id)
+  getSalon: function(req, res) {
+    // use mongoose to get all salons in the database
+    Salon.findById(req.params.id)
     .populate('hairstyles')
-    .exec(function(err, saloon) {
+    .exec(function(err, salon) {
       // if there is an error retrieving, send the error.
       if (err){
         res.send(err);
       }
-      else if(!saloon){
+      else if(!salon){
         res.status(404).send({
           success: false,
-          message: 'Saloon not found'
+          message: 'salon not found'
         });
       }
-      // return all saloon
+      // return all salon
       else {
-        res.json(saloon);
+        res.json(salon);
       }
-    })
+    });
   },
 
-  updateSaloon: function(req, res) {
+  updateSalon: function(req, res) {
 
     // use the Hair model to find the hairstyle
-    Saloon.update(req.params.id, req.body, function(err, saloon) {
+    Salon.update(req.params.id, req.body, function(err, salon) {
 
       if (err) {
         res.send(err);
       } else {
         res.send({
           success: true,
-          message: 'Saloon Updated!'
+          message: 'salon Updated!'
         });
       }
     });
   },
 
   // remove a hairstyle
-  deleteSaloon: function(req, res) {
+  deleteSalon: function(req, res) {
 
-    Saloon.findById(req.params.id, req.body)
-      .remove(function(err, saloon) {
+    Salon.findById(req.params.id, req.body)
+      .remove(function(err, salon) {
 
         if (err) {
           res.send(err);
         } else {
           res.send({
             success: true,
-            message: 'Saloon deleted from list'
+            message: 'salon deleted from list'
           });
         }
       });

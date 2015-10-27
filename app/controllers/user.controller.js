@@ -9,46 +9,57 @@ exports.authMiddleware = function(req, res, next) {
   if (token) {
     jwt.verify(token, config.secret, function(err, decoded) {
       if (err) {
-        return res.json({ 
+        return res.json({
           success: false,
-          message: 'Failed to authenticate token.' });
-      }
-      else {
+          message: 'Failed to authenticate token.'
+        });
+      } else {
+
         req.decoded = decoded;
         next();
       }
     });
-  }
-  else {
+  } else {
     return res.status(403).send({
-        success: false,
-        message: 'No token provided.'
+      success: false,
+      message: 'No token provided.'
     });
   }
 };
 
 exports.getUser = function(req, res) {
-  User.find({username: req.params.username}, function(err, user) {
+  User.find({
+    username: req.params.username
+  }, function(err, user) {
     if (err) {
       res.send(err);
     }
     res.json(user);
-    });
+  });
 };
 
 exports.editProfile = function(req, res) {
-  User.update({username: req.params.username},
-    req.body, function() {
-    res.json({ message: 'User updated!' });
-  });
+  User.update({
+      username: req.params.username
+    },
+    req.body,
+    function() {
+      res.json({
+        message: 'User updated!'
+      });
+    });
 };
 
 exports.deleteUser = function(req, res) {
-  User.remove({username: req.params.username},
+  User.remove({
+      username: req.params.username
+    },
     function(err) {
-    if (err) {
-      return res.send(err);
-    }
-    res.json({ message: 'Successfully deleted' });
-  });
+      if (err) {
+        return res.send(err);
+      }
+      res.json({
+        message: 'Successfully deleted'
+      });
+    });
 };

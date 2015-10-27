@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var saloons = require('./saloon.model');
+var Salons = require('./salon.model');
 var Schema = mongoose.Schema;
 //schema for hairstyles
 
@@ -25,9 +25,9 @@ var hairStyle = new Schema({
     default: Date.now('dd/mm/yyyy')
   },
 
-  saloon: {
+  salon: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Saloon'
+    ref: 'Salon'
   },
   rating: {
     type: Number

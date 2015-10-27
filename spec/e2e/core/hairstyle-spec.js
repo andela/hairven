@@ -4,10 +4,10 @@ var fs = require('fs');
 
 var app = require('../../../server');
 var Hair = require('../../../app/models/hairstyle.model');
-var Saloon = require('../../../app/models/saloon.model');
+var Salon = require('../../../app/models/salon.model');
 
 var hairstyleData,
-  saloonData;
+  salonData;
 
 fs.readFile(__dirname + '/fixtures/hairstyleData.json', function(err, data) {
   if (err) {
@@ -16,11 +16,11 @@ fs.readFile(__dirname + '/fixtures/hairstyleData.json', function(err, data) {
   hairstyleData = JSON.parse(data);
 });
 
-fs.readFile(__dirname + '/fixtures/saloonData.json', function(err, data) {
+fs.readFile(__dirname + '/fixtures/salonData.json', function(err, data) {
   if (err) {
     console.log(err);
   }
-  saloonData = JSON.parse(data);
+  salonData = JSON.parse(data);
 });
 
 describe('Hairstyles details', function() {
@@ -38,7 +38,7 @@ describe('Hairstyles details', function() {
   it('without image should NOT be posted', function(done) {
 
     request(app)
-      .post('/hairstyles')
+      .post('/api/hairstyles')
       .send({
         name: 'sampleHair',
         description: 'sample hairstyles'
@@ -56,7 +56,7 @@ describe('Hairstyles details', function() {
   it('without name should NOT be posted', function(done) {
 
     request(app)
-      .post('/hairstyles')
+      .post('/api/hairstyles')
       .field('name', '')
       .field('description', 'sample hairstyles')
       .attach('hairPhoto', 'hair_henna.jpg')
@@ -75,7 +75,7 @@ describe('Hairstyles details', function() {
   it('without description should NOT be posted', function(done) {
 
     request(app)
-      .post('/hairstyles')
+      .post('/api/hairstyles')
       .set('Accept', 'application/json')
       .field('name', 'sampleHair')
       .field('description', '')
@@ -94,7 +94,7 @@ describe('Hairstyles details', function() {
 });
 
 
-describe('Hairstyles', function() {
+describe('api/hairstyles', function() {
 
   var id;
 
@@ -122,7 +122,7 @@ describe('Hairstyles', function() {
   it('should POST successfully', function(done) {
 
     request(app)
-      .post('/hairstyles')
+      .post('/api/hairstyles')
       .field('_id', '55dc7552485fdd152d689439')
       .field('name', 'uglyHair')
       .field('description', 'a sample hairstyle for tests')
@@ -152,7 +152,7 @@ describe('Hairstyles', function() {
     });
 
     request(app)
-      .get('/hairstyles')
+      .get('/api/hairstyles')
       .expect('Content-Type', /json/)
       .end(function(err, response) {
         expect(response.statusCode).toBe(200);
@@ -175,7 +175,7 @@ describe('Hairstyles', function() {
   it('GET request for a hairstyle should return the hairstyle', function(done) {
 
     request(app)
-      .get('/hairstyles/' + id)
+      .get('/api/hairstyles/' + id)
       .expect('Content-Type', /json/)
       .end(function(err, response) {
         expect(response.statusCode).toBe(200);
@@ -192,17 +192,17 @@ describe('Hairstyles', function() {
 
   });
 
-  //saloon populate test
-  it('should populate saloon property of the hairstyle', function(done) {
-    var saloonSample = new Saloon(saloonData[1]);
+  //salon populate test
+  it('should populate salon property of the hairstyle', function(done) {
+    var salonSample = new Salon(salonData[1]);
 
-    saloonSample.save(function(err) {
+    salonSample.save(function(err) {
       if (err) {
         return err;
       }
     });
 
-    hairstyleData[1].saloon = saloonSample.id;
+    hairstyleData[1].salon = salonSample.id;
     var testHairTwo = new Hair(hairstyleData[1]);
 
     testHairTwo.save(function(err) {
@@ -214,15 +214,15 @@ describe('Hairstyles', function() {
     id = testHairTwo.id;
 
     request(app)
-      .get('/hairstyles/' + id)
+      .get('/api/hairstyles/' + id)
       .expect('Content-Type', /json/)
       .end(function(err, response) {
         expect(response.body.name).toEqual('uglyHair');
         expect(response.statusCode).toBe(200);
-        expect(response.body.saloon).toBeDefined();
-        expect(response.body.saloon.name)
+        expect(response.body.salon).toBeDefined();
+        expect(response.body.salon.name)
           .toEqual('Beauty Place');
-        expect(response.body.saloon.address)
+        expect(response.body.salon.address)
           .toEqual('334, Herbert Macaulay Way, Yaba Lagos');
         if (err) {
           return err;
@@ -231,7 +231,7 @@ describe('Hairstyles', function() {
       });
 
     afterEach(function(done) {
-      Saloon.remove({}, function() {});
+      Salon.remove({}, function() {});
       done();
     });
 
@@ -240,7 +240,7 @@ describe('Hairstyles', function() {
   //hairstyle update test
   it('details should update successfully', function(done) {
     request(app)
-      .put('/hairstyles/' + id)
+      .put('/api/hairstyles/' + id)
       .field('name', 'Shuku')
       .field('rating', 3)
       .field('date', Date.now())
@@ -252,7 +252,7 @@ describe('Hairstyles', function() {
         }));
         expect(response.statusCode).toBe(200);
         request(app)
-          .get('/hairstyles/' + id)
+          .get('/api/hairstyles/' + id)
           .end(function(err, response) {
             expect(response.statusCode).toBe(200);
             expect(response.body.name).toEqual('Shuku');
@@ -273,21 +273,34 @@ describe('Hairstyles', function() {
   });
 
   //hairstyle remove test
-  //saloon remove test
+  //salon remove test
   it('should delete successfully', function(done) {
 
     request(app)
-      .delete('/hairstyles/' + id)
+      .delete('/api/hairstyles/' + id)
       .end(function(err, response) {
         expect(response.body).toEqual(jasmine.objectContaining({
           success: true,
           message: 'Hairstyle Deleted Successfully!'
         }));
+        request(app)
+          .get('/api/hairstyles/' + id)
+          .end(function(err, response) {
+            expect(response.statusCode).toBe(404);
+            expect(response.body)
+              .toEqual(jasmine.objectContaining({
+                success: false,
+                message: 'Hairstyle not found'
+              }));
+            done();
+            if (err) {
+              return err;
+            }
+          });
         expect(response.statusCode).toBe(200);
         if (err) {
           return err;
         }
-        done();
       });
   });
 
