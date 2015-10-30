@@ -1,5 +1,4 @@
 var authCtrl = require('../controllers/auth.controller');
-var passport = require('passport');
 
 function authRoutes(router) {
 
