@@ -75,7 +75,7 @@ angular.module('hairvenApp')
 
             $window.localStorage.currentUser = JSON.stringify(response.access_token);
             $rootScope.currentUser = JSON.parse($window.localStorage.currentUser);
-            $location.path('/Userdashboard')
+            $location.path('/Userdashboard');
           })
           .catch(function(response) {});
       };
