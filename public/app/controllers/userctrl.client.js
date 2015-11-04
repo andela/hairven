@@ -21,16 +21,15 @@ angular.module('hairvenApp')
           username: $scope.username,
           password: $scope.password
         };
-        UserService.login(data, function(res) {
+        UserService.login(data).success(function(res) {
 
           if (res.type === false) {
             console.log('authentication failed', data);
           } else {
             $auth.setToken(res.token);
-
-            console.log('you are signed in');
+            $location.path('/Userdashboard');
           }
-        }, function(err) {
+        }).error(function(err) {
           console.log('login failed', err);
           $rootScope.error = 'Authentication failed';
         });
@@ -38,19 +37,22 @@ angular.module('hairvenApp')
 
       $scope.signup = function() {
         var data = {
+          name: {
+            firstname: $scope.firstname,
+            lastname: $scope.lastname
+          },
           username: $scope.username,
           email: $scope.email,
           password: $scope.password
         };
-        UserService.register(data, function(data) {
+        UserService.register(data).success(function(data) {
           if (data.success === false) {
             console.log('registration failed');
             $location.path('/');
           } else {
-            // $localStorage.token = data.token;
-            console.log('you are registered');
+            $location.path('/login');
           }
-        }, function(err) {
+        }).error(function(err) {
           console.log('FAILED!!', err);
           $rootScope.error = 'Failed to sign up';
         });
@@ -73,6 +75,7 @@ angular.module('hairvenApp')
 
             $window.localStorage.currentUser = JSON.stringify(response.access_token);
             $rootScope.currentUser = JSON.parse($window.localStorage.currentUser);
+            $location.path('/Userdashboard')
           })
           .catch(function(response) {});
       };
