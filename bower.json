@@ -18,6 +18,8 @@
     "angular-ui-router": "~0.2.15",
     "angular": "~1.4.3",
     "bootstrap": "~3.3.5",
-    "ui-router": "~0.2.15"
+    "ui-router": "~0.2.15",
+    "angular-messages": "~1.4.7",
+    "angular-material": "~0.11.4"
   }
 }
