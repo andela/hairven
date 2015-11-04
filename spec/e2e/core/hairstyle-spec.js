@@ -138,7 +138,7 @@ describe('api/hairstyles', function() {
       });
   });
 
-  //get for getting all hairstyles in database (i.e, for populating
+  //test for getting all hairstyles in database (i.e, for populating
   //the gallery in view)
   it('GET request should return all successfully', function(done) {
 
@@ -150,7 +150,7 @@ describe('api/hairstyles', function() {
         return err;
       }
     });
-
+   
     request(app)
       .get('/api/hairstyles')
       .expect('Content-Type', /json/)
