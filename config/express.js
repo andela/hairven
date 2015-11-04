@@ -59,8 +59,8 @@ app.use(morgan('dev'));
 app.use(cookieParser()); // read cookies (needed for auth)
 
 // landing page
-app.get('/', function(req, res) {
-  res.sendFile(process.cwd() + '/public/index');
+app.get('*', function(req, res) {
+  res.sendFile(process.cwd() + '/public/index.html');
 });
 
 // route trough api
