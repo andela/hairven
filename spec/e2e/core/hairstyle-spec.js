@@ -150,7 +150,7 @@ describe('api/hairstyles', function() {
         return err;
       }
     });
-   
+
     request(app)
       .get('/api/hairstyles')
       .expect('Content-Type', /json/)
@@ -194,11 +194,13 @@ describe('api/hairstyles', function() {
 
   //salon populate test
   it('should populate salon property of the hairstyle', function(done) {
+
+    Salon.remove({}, function() {});
     var salonSample = new Salon(salonData[1]);
 
     salonSample.save(function(err) {
       if (err) {
-        return err;
+        console.log(err);
       }
     });
 
