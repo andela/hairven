@@ -138,7 +138,7 @@ describe('api/hairstyles', function() {
       });
   });
 
-  //get for getting all hairstyles in database (i.e, for populating
+  //test for getting all hairstyles in database (i.e, for populating
   //the gallery in view)
   it('GET request should return all successfully', function(done) {
 
@@ -194,11 +194,13 @@ describe('api/hairstyles', function() {
 
   //salon populate test
   it('should populate salon property of the hairstyle', function(done) {
+
+    Salon.remove({}, function() {});
     var salonSample = new Salon(salonData[1]);
 
     salonSample.save(function(err) {
       if (err) {
-        return err;
+        console.log(err);
       }
     });
 

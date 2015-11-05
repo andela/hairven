@@ -376,7 +376,6 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
         Shared.setToken = function(response) {
           var accessToken = response && response.access_token;
           var token;
-          console.log(response);
           if (accessToken) {
             if (angular.isObject(accessToken) && angular.isObject(accessToken.data)) {
               response = accessToken;
@@ -386,7 +385,6 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
           }
 
           if (!token && response) {
-            console.log(response.data);
             var tokenRootData = config.tokenRoot && config.tokenRoot.split('.').reduce(function(o, x) {
               return o[x];
             }, response.data);

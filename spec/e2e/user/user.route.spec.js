@@ -9,88 +9,132 @@ describe('User route test', function() {
 
   it('should create new user with complete credentials', function(done) {
     user = {
+      name: {
+        firstname: 'John',
+        lastname: 'David'
+      },
       username: 'straight',
       email: 'outta@gmail.com',
       password: 'compton'
     };
     request.post('/api/signup')
-    .send(user)
-    .expect(200)
-    .end(function(err){
-      expect(err).toBe(null);
-      done();
-    });
+      .send(user)
+      .expect(200)
+      .end(function(err) {
+        expect(err).toBe(null);
+        done();
+      });
   });
 
   it('should not create new user with duplicate credentials', function(done) {
     user = {
+      name: {
+        firstname: 'John',
+        lastname: 'David'
+      },
       username: 'straight',
       email: 'outta@gmail.com',
       password: 'compton'
     };
     request.post('/api/signup')
-    .send(user)
-    .expect(401)
-    .end(function(err, response) {
-      expect(response.body).toEqual(jasmine.objectContaining({
+      .send(user)
+      .expect(401)
+      .end(function(err, response) {
+        expect(response.body).toEqual(jasmine.objectContaining({
           success: false,
-          message: 'Username already exists!'}));
-      done();
-    });
+          message: 'Username already exists!'
+        }));
+        done();
+      });
   });
 
   it('should not create new user with undefined username', function(done) {
     user = {
+      name: {
+        firstname: 'John',
+        lastname: 'David'
+      },
       username: undefined,
       email: 'outta@gmail.com',
       password: 'compton'
     };
     request.post('/api/signup')
-    .send(user)
-    .expect(401)
-    .end(function(err, response) {
-      expect(response.body).toEqual(jasmine.objectContaining({
+      .send(user)
+      .expect(401)
+      .end(function(err, response) {
+        expect(response.body).toEqual(jasmine.objectContaining({
           success: false,
           message: 'Invalid Username or Email or Password!'
-      }));
-      done();
-    });
+        }));
+        done();
+      });
   });
+
+  it('should not create new user with undefined first or last name',
+    function(done) {
+      user = {
+        name: {
+          firstname: undefined,
+          lastname: undefined
+        },
+        username: 'straight',
+        email: 'outta@gmail.com',
+        password: 'compton'
+      };
+      request.post('/api/signup')
+        .send(user)
+        .expect(401)
+        .end(function(err, response) {
+          expect(response.body).toEqual(jasmine.objectContaining({
+            success: false,
+            message: 'Invalid First or Last Name!'
+          }));
+          done();
+        });
+    });
 
   it('should not create new user with undefined email', function(done) {
     user = {
+      name: {
+        firstname: 'John',
+        lastname: 'David'
+      },
       username: 'straight',
       email: undefined,
       password: 'compton'
     };
     request.post('/api/signup')
-    .send(user)
-    .expect(401)
-    .end(function(err, response) {
-      expect(response.body).toEqual(jasmine.objectContaining({
+      .send(user)
+      .expect(401)
+      .end(function(err, response) {
+        expect(response.body).toEqual(jasmine.objectContaining({
           success: false,
           message: 'Invalid Username or Email or Password!'
-      }));
-      done();
-    });
+        }));
+        done();
+      });
   });
 
   it('should not create new user with undefined password', function(done) {
     user = {
+      name: {
+        firstname: 'John',
+        lastname: 'David'
+      },
       username: 'straight',
       email: 'outta@gmail.com',
       password: undefined
     };
     request.post('/api/signup')
-    .send(user)
-    .expect(401)
-    .end(function(err, response) {
-      expect(response.body).toEqual(jasmine.objectContaining({
+      .send(user)
+      .expect(401)
+      .end(function(err, response) {
+        expect(response.body).toEqual(jasmine.objectContaining({
           success: false,
           message: 'Invalid Username or Email or Password!'
-      }));
-      done();
-    });
+        }));
+        done();
+      });
   });
 
   it('should login a user with correct credentials', function(done) {
@@ -99,12 +143,12 @@ describe('User route test', function() {
       password: 'compton'
     };
     request.post('/api/login')
-    .send(user)
-    .expect(200)
-    .end(function(err){
-      expect(err).toBe(null);
-      done();
-    });
+      .send(user)
+      .expect(200)
+      .end(function(err) {
+        expect(err).toBe(null);
+        done();
+      });
   });
 
   it('should not login a user with incorrect username', function(done) {
@@ -113,15 +157,15 @@ describe('User route test', function() {
       password: 'compton'
     };
     request.post('/api/login')
-    .send(user)
-    .expect(401)
-    .end(function(err, response) {
-      expect(response.body).toEqual(jasmine.objectContaining({
-        success: false,
-        message: 'Invalid Username or Password!'
-      }));
-      done();
-    });
+      .send(user)
+      .expect(401)
+      .end(function(err, response) {
+        expect(response.body).toEqual(jasmine.objectContaining({
+          success: false,
+          message: 'Invalid Username or Password!'
+        }));
+        done();
+      });
   });
 
   it('should not login a user with wrong password', function(done) {
@@ -130,15 +174,15 @@ describe('User route test', function() {
       password: 'inglewood'
     };
     request.post('/api/login')
-    .send(user)
-    .expect(401)
-    .end(function(err, response) {
-      expect(response.body).toEqual(jasmine.objectContaining({
-        success: false,
-        message: 'Invalid Username or Password!'
-      }));
-      done();
-    });
+      .send(user)
+      .expect(401)
+      .end(function(err, response) {
+        expect(response.body).toEqual(jasmine.objectContaining({
+          success: false,
+          message: 'Invalid Username or Password!'
+        }));
+        done();
+      });
   });
 });
 
@@ -146,54 +190,56 @@ var token;
 
 describe('User route test', function() {
 
-   beforeEach(function(done) {
-    token = jwt.sign(user, config.secret, { expiresInMinutes: 1440 });
+  beforeEach(function(done) {
+    token = jwt.sign(user, config.secret, {
+      expiresInMinutes: 1440
+    });
     done();
   });
 
   it('should return a single user', function(done) {
     request.get('/api/v1/users/:username')
-    .set('x-access-token', token)
-    .expect(200)
-    .end(function(err){
-      expect(err).toBe(null);
-      done();
-    });
+      .set('x-access-token', token)
+      .expect(200)
+      .end(function(err) {
+        expect(err).toBe(null);
+        done();
+      });
   });
 
   it('should not return a user without token', function(done) {
     request.get('/api/v1/users/:username')
-    .expect(403)
-    .end(function(err, response) {
-      expect(response.body).toEqual(jasmine.objectContaining( {
-        success: false,
-        message: 'No token provided.'
-      }));
-      done();
-    });
+      .expect(403)
+      .end(function(err, response) {
+        expect(response.body).toEqual(jasmine.objectContaining({
+          success: false,
+          message: 'No token provided.'
+        }));
+        done();
+      });
   });
 
   it('should edit a user details', function(done) {
     user = {
-      username:'curve'
+      username: 'curve'
     };
     request.put('/api/v1/users/straight')
-    .set('x-access-token', token)
-    .expect(200)
-    .send(user)
-    .end(function(err){
-      expect(err).toBe(null);
-      done();
-    });
+      .set('x-access-token', token)
+      .expect(200)
+      .send(user)
+      .end(function(err) {
+        expect(err).toBe(null);
+        done();
+      });
   });
 
   it('should delete a user', function(done) {
     request.delete('/api/v1/users/curve')
-    .set('x-access-token', token)
-    .expect(200)
-    .end(function(err){
-      expect(err).toBe(null);
-      done();
-    });
+      .set('x-access-token', token)
+      .expect(200)
+      .end(function(err) {
+        expect(err).toBe(null);
+        done();
+      });
   });
 });

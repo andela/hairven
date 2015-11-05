@@ -20,18 +20,21 @@ var generatePassword = function() {
 };
 
 exports.signup = function(req, res) {
-  var user = new User();
-  user.username = req.body.username;
-  user.email = req.body.email;
-  user.password = req.body.password;
-
+  var user = new User(req.body);
+  
   user.save(function(err) {
     if (!user.username || !user.email || !user.password) {
       return res.status(401).send({
         success: false,
         message: 'Invalid Username or Email or Password!'
       });
-    } else if (err) {
+    }else if (!user['name']['firstname'] || !user['name']['lastname']) {
+      return res.status(401).send({
+        success: false,
+        message: 'Invalid First or Last Name!'
+      });
+    }
+     else if (err) {
       if (err.code === 11000) {
         return res.status(401).send({
           success: false,
