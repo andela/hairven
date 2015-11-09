@@ -103,7 +103,12 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
             templateUrl: 'app/partials/nav.view.html'
           },
           'theView@salongallery': {
-            templateUrl: 'app/partials/shopOwnerGallery.view.html'
+            templateUrl: 'app/partials/shopOwnerGallery.view.html',
+            controller: 'HairCtrl'
+          },
+          'sideNav@salongallery': {
+            templateUrl: 'app/partials/salonSidenav.view.html',
+            controller: 'SalonCtrl'
           }
         }
       })
