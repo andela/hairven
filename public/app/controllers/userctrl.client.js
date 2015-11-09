@@ -27,7 +27,7 @@ angular.module('hairvenApp')
             console.log('authentication failed', data);
           } else {
             $auth.setToken(res.token);
-            $location.path('/Userdashboard');
+            $location.path('/salongallery');
           }
         }).error(function(err) {
           console.log('login failed', err);
