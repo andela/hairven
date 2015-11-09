@@ -54,6 +54,26 @@ a:focus {
   text-align: center;
 }
 
+.salon-details-wrapper{
+  margin: auto;
+width: 95%;
+position: relative;
+margin-bottom: 20px;
+}
+
+.salon-photo{
+width: 90%;
+margin-left: 10px;
+margin-bottom: 10px;
+}
+
+.salon-heading{
+  color: #aeb2b7;
+}
+
+.salon-detail{
+ margin-left: 20px; 
+}
 .goleft {
   text-align: left;
 }
@@ -385,7 +405,7 @@ hr {
 /*sidebar navigation*/
 
 #sidebar {
-  width: 210px;
+  width: 22%;
   height: 100%;
   position: fixed;
   background: #424a5d;
@@ -434,6 +454,13 @@ ul.sidebar-menu {
   display: block;
 }
 
+#sidebar > ul > li > hr {
+margin-top: 0;
+width: 90%; 
+margin-bottom: 0;
+}
+
+ 
 ul.sidebar-menu li ul.sub li {
   background: #424a5d;
   margin-bottom: 0;
@@ -533,7 +560,7 @@ ul.sidebar-menu li a.active i {
 /* MAIN CONTENT CONFIGURATION */
 
 #main-content {
-  margin-left: 210px;
+  margin-left: 22%;
 }
 
 .wrapper {
@@ -822,4 +849,9 @@ li.reviews {
   font-family: helvetica;
   font-size: 16px;
   color: #3E91F4;
+}
+
+.saloon-image{
+  width: 22%;
+  margin: auto;
 }
