@@ -33,7 +33,11 @@ a:focus {
   color: #5BBBE2;
 }
 
-::-webkit-scrollbar {width: 4px; height: 2px;}
+::-webkit-scrollbar {
+  width: 4px;
+  height: 2px;
+}
+
 ::-webkit-scrollbar-track {
   border-radius: 5px;
 }
@@ -48,32 +52,34 @@ a:focus {
   height: 100%;
 }
 
+
 /*HELPERS*/
 
 .centered {
   text-align: center;
 }
 
-.salon-details-wrapper{
+.salon-details-wrapper {
   margin: auto;
-width: 95%;
-position: relative;
-margin-bottom: 20px;
+  width: 95%;
+  position: relative;
+  margin-bottom: 20px;
 }
 
-.salon-photo{
-width: 90%;
-margin-left: 10px;
-margin-bottom: 10px;
+.salon-photo {
+  width: 90%;
+  margin-left: 10px;
+  margin-bottom: 10px;
 }
 
-.salon-heading{
+.salon-heading {
   color: #aeb2b7;
 }
 
-.salon-detail{
- margin-left: 20px; 
+.salon-detail {
+  margin-left: 20px;
 }
+
 .goleft {
   text-align: left;
 }
@@ -118,6 +124,7 @@ margin-bottom: 10px;
   width: 80%;
   margin: 50px auto
 }
+
 
 /*NAVBAR STYLE*/
 
@@ -169,11 +176,11 @@ a.logo span {
 .top-menu .navbar-nav li a {
   color: #676767;
   font-weight: 200;
-  font-family: Helvetica, 'Open Sans'; 
+  font-family: Helvetica, 'Open Sans';
   text-transform: uppercase;
 }
 
-.top-menu .navbar-nav li a:hover, 
+.top-menu .navbar-nav li a:hover,
 .top-menu .navbar-nav li a:focus {
   background: transparent;
   color: rgba(103, 103, 103, 0.5);
@@ -181,23 +188,33 @@ a.logo span {
 
 @media (min-width: 768px) {
   .centered_nav_opt {
-    padding: 0 5% 0 18%;
+    padding: 0 5% 0 10%;
   }
 }
 
 @media (min-width: 998px) {
   .centered_nav_opt {
-    padding: 0 10% 0 25%;
+    padding: 0 5% 0 20%;
   }
 }
 
 @media (min-width: 1200px) {
   .centered_nav_opt {
-    padding: 0 25% 0 25%;
+    padding: 0 15% 0 25%;
   }
 }
 
+
 /*LOGIN && SIGNUP STYLE*/
+
+.login {
+  border: solid;
+  border-width: 1px;
+  margin-top: 12px;
+  border-color: #424a5d;
+  background: #FFFFFF;
+  display: inline;
+}
 
 .form-login {
   max-width: 460px;
@@ -213,6 +230,7 @@ a.logo span {
 .login-social-link {
   display: block;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .login-social-link .twitter {
@@ -246,9 +264,12 @@ a.logo span {
   color: #EF395A;
 }
 
+
 /*HOMEPAGE*/
 
+
 /* CAROUSEL*/
+
 .carousel {
   position: absolute;
   top: 0;
@@ -280,7 +301,7 @@ a.logo span {
   margin: 310px auto;
 }
 
-#services h1.services_title, 
+#services h1.services_title,
 #gallery h1.gallery_title,
 #contact h1.contact_title {
   font-size: 20px;
@@ -353,14 +374,15 @@ a.logo span {
   margin: 0 auto;
 }
 
-#contact button, #gallery button {
+#contact button,
+#gallery button {
   border-radius: 100%;
   height: 80px;
   width: 80px;
 }
 
 #contact button:hover,
-#contact button:focus, 
+#contact button:focus,
 #gallery button:hover,
 #gallery button:focus {
   background: none;
@@ -398,8 +420,6 @@ hr {
   right: 0;
   bottom: 0;
 }
-
-
 
 
 /*sidebar navigation*/
@@ -455,12 +475,11 @@ ul.sidebar-menu {
 }
 
 #sidebar > ul > li > hr {
-margin-top: 0;
-width: 90%; 
-margin-bottom: 0;
+  margin-top: 0;
+  width: 90%;
+  margin-bottom: 0;
 }
 
- 
 ul.sidebar-menu li ul.sub li {
   background: #424a5d;
   margin-bottom: 0;
@@ -712,6 +731,7 @@ ul.sidebar-menu li a.active i {
   border: 1px solid rgba(0, 0, 0, .2);
 }
 
+
 /*footer*/
 
 #footer {
@@ -834,12 +854,12 @@ li.reviews {
 }
 
 .contact-div {
-    -webkit-box-shadow: rgba(0, 0, 0, 0.17) 0px 5px 13px;
-    box-shadow: rgba(0, 0, 0, 0.17) 0px 5px 13px;
-    height: 400px;
-    margin-top: 120px;
-    padding: 40px 30px;
-    background: url(../images/contact-form.png) repeat-x #fff;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.17) 0px 5px 13px;
+  box-shadow: rgba(0, 0, 0, 0.17) 0px 5px 13px;
+  height: 400px;
+  margin-top: 120px;
+  padding: 40px 30px;
+  background: url(../images/contact-form.png) repeat-x #fff;
 }
 
 .sendmessage {
@@ -851,7 +871,7 @@ li.reviews {
   color: #3E91F4;
 }
 
-.saloon-image{
+.saloon-image {
   width: 22%;
   margin: auto;
 }
