@@ -138,6 +138,17 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
             controller: 'UserCtrl'
           }
         }
+      }).state('salonlogin', {
+        url: "/salonlogin",
+        views: {
+          '': {
+            templateUrl: 'app/partials/nav.view.html'
+          },
+          'theView@salonlogin': {
+            templateUrl: 'app/partials/salonLogin.view.html',
+            controller: 'UserCtrl'
+          }
+        }
       });
 
     $urlRouterProvider.otherwise("/");
