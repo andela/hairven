@@ -281,6 +281,7 @@ describe('api/hairstyles', function() {
     request(app)
       .delete('/api/hairstyles/' + id)
       .end(function(err, response) {
+        expect(response.statusCode).toBe(200);
         expect(response.body).toEqual(jasmine.objectContaining({
           success: true,
           message: 'Hairstyle Deleted Successfully!'
@@ -299,10 +300,10 @@ describe('api/hairstyles', function() {
               return err;
             }
           });
-        expect(response.statusCode).toBe(200);
         if (err) {
           return err;
         }
+        done();
       });
   });
 
