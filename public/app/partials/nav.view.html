@@ -1,17 +1,17 @@
 <header class="header black-bg">
   <!--logo start-->
-  <a ui-sref="index.html" class="logo"><b>HAIRVEN</b></a>
+  <a href="/" class="logo">HAIRVEN</a>
   <!--logo end-->
   <div class="top-menu">
-    <ul class="nav navbar-nav pull-right top-menu">
-      <li><a href="#">Home</a></li>
+    <ul class="nav navbar-nav centered_nav_opt top-menu">
+      <li><a href="/">Home</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+    <ul class="nav navbar-nav pull-right top-menu">
       <li><a href="/login">Login</a></li>
-      <li><a class="logout" ui-sref="login.html">Logout</a></li>
     </ul>
   </div>
 </header>
-
 <div ui-view="theView"></div>

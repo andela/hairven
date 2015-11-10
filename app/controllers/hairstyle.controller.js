@@ -64,30 +64,41 @@ module.exports = {
     // use mongoose to get all hairstyles in the database
     Hair
       .find({})
-      .populate('saloon')
+      .populate('salon')
       .exec(function(err, hairstyles) {
         // if there is an error retrieving, send the error.
-        if (err || !hairstyles)
+        if (err) {
           res.send(err);
-        // return all hairstyles in JSON format
-        res.json(hairstyles);
+        } else if (!hairstyles) {
+          res.status(404).send({
+            success: false,
+            message: 'Hairstyles not found'
+          });
+        } else {
+          // return all hairstyles in JSON format
+          res.json(hairstyles);
+        }
       });
   },
 
   //get a specific hairstyle
   getById: function(req, res) {
     Hair.findById(req.params.id)
-      .populate('saloon')
+      .populate('salon')
       .exec(function(err, hairstyle) {
         // if there is an error retrieving, send the error.
-        if (err || !hairstyle) {
+        if (err) {
+          res.send(err);
+        } else if (!hairstyle) {
           res.status(404).send({
             success: false,
             message: 'Hairstyle not found'
           });
+        } else {
+          res.json(hairstyle);
         }
-        res.json(hairstyle);
       });
+
   },
 
   //edit details of a haistyle

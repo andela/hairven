@@ -28,24 +28,21 @@
   </div>
   <!-- Controls -->
   <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
+    <i class="fa fa-chevron-left"></i>
   </a>
   <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
+    <i class="fa fa-chevron-right"></i>
   </a>
 </div>
+
+<div style="margin-bottom: 630px;"></div>
+
 <div id="services">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-12 text-center">
-        <h1 style="margin-top: 70px">Services</h1>
-        <span class="figure">
-          <img class="hairven__divider" alt="" src="assets/images/header-border1.png">
-        </span>
-      </div>
-      <h4 style="padding: 40px 0px;" class="text-center">At Hairven, we provide you with a collection of the best Hairstyles of all time</h4>
+      <div class="col-md-12 text-center padding10">
+        <h1 class="services_title">WHAT WE DO</h1>
+        <h4 class="sub-services text-center">At Hairven, we provide you with a collection of the best Hairstyles of all time</h4>
     </div>
   </div>
 
@@ -78,14 +75,15 @@
   </div>
 </div>
 
+<div class="divider">
+  <hr /> 
+</div>
+
 <div id="gallery">
   <div class="container">
     <div class="row">
-      <div class="col-md-12 text-center">
-        <h1 style="padding-top: 50px;">Gallery</h1>
-        <span class="figure">
-          <img alt="" src="assets/images/header-border1.png">
-        </span>
+      <div class="col-md-12 text-center padding10">
+        <h1 class="gallery_title">GALLERY</h1>
       </div>
     </div>
   </div>
@@ -93,20 +91,32 @@
     <div class="row mt">
       <div class="col-md-4 text-center">
         <div>
-          <a class="figure-image" href="/hair"><span class="roll"><h1 class="hair-caption" >Bohemian</h1></span><img class="gallery" src="assets/images/03.jpg">
+          <a class="figure-image" href="/hair">
+            <span class="roll">
+              <h1 class="hair-caption" >Bohemian</h1>
+            </span>
+            <img class="gallery" src="assets/images/03.jpg">
           </a>
         </div>
       </div>
 
       <div class="col-md-4 text-center">
         <div>
-          <a class="figure-image" href="/hair"><span class="roll"><h1 class="hair-caption" >Bold waves</h1></span><img class="gallery" src="assets/images/05.jpg">
+          <a class="figure-image" href="/hair">
+            <span class="roll">
+              <h1 class="hair-caption">Bold waves</h1>
+            </span>
+            <img class="gallery" src="assets/images/05.jpg">
           </a>
         </div>
       </div>
       <div class="col-md-4 text-center">
         <div>
-          <a class="figure-image" href="/hair"><span class="roll"><h1 class="hair-caption">Naturalista</h1></span><img class="gallery" src="assets/images/01.jpg">
+          <a class="figure-image" href="/hair">
+            <span class="roll">
+              <h1 class="hair-caption">Naturalista</h1>
+            </span>
+            <img class="gallery" src="assets/images/01.jpg">
           </a>
         </div>
       </div>
@@ -115,36 +125,49 @@
     <div class="row mt">
       <div class="col-md-4 text-center">
         <div>
-          <a class="figure-image" href="/hair"> <span class="roll">
-          <h1 class="hair-caption">Hot Bun</h1></span><img class="gallery" src="../assets/images/04.jpg">
+          <a class="figure-image" href="/hair">
+          <span class="roll">
+            <h1 class="hair-caption">Hot Bun</h1>
+          </span><img class="gallery" src="../assets/images/04.jpg">
           </a>
         </div>
       </div>
       <div class="col-md-4 text-center">
         <div>
-          <a class="figure-image" href="/hair"> <span class="roll"><h1 class="hair-caption">Blond curls</h1></span><img class="gallery"  src="assets/images/02.jpeg">
+          <a class="figure-image" href="/hair">
+            <span class="roll">
+              <h1 class="hair-caption">Blond curls</h1>
+            </span>
+            <img class="gallery"  src="assets/images/02.jpeg">
           </a>
         </div>
       </div>
       <div class="col-md-4 text-center">
         <div>
-          <a class="figure-image" href="/hair"> <span class="roll"><h1 class="hair-caption">Blond curls</h1></span><img class="gallery" src="assets/images/02.jpeg">
+          <a class="figure-image" href="/hair">
+            <span class="roll">
+              <h1 class="hair-caption">Blond curls</h1>
+            </span>
+            <img class="gallery" src="assets/images/02.jpeg">
           </a>
         </div>
       </div>
+    </div>
+    <div class="centered-button">
+      <button type="submit" ng-click = "redirect('usergallery')" class="btn btn-default">explore</button>
     </div>
   </div>
 </div>
+
+<div class="divider">
+  <hr /> 
+</div>
+
 <div id="contact">
-  <div class="col-md-12 text-center">
-    <h1>Contact us</h1>
-    <div>
-      <span class="figure">
-        <img class="hairven__divider" alt="" src="assets/images/header-border1.png">
-      </span>
-    </div>
+  <div class="col-md-12 text-center padding10">
+    <h1 class="contact_title">KEEP UP WITH HAIRVEN</h1>
   </div>
-  <div class="container-fluid hairven__form">
+  <div class="container-fluid hairven_contact_form">
     <div class="form-container">
       <form>
         <div class="form-group">
@@ -163,4 +186,8 @@
       </form>
     </div>
   </div>
+</div>
+
+<div class="divider">
+  <hr /> 
 </div>

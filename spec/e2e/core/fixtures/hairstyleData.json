@@ -1,0 +1,14 @@
+[{
+    "name": "fineHair",
+    "description": "a sample hairstyle for tests",
+    "image": "hair_henna.jpg",
+    "rating": 4
+  },
+
+  {
+    "name": "uglyHair",
+    "description": "another sample hairstyle for tests",
+    "image": "hair_henna.jpg",
+    "rating": 1
+  }
+]

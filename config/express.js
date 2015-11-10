@@ -1,17 +1,19 @@
-var env = require('./config');
+var config = require('./config');
 var express = require('express');
 var app = express();
-var router = require('../app/routes/router');
+var router = express.Router();
+var routes = require('../app/routes/');
 
 var methodOverride = require('method-override');
-var passport = require('passport');
 var morgan = require('morgan');
 var multer = require('multer');
-var mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var db = require('./db');
 
-mongoose.connect(env.database);
+
+routes(router);
 
 app.use(express.static(__dirname + '/../public'));
 
@@ -25,6 +27,12 @@ app.use(bodyParser.json({
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
   extended: true
+}));
+
+app.use(session({
+  secret: 'rosco',
+  saveUninitialized: true,
+  resave: false
 }));
 
 //multer properties for saving into file with an assigned name.
@@ -50,16 +58,13 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(morgan('dev'));
 app.use(cookieParser()); // read cookies (needed for auth)
 
-// session secret
-app.use(passport.initialize());
-app.use(passport.session());
+// route trough api
+app.use('/api', router);
 
 // landing page
-app.get('/', function(req, res) {
-  res.sendFile(process.cwd() + '/public/index');
+app.get('*', function(req, res) {
+  res.sendFile(process.cwd() + '/public/index.html');
 });
 
-// route trough api
-app.use('/', router);
 
 exports = module.exports = app;
