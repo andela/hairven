@@ -1,14 +1,16 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
+var Role = require('./role.model');
+var Salon = require('./salon.model');
 
 var userSchema = new Schema({
   name: {
-    firstname: {
+    first: {
       type: String,
       required: true
     },
-    lastname: {
+    last: {
       type: String,
       required: true
     }
@@ -31,7 +33,16 @@ var userSchema = new Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  role: {
+    type: String,
+    required: true,
+    enum: ['user', 'stylist']
+  },
+  salons: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Salon'
+  }]
 });
 
 userSchema.pre('save', function(next) {
