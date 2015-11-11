@@ -265,7 +265,6 @@ describe('api/hairstyles', function() {
             if (err) {
               return err;
             }
-            done();
           });
         if (err) {
           return err;
@@ -295,7 +294,6 @@ describe('api/hairstyles', function() {
                 success: false,
                 message: 'Hairstyle not found'
               }));
-            done();
             if (err) {
               return err;
             }
