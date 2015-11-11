@@ -17,6 +17,12 @@
         <p class="centered">Register as a Stylist</p>
         <hr>
         <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input ng-model="username" type="text" class="form-control" placeholder="Username">
+            </div>
+          </div>
           <div class="col-md-6">
             <div class="form-group">
               <label for="firstname">First Name</label>
@@ -42,12 +48,26 @@
               <label for="email">Email Address</label>
               <input ng-model="email" type="text" class="form-control" placeholder="Email Address">
             </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="salon-name">Salon Name</label>
+              <input ng-model="salonName" type="text" class="form-control" placeholder="Salon Name">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="salon-address">Salon Address</label>
+              <input ng-model="salonAddress" type="text" class="form-control" placeholder="Salon Address">
+            </div>
+          </div>
+          <div class="col-md-12">
             <div class="form-group">
               <label for="password">Password</label>
               <input ng-model="password" type="password" class="form-control" placeholder="Password">
             </div>
-            <p class="verify_input_data centered pt2 enable_cursor" ng-click ="signup()" type="button">SIGN UP <i class="fa fa-chevron-right"></i></p>
           </div>
+          <p class="verify_input_data centered pt2 enable_cursor" ng-click="signup()" type="button">SIGN UP <i class="fa fa-chevron-right"></i></p>
         </div>
       </div>
       <!-- Modal -->
