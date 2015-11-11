@@ -25,7 +25,8 @@ module.exports = {
         }
         res.send({
           success: true,
-          message: 'your salon successfully added to list'
+          message: 'your salon successfully added to list',
+          salon: newSalon
         });
 
       });
