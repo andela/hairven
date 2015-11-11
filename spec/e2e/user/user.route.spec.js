@@ -10,12 +10,13 @@ describe('User route test', function() {
   it('should create new user with complete credentials', function(done) {
     user = {
       name: {
-        firstname: 'John',
-        lastname: 'David'
+        first: 'John',
+        last: 'David'
       },
       username: 'straight',
       email: 'outta@gmail.com',
-      password: 'compton'
+      password: 'compton',
+      role: 'user'
     };
     request.post('/api/signup')
       .send(user)
@@ -29,12 +30,13 @@ describe('User route test', function() {
   it('should not create new user with duplicate credentials', function(done) {
     user = {
       name: {
-        firstname: 'John',
-        lastname: 'David'
+        first: 'John',
+        last: 'David'
       },
       username: 'straight',
       email: 'outta@gmail.com',
-      password: 'compton'
+      password: 'compton',
+      role: 'user'
     };
     request.post('/api/signup')
       .send(user)
@@ -51,12 +53,13 @@ describe('User route test', function() {
   it('should not create new user with undefined username', function(done) {
     user = {
       name: {
-        firstname: 'John',
-        lastname: 'David'
+        first: 'John',
+        last: 'David'
       },
       username: undefined,
       email: 'outta@gmail.com',
-      password: 'compton'
+      password: 'compton',
+      role: 'user'
     };
     request.post('/api/signup')
       .send(user)
@@ -74,12 +77,13 @@ describe('User route test', function() {
     function(done) {
       user = {
         name: {
-          firstname: undefined,
-          lastname: undefined
+          first: undefined,
+          last: undefined
         },
         username: 'straight',
         email: 'outta@gmail.com',
-        password: 'compton'
+        password: 'compton',
+        role: 'user'
       };
       request.post('/api/signup')
         .send(user)
@@ -96,12 +100,13 @@ describe('User route test', function() {
   it('should not create new user with undefined email', function(done) {
     user = {
       name: {
-        firstname: 'John',
-        lastname: 'David'
+        first: 'John',
+        last: 'David'
       },
       username: 'straight',
       email: undefined,
-      password: 'compton'
+      password: 'compton',
+      role: 'user'
     };
     request.post('/api/signup')
       .send(user)
@@ -118,12 +123,13 @@ describe('User route test', function() {
   it('should not create new user with undefined password', function(done) {
     user = {
       name: {
-        firstname: 'John',
-        lastname: 'David'
+        first: 'John',
+        last: 'David'
       },
       username: 'straight',
       email: 'outta@gmail.com',
-      password: undefined
+      password: undefined,
+      role: 'user'
     };
     request.post('/api/signup')
       .send(user)
