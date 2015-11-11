@@ -214,6 +214,7 @@ a.logo span {
   border: solid;
   border-width: 1px;
   text-transform: uppercase;
+  border-radius: 0.3em;
   padding: 5px 10px;
   border-color: #676767;
   background: #FFFFFF;
@@ -224,6 +225,7 @@ a.logo span {
   padding: 5px 10px;
   border: solid;
   border-width: 1px;
+  border-radius: 0.3em;
   border-color: #676767;
 }
 
