@@ -20,16 +20,8 @@ var generatePassword = function() {
 };
 
 exports.signup = function(req, res) {
-  // var user = new User(req.body);
-  var user = new User();
-  user.username = req.body.username;
-  user.name = {
-    first: req.body.first,
-    last: req.body.last
-  };
-  user.email = req.body.email;
-  user.password = req.body.password;
-  user.role = req.body.role;
+
+  var user = new User(req.body);
 
   user.save(function(err) {
     if (!user.username || !user.email || !user.password) {
