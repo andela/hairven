@@ -20,21 +20,26 @@ var generatePassword = function() {
 };
 
 exports.signup = function(req, res) {
+
   var user = new User(req.body);
-  
+
   user.save(function(err) {
     if (!user.username || !user.email || !user.password) {
       return res.status(401).send({
         success: false,
         message: 'Invalid Username or Email or Password!'
       });
-    }else if (!user['name']['firstname'] || !user['name']['lastname']) {
+    } else if (!user.name.first || !user.name.last) {
       return res.status(401).send({
         success: false,
         message: 'Invalid First or Last Name!'
       });
-    }
-     else if (err) {
+    } else if (!user.role) {
+      return res.status(401).send({
+        success: false,
+        message: 'Invalid Role Provided!'
+      });
+    } else if (err) {
       if (err.code === 11000) {
         return res.status(401).send({
           success: false,
@@ -52,7 +57,6 @@ exports.signup = function(req, res) {
 };
 
 exports.login = function(req, res) {
-
   User.findOne({
       username: req.body.username
     })
@@ -89,7 +93,6 @@ exports.login = function(req, res) {
 
 
 exports.twitterSignin = function(req, res) {
-
   var requestTokenUrl = 'https://api.twitter.com/oauth/request_token';
   var accessTokenUrl = 'https://api.twitter.com/oauth/access_token';
   var profileUrl = 'https://api.twitter.com/1.1/users/show.json?screen_name=';
@@ -126,9 +129,7 @@ exports.twitterSignin = function(req, res) {
       url: accessTokenUrl,
       oauth: accessTokenOauth
     }, function(err, response, accessToken) {
-
       accessToken = qs.parse(accessToken);
-
       var profileOauth = {
         consumer_key: auth.twitterAuth.consumerKey,
         consumer_secret: auth.twitterAuth.consumerSecret,

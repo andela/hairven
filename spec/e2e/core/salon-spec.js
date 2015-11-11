@@ -212,11 +212,11 @@ describe('salons', function() {
             if (err) {
               return err;
             }
+            done();
           });
         if (err) {
           return err;
         }
-        done();
       });
   });
 

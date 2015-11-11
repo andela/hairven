@@ -22,13 +22,13 @@ module.exports = {
       newSalon.save(function(err) {
         if (err) {
           res.send(err);
+        } else {
+          res.send({
+            success: true,
+            message: 'your salon successfully added to list',
+            salon: newSalon
+          });
         }
-        res.send({
-          success: true,
-          message: 'your salon successfully added to list',
-          salon: newSalon
-        });
-
       });
     }
   },
@@ -36,23 +36,22 @@ module.exports = {
   getSalon: function(req, res) {
     // use mongoose to get all salons in the database
     Salon.findById(req.params.id)
-    .populate('hairstyles')
-    .exec(function(err, salon) {
-      // if there is an error retrieving, send the error.
-      if (err){
-        res.send(err);
-      }
-      else if(!salon){
-        res.status(404).send({
-          success: false,
-          message: 'salon not found'
-        });
-      }
-      // return all salon
-      else {
-        res.json(salon);
-      }
-    });
+      .populate('hairstyles')
+      .exec(function(err, salon) {
+        // if there is an error retrieving, send the error.
+        if (err) {
+          res.send(err);
+        } else if (!salon) {
+          res.status(404).send({
+            success: false,
+            message: 'salon not found'
+          });
+        }
+        // return all salon
+        else {
+          res.json(salon);
+        }
+      });
   },
 
   updateSalon: function(req, res) {
