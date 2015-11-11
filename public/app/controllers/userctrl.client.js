@@ -39,11 +39,11 @@ angular.module('hairvenApp')
         var salon = {
           name: $scope.salonName,
           address: $scope.salonAddress
-        }
+        };
         var data = {
           name: {
-            firstname: $scope.firstname,
-            lastname: $scope.lastname
+            first: $scope.first,
+            last: $scope.last
           },
           username: $scope.username,
           email: $scope.email,
@@ -53,24 +53,32 @@ angular.module('hairvenApp')
 
         if (salon.name && salon.address) {
           SalonService.addSalon(salon).success(function(res) {
-            data.salon = res.salon._id,
-            data.role = 'stylist'
+            data.salons = res.salon._id;
+            data.role = 'stylist';
+            UserService.register(data).success(function(data) {
+              if (data.success === false) {
+                console.log('registration failed');
+                $location.path('/');
+              } else {
+                $location.path('/login');
+              }
+            });
           }).error(function(err) {
-            console.log(err)
-          })
+            console.log(err);
+          });
+        } else {
+          UserService.register(data).success(function(data) {
+            if (data.success === false) {
+              console.log('registration failed');
+              $location.path('/');
+            } else {
+              $location.path('/login');
+            }
+          }).error(function(err) {
+            console.log('FAILED!!', err);
+            $rootScope.error = 'Failed to sign up';
+          });
         }
-        
-        UserService.register(data).success(function(data) {
-          if (data.success === false) {
-            console.log('registration failed');
-            $location.path('/');
-          } else {
-            $location.path('/login');
-          }
-        }).error(function(err) {
-          console.log('FAILED!!', err);
-          $rootScope.error = 'Failed to sign up';
-        });
       };
 
       $scope.logout = function() {
