@@ -1,0 +1,58 @@
+ <!--sidebar start-->
+  <aside>
+    <div id="sidebar" class="nav-collapse" datang-ng-init= "getSalon()">
+      <!-- sidebar menu start-->
+      <ul class="sidebar-menu" id="nav-accordion">
+        <div class="salon-details-wrapper">
+          <a ui-sref="home"><img class="salon-photo" src="../assets/images/salon.jpg"></a>
+          <h6 class="salon-heading">Salon Name:</h6>
+          <h5 class="salon-detail">{{salon.name}}</h5>
+          <h6 class="salon-heading">Salon Address:</h6>
+          <h5 class="salon-detail">{{salon.address}}</h5>
+        </div>
+        <li>
+          <a ui-sref="dashboard">
+            <i class="fa fa-dashboard"></i>
+            <span>Dashboard</span>
+          </a>
+          <hr>
+        </li>
+        <li class="sub-menu">
+          <a ui-sref="gallery">
+            <i class="fa fa-camera-retro"></i>
+            <span>Explore Gallery</span>
+          </a>
+          <hr>
+        </li>
+        <li class="sub-menu">
+          <a ui-sref="lock_screen">
+            <i class="fa fa-desktop"></i>
+            <span ng-click = "getSalon()">View Salons</span>
+          </a>
+          <hr>
+        </li>
+        <li class="sub-menu">
+          <a ui-sref="lock_screen">
+            <i class="fa fa-calendar"></i>
+            <span>Appointments</span>
+          </a>
+          <hr>
+        </li>
+        <li class="sub-menu">
+          <a ui-sref="lock_screen">
+            <i class="fa fa-black-tie"></i>
+            <span>VIP</span>
+          </a>
+          <hr>
+        </li>
+        <li class="sub-menu">
+          <a ui-sref="lock_screen">
+            <i class="fa fa-envelope-o"></i>
+            <span>Messages</span>
+          </a>
+        </li>
+      </ul>
+      <!-- sidebar menu end-->
+    </div>
+  </aside>
+  <!--sidebar end-->

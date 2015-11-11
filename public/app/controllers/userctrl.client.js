@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hairvenApp')
-  .controller('UserCtrl', ['UserService', '$rootScope', '$window', '$scope', '$location', '$localStorage', '$auth',
-    function(UserService, $rootScope, $window, $scope, $location, $localStorage, $auth) {
+  .controller('UserCtrl', ['UserService', 'SalonService', '$rootScope', '$window', '$scope', '$location', '$localStorage', '$auth',
+    function(UserService, SalonService, $rootScope, $window, $scope, $location, $localStorage, $auth) {
 
       function successAuth(res) {
         console.log(res);
@@ -27,7 +27,7 @@ angular.module('hairvenApp')
             console.log('authentication failed', data);
           } else {
             $auth.setToken(res.token);
-            $location.path('/Userdashboard');
+            $location.path('/salongallery');
           }
         }).error(function(err) {
           console.log('login failed', err);
@@ -36,6 +36,10 @@ angular.module('hairvenApp')
       };
 
       $scope.signup = function() {
+        var salon = {
+          name: $scope.salonName,
+          address: $scope.salonAddress
+        }
         var data = {
           name: {
             firstname: $scope.firstname,
@@ -43,8 +47,19 @@ angular.module('hairvenApp')
           },
           username: $scope.username,
           email: $scope.email,
-          password: $scope.password
+          password: $scope.password,
+          role: 'user'
         };
+
+        if (salon.name && salon.address) {
+          SalonService.addSalon(salon).success(function(res) {
+            data.salon = res.salon._id,
+            data.role = 'stylist'
+          }).error(function(err) {
+            console.log(err)
+          })
+        }
+        
         UserService.register(data).success(function(data) {
           if (data.success === false) {
             console.log('registration failed');

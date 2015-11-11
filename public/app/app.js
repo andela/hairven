@@ -103,7 +103,12 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
             templateUrl: 'app/partials/nav.view.html'
           },
           'theView@salongallery': {
-            templateUrl: 'app/partials/shopOwnerGallery.view.html'
+            templateUrl: 'app/partials/shopOwnerGallery.view.html',
+            controller: 'HairCtrl'
+          },
+          'sideNav@salongallery': {
+            templateUrl: 'app/partials/salonSidenav.view.html',
+            controller: 'SalonCtrl'
           }
         }
       })
@@ -130,6 +135,17 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
           },
           'theView@login': {
             templateUrl: 'app/partials/login.view.html',
+            controller: 'UserCtrl'
+          }
+        }
+      }).state('salonlogin', {
+        url: "/salonlogin",
+        views: {
+          '': {
+            templateUrl: 'app/partials/nav.view.html'
+          },
+          'theView@salonlogin': {
+            templateUrl: 'app/partials/salonLogin.view.html',
             controller: 'UserCtrl'
           }
         }
