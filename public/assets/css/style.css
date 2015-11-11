@@ -188,18 +188,21 @@ a.logo span {
 
 @media (min-width: 768px) {
   .centered_nav_opt {
+    margin-top: 5px;
     padding: 0 5% 0 10%;
   }
 }
 
 @media (min-width: 998px) {
   .centered_nav_opt {
+    margin-top: 5px;
     padding: 0 5% 0 20%;
   }
 }
 
 @media (min-width: 1200px) {
   .centered_nav_opt {
+    margin-top: 5px;
     padding: 0 15% 0 25%;
   }
 }
@@ -210,10 +213,18 @@ a.logo span {
 .login {
   border: solid;
   border-width: 1px;
-  margin-top: 12px;
-  border-color: #424a5d;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-color: #676767;
   background: #FFFFFF;
-  display: inline;
+}
+
+.salon-login {
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border: solid;
+  border-width: 1px;
+  border-color: #676767;
 }
 
 .form-login {
