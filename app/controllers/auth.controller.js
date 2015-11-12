@@ -83,8 +83,51 @@ exports.login = function(req, res) {
           });
           res.send({
             success: true,
-            message: 'Token generated.',
-            token: token
+            message: 'You are logged in',
+            token: token,
+            user: user
+          });
+        }
+      }
+    });
+};
+
+exports.loginSalon = function(req, res) {
+  User.findOne({
+      username: req.body.username
+    })
+    .populate('salons')
+    .select('username password role salons')
+    .exec(function(err, user) {
+      if (err) {
+        throw err;
+      }
+      if (!user) {
+        return res.status(401).send({
+          success: false,
+          message: 'Invalid Username or Password!'
+        });
+      } else if (user.role !== 'stylist') {
+        return res.status(401).send({
+          success: false,
+          message: 'Cannot find account,\n Please register as stylist or salon owner!'
+        });
+      } else {
+        var validPassword = user.comparePassword(req.body.password);
+        if (!validPassword) {
+          return res.status(401).send({
+            success: false,
+            message: 'Invalid Username or Password!'
+          });
+        } else {
+          var token = jwt.sign(user, config.secret, {
+            expiresInMinutes: 1440
+          });
+          res.send({
+            success: true,
+            message: 'You are logged in',
+            token: token,
+            user: user
           });
         }
       }
