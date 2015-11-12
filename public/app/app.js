@@ -1,9 +1,9 @@
 "use strict"
 
-var app = angular.module('hairvenApp', ['ui.router', 'ngStorage', 'satellizer']);
+var app = angular.module('hairvenApp', ['ui.router', 'ngStorage', 'satellizer', 'ngToast']);
 
-app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authProvider',
-  function($stateProvider, $urlRouterProvider, $locationProvider, $authProvider) {
+app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authProvider', 'ngToastProvider',
+  function($stateProvider, $urlRouterProvider, $locationProvider, $authProvider, ngToastProvider) {
 
     $stateProvider
       .state('home', {
@@ -53,7 +53,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
         }
       })
       .state('Userdashboard', {
-        url: "/Userdashboard",
+        url: "/userdashboard",
         views: {
           '': {
             templateUrl: 'app/partials/nav.view.html'
@@ -103,7 +103,12 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
             templateUrl: 'app/partials/nav.view.html'
           },
           'theView@salongallery': {
-            templateUrl: 'app/partials/shopOwnerGallery.view.html'
+            templateUrl: 'app/partials/shopOwnerGallery.view.html',
+            controller: 'HairCtrl'
+          },
+          'sideNav@salongallery': {
+            templateUrl: 'app/partials/salonSidenav.view.html',
+            controller: 'SalonCtrl'
           }
         }
       })
@@ -133,7 +138,22 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
             controller: 'UserCtrl'
           }
         }
+      }).state('salonlogin', {
+        url: "/salonlogin",
+        views: {
+          '': {
+            templateUrl: 'app/partials/nav.view.html'
+          },
+          'theView@salonlogin': {
+            templateUrl: 'app/partials/salonLogin.view.html',
+            controller: 'UserCtrl'
+          }
+        }
       });
+
+    ngToastProvider.configure({
+      animation: 'slide'
+    });
 
     $urlRouterProvider.otherwise("/");
     $locationProvider.html5Mode(true);

@@ -10,8 +10,18 @@
       <li><a href="/contact">Contact</a></li>
     </ul>
     <ul class="nav navbar-nav pull-right top-menu">
-      <li><a href="/login">Login</a></li>
+      <li>
+        <a href="/login">
+          <button class="login"> Login</button>
+        </a>
+      </li>
+      <li>
+        <a href="/salonlogin">
+          <button class="salon-login"> Salon Login</button>
+        </a>
+      </li>
     </ul>
   </div>
 </header>
+<div ui-view="sideNav"></div>
 <div ui-view="theView"></div>

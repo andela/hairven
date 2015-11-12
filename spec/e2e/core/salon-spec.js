@@ -118,7 +118,7 @@ describe('salons', function() {
       });
 
   });
-  
+
   //salon posting test
   it('should POST successfully', function(done) {
 
@@ -217,7 +217,6 @@ describe('salons', function() {
         if (err) {
           return err;
         }
-        done();
       });
   });
 
@@ -227,11 +226,11 @@ describe('salons', function() {
     request(app)
       .delete('/api/salons/' + id)
       .end(function(err, response) {
+        expect(response.statusCode).toBe(200);
         expect(response.body).toEqual(jasmine.objectContaining({
           success: true,
           message: 'salon deleted from list'
         }));
-        expect(response.statusCode).toBe(200);
         request(app)
           .get('/api/salons/' + id)
           .end(function(err, response) {
@@ -243,7 +242,6 @@ describe('salons', function() {
             if (err) {
               return err;
             }
-            done();
           });
         if (err) {
           return err;
