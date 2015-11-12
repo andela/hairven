@@ -20,7 +20,6 @@ app.factory('UserService', ['$http', 'baseUrl', '$localStorage', function($http,
     },
     logout: function(success) {
       changeUser({});
-      delete $localStorage.token;
       success();
     },
     currentUser: function() {
