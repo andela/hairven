@@ -157,7 +157,7 @@ describe('User route test', function() {
     request.post('/api/signup')
       .send(user)
       .end(function(err, response) {
-        expect(401)
+        expect(401);
         expect(response.body).toEqual(jasmine.objectContaining({
           success: false,
           message: 'Invalid Role Provided!'
@@ -208,7 +208,7 @@ describe('User route test', function() {
     request.post('/api/salonlogin')
       .send(user)
       .end(function(err, response) {
-        expect(401)
+        expect(401);
         expect(response.body)
           .toEqual(jasmine.objectContaining({
             success: false,
@@ -245,7 +245,7 @@ describe('User route test', function() {
     request.post('/api/salonlogin')
       .send(userDetails)
       .end(function(err, response) {
-        expect(200)
+        expect(200);
         expect(err).toBe(null);
         expect(response.body.message).toEqual('You are logged in');
         done();
