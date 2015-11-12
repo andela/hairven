@@ -17,6 +17,10 @@ function authRoutes(router) {
   // login
   router.route('/login')
     .post(authCtrl.login);
-}
+
+// salon/stylists login
+  router.route('/salonlogin')
+    .post(authCtrl.loginSalon);
+};
 
 module.exports = authRoutes;
