@@ -1,4 +1,4 @@
-"use strict"
+'use strict'
 
 var app = angular.module('hairvenApp');
 app.factory('UserService', ['$http', 'baseUrl', '$localStorage', function($http, baseUrl, $localStorage) {
@@ -20,7 +20,6 @@ app.factory('UserService', ['$http', 'baseUrl', '$localStorage', function($http,
     },
     logout: function(success) {
       changeUser({});
-      delete $localStorage.token;
       success();
     },
     currentUser: function() {
