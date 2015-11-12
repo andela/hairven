@@ -1,7 +1,8 @@
 'use strict'
 
 angular.module('hairvenApp')
-  .controller('HomeCtrl', ['$scope', '$state', function($scope, $state) {
+  .controller('HomeCtrl', ['$scope', '$rootScope', '$state',
+   function($scope, $rootScope, $state) {
     $(function() {
       // OPACITY OF BUTTON SET TO 0%
       $(".roll").css("opacity", "0");
@@ -28,5 +29,6 @@ angular.module('hairvenApp')
     $scope.redirect = function(link) {
       $state.go(link);
     };
-    
-  }]);
+  
+  }
+  ]);
