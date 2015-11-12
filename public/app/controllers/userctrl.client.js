@@ -27,7 +27,7 @@ angular.module('hairvenApp')
             dismissOnClick: true,
             timeout: 3000
           });
-
+          
         }).error(function(err) {
 
           ngToast.create({
