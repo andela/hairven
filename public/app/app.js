@@ -1,9 +1,9 @@
 "use strict"
 
-var app = angular.module('hairvenApp', ['ui.router', 'ngStorage', 'satellizer']);
+var app = angular.module('hairvenApp', ['ui.router', 'ngStorage', 'satellizer', 'ngToast']);
 
-app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authProvider',
-  function($stateProvider, $urlRouterProvider, $locationProvider, $authProvider) {
+app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authProvider', 'ngToastProvider',
+  function($stateProvider, $urlRouterProvider, $locationProvider, $authProvider, ngToastProvider) {
 
     $stateProvider
       .state('home', {
@@ -53,7 +53,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
         }
       })
       .state('Userdashboard', {
-        url: "/Userdashboard",
+        url: "/userdashboard",
         views: {
           '': {
             templateUrl: 'app/partials/nav.view.html'
@@ -150,6 +150,10 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
           }
         }
       });
+
+    ngToastProvider.configure({
+      animation: 'slide'
+    });
 
     $urlRouterProvider.otherwise("/");
     $locationProvider.html5Mode(true);
