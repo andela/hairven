@@ -1,41 +1,85 @@
 'use strict';
 
 angular.module('hairvenApp')
-  .controller('UserCtrl', ['UserService', 'SalonService', '$rootScope', '$window', '$scope', '$location', '$localStorage', '$auth',
-    function(UserService, SalonService, $rootScope, $window, $scope, $location, $localStorage, $auth) {
+  .controller('UserCtrl', ['UserService', 'SalonService', '$rootScope', '$window', '$scope',
+    '$location', '$localStorage', '$auth', 'ngToast',
+    function(UserService, SalonService, $rootScope, $window, $scope, $location, $localStorage, $auth, ngToast) {
 
-      function successAuth(res) {
-        console.log(res);
-        if (res.type == false) {
-          console.log('stop', data);
-        } else {
-          console.log(res.body);
-          $localStorage.token = res.data.token;
-
-          alert('You are in!');
-        }
-      };
       $scope.signin = function() {
 
         var data = {
           username: $scope.username,
           password: $scope.password
         };
+
         UserService.login(data).success(function(res) {
 
-          if (res.type === false) {
-            console.log('authentication failed', data);
-          } else {
-            $auth.setToken(res.token);
-            $location.path('/salongallery');
-          }
+          $auth.setToken(res.token);
+          $localStorage.activeUser = res.user.username;
+          $localStorage.userId = res.user._id;
+
+          $location.path('/dashboard');
+
+          ngToast.create({
+            className: 'success',
+            content: res.message,
+            dismissOnTimeout: true,
+            dismissOnClick: true,
+            timeout: 3000
+          });
+
         }).error(function(err) {
-          console.log('login failed', err);
-          $rootScope.error = 'Authentication failed';
+
+          ngToast.create({
+            className: 'danger',
+            content: err.message,
+            dismissOnTimeout: true,
+            dismissOnClick: true,
+            timeout: 3000
+          });
+
+        });
+      };
+
+      $scope.salonSignin = function() {
+
+        var data = {
+          username: $scope.username,
+          password: $scope.password
+        };
+
+        UserService.salonLogin(data).success(function(res) {
+
+          $auth.setToken(res.token);
+          $localStorage.activeStylist = res.user.username;
+          $localStorage.stylistId = res.user._id;
+          $localStorage.activeSalons = res.user.salons;
+
+          $location.path('/salongallery');
+
+          ngToast.create({
+            className: 'success',
+            content: res.message,
+            dismissOnTimeout: true,
+            dismissOnClick: true,
+            timeout: 3000
+          });
+
+        }).error(function(err) {
+
+          ngToast.create({
+            className: 'danger',
+            content: err.message,
+            dismissOnTimeout: true,
+            dismissOnClick: true,
+            timeout: 3000
+          });
+
         });
       };
 
       $scope.signup = function() {
+
         var salon = {
           name: $scope.salonName,
           address: $scope.salonAddress
@@ -52,45 +96,95 @@ angular.module('hairvenApp')
         };
 
         if (salon.name && salon.address) {
+
           SalonService.addSalon(salon).success(function(res) {
+
             data.salons = res.salon._id;
             data.role = 'stylist';
-            UserService.register(data).success(function(data) {
-              if (data.success === false) {
-                console.log('registration failed');
-                $location.path('/');
-              } else {
-                $location.path('/login');
-              }
+
+            UserService.register(data).success(function(response) {
+
+              $location.path('/salonlogin');
+
+              ngToast.create({
+                className: 'success',
+                content: response.message,
+                dismissOnTimeout: true,
+                dismissOnClick: true,
+                timeout: 3000
+              });
+
+            }).error(function(err) {
+
+              ngToast.create({
+                className: 'danger',
+                content: err.message,
+                dismissOnTimeout: true,
+                dismissOnClick: true,
+                timeout: 3000
+              });
+
             });
           }).error(function(err) {
-            console.log(err);
+
+            ngToast.create({
+              className: 'danger',
+              content: err.message,
+              dismissOnTimeout: true,
+              dismissOnClick: true,
+              timeout: 3000
+            });
+
           });
         } else {
-          UserService.register(data).success(function(data) {
-            if (data.success === false) {
-              console.log('registration failed');
-              $location.path('/');
-            } else {
-              $location.path('/login');
-            }
+          UserService.register(data).success(function(res) {
+
+            $location.path('/login');
+
+            ngToast.create({
+              className: 'success',
+              content: res.message,
+              dismissOnTimeout: true,
+              dismissOnClick: true,
+              timeout: 3000
+            });
+
           }).error(function(err) {
-            console.log('FAILED!!', err);
-            $rootScope.error = 'Failed to sign up';
+            ngToast.create({
+              className: 'danger',
+              content: err.message,
+              dismissOnTimeout: true,
+              dismissOnClick: true,
+              timeout: 3000
+            });
           });
         }
       };
 
       $scope.logout = function() {
         $auth.removeToken();
+        $localStorage.$reset();
+
         UserService.logout(function() {
-          window.location = '/';
+          $location.path('/');
+
+          ngToast.create({
+            className: 'success',
+            content: 'successfully logged out',
+            dismissOnTimeout: true,
+            dismissOnClick: true,
+            timeout: 3000
+          });
         }, function() {
-          console.log('failed to logout!');
+          ngToast.create({
+            className: 'danger',
+            content: 'failed to logout!',
+            dismissOnTimeout: true,
+            dismissOnClick: true,
+            timeout: 3000
+          });
         });
       };
-
-      $scope.token = $localStorage.token;
 
       $scope.authenticate = function(provider) {
         $auth.authenticate(provider)
