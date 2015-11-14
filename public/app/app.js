@@ -138,14 +138,14 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
             controller: 'UserCtrl'
           }
         }
-      }).state('salonlogin', {
-        url: "/salonlogin",
+      }).state('registersalon', {
+        url: "/registersalon",
         views: {
           '': {
             templateUrl: 'app/partials/nav.view.html'
           },
-          'theView@salonlogin': {
-            templateUrl: 'app/partials/salonLogin.view.html',
+          'theView@registersalon': {
+            templateUrl: 'app/partials/salonSignup.view.html',
             controller: 'UserCtrl'
           }
         }
@@ -165,6 +165,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
     $authProvider.twitter({
       url: '/api/auth/twitter'
     });
+
+    $authProvider.authHeader = 'x-access-token';
   }
 
 ]);
