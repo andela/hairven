@@ -1,8 +1,8 @@
 'use strict'
 
 angular.module('hairvenApp')
-  .controller('HomeCtrl', ['$scope', '$rootScope', '$state',
-   function($scope, $rootScope, $state) {
+  .controller('HomeCtrl', ['$scope', '$state',
+   function($scope, $state) {
     $(function() {
       // OPACITY OF BUTTON SET TO 0%
       $(".roll").css("opacity", "0");
