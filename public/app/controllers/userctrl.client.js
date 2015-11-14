@@ -14,48 +14,22 @@ angular.module('hairvenApp')
 
         UserService.login(data).success(function(res) {
 
-          $auth.setToken(res.token);
-          $localStorage.activeUser = res.user.username;
-          $localStorage.userId = res.user._id;
+          if (res.user.role === 'user') {
+            $auth.setToken(res.token);
+            $localStorage.activeUser = res.user.username;
+            $localStorage.userId = res.user._id;
 
-          $location.path('/dashboard');
+            $location.path('/dashboard');
 
-          ngToast.create({
-            className: 'success',
-            content: res.message,
-            dismissOnTimeout: true,
-            dismissOnClick: true,
-            timeout: 3000
-          });
-          
-        }).error(function(err) {
+          } else {
+            $auth.setToken(res.token);
+            $localStorage.activeStylist = res.user.username;
+            $localStorage.stylistId = res.user._id;
+            $localStorage.activeSalons = res.user.salons;
 
-          ngToast.create({
-            className: 'danger',
-            content: err.message,
-            dismissOnTimeout: true,
-            dismissOnClick: true,
-            timeout: 3000
-          });
+            $location.path('/salongallery');
 
-        });
-      };
-
-      $scope.salonSignin = function() {
-
-        var data = {
-          username: $scope.username,
-          password: $scope.password
-        };
-
-        UserService.salonLogin(data).success(function(res) {
-
-          $auth.setToken(res.token);
-          $localStorage.activeStylist = res.user.username;
-          $localStorage.stylistId = res.user._id;
-          $localStorage.activeSalons = res.user.salons;
-
-          $location.path('/salongallery');
+          }
 
           ngToast.create({
             className: 'success',
@@ -143,13 +117,14 @@ angular.module('hairvenApp')
 
             ngToast.create({
               className: 'success',
-              content: res.message,
+              content: res.message + ' login to continue',
               dismissOnTimeout: true,
               dismissOnClick: true,
               timeout: 3000
             });
 
           }).error(function(err) {
+
             ngToast.create({
               className: 'danger',
               content: err.message,
@@ -190,11 +165,32 @@ angular.module('hairvenApp')
         $auth.authenticate(provider)
           .then(function(response) {
 
-            $window.localStorage.currentUser = JSON.stringify(response.access_token);
-            $rootScope.currentUser = JSON.parse($window.localStorage.currentUser);
-            $location.path('/Userdashboard');
+            $auth.setToken(response.data.token);
+            $localStorage.activeUser = response.data.user.username;
+            $localStorage.userId = response.data.user._id;
+
+            $location.path('/home');
+
+            ngToast.create({
+              className: 'success',
+              content: 'You are signed in',
+              dismissOnTimeout: true,
+              dismissOnClick: true,
+              timeout: 3000
+            });
+
           })
-          .catch(function(response) {});
+          .catch(function(err) {
+
+            ngToast.create({
+              className: 'danger',
+              content: err.data.message,
+              dismissOnTimeout: true,
+              dismissOnClick: true,
+              timeout: 3000
+            });
+
+          });
       };
 
       $scope.isAuthenticated = function() {
