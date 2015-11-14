@@ -67,7 +67,7 @@ describe('User route test', function() {
       .end(function(err, response) {
         expect(response.body).toEqual(jasmine.objectContaining({
           success: false,
-          message: 'Invalid Username or Email or Password!'
+          message: 'Invalid username'
         }));
         done();
       });
@@ -77,8 +77,8 @@ describe('User route test', function() {
     function(done) {
       user = {
         name: {
-          first: undefined,
-          last: undefined
+          first: ' ',
+          last: ' '
         },
         username: 'straight',
         email: 'outta@gmail.com',
@@ -91,7 +91,7 @@ describe('User route test', function() {
         .end(function(err, response) {
           expect(response.body).toEqual(jasmine.objectContaining({
             success: false,
-            message: 'Invalid First or Last Name!'
+            message: 'Invalid first or last name'
           }));
           done();
         });
@@ -114,7 +114,7 @@ describe('User route test', function() {
       .end(function(err, response) {
         expect(response.body).toEqual(jasmine.objectContaining({
           success: false,
-          message: 'Invalid Username or Email or Password!'
+          message: 'Invalid email'
         }));
         done();
       });
@@ -137,7 +137,7 @@ describe('User route test', function() {
       .end(function(err, response) {
         expect(response.body).toEqual(jasmine.objectContaining({
           success: false,
-          message: 'Invalid Username or Email or Password!'
+          message: 'Invalid password'
         }));
         done();
       });
@@ -160,7 +160,7 @@ describe('User route test', function() {
         expect(401);
         expect(response.body).toEqual(jasmine.objectContaining({
           success: false,
-          message: 'Invalid Role Provided!'
+          message: 'Invalid role'
         }));
         done();
       });
@@ -181,7 +181,10 @@ describe('User route test', function() {
       .send(user)
       .expect(401)
       .end(function(err, response) {
-        expect(response.body.errors).not.toBe(null);
+        expect(response.body).toEqual(jasmine.objectContaining({
+          success: false,
+          message: 'Invalid role'
+        }));
         done();
       });
   });
@@ -200,27 +203,9 @@ describe('User route test', function() {
       });
   });
 
-  it('should not login a user as a stylist', function(done) {
-    user = {
-      username: 'straight',
-      password: 'compton'
-    };
-    request.post('/api/salonlogin')
-      .send(user)
-      .end(function(err, response) {
-        expect(401);
-        expect(response.body)
-          .toEqual(jasmine.objectContaining({
-            success: false,
-            message: 'Cannot find account,\n Please register as stylist or salon owner!'
-          }));
-        done();
-      });
-  });
-
   it('should login a stylist/salon owner with correct credentials', function(done) {
     User.remove({}, function() {});
-    
+
     user = new User({
       name: {
         first: 'John',
@@ -242,7 +227,7 @@ describe('User route test', function() {
       username: 'straight',
       password: 'compton'
     };
-    request.post('/api/salonlogin')
+    request.post('/api/login')
       .send(userDetails)
       .end(function(err, response) {
         expect(200);
