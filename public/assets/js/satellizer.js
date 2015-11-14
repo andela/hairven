@@ -30,7 +30,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
       providers: {
         facebook: {
           name: 'facebook',
-          url: '/api/auth/facebook',
+          url: 'http://localhost:3030/api/auth/facebook',
           authorizationEndpoint: 'https://www.facebook.com/v2.3/dialog/oauth',
           redirectUri: (window.location.origin || window.location.protocol + '//' + window.location.host) + '/',
           requiredUrlParams: ['display', 'scope'],
@@ -556,7 +556,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
 
           var defaults = {
             defaultUrlParams: ['response_type', 'client_id', 'redirect_uri'],
-            responseType: 'token',
+            responseType: 'code',
             responseParams: {
               code: 'code',
               clientId: 'clientId',
@@ -565,6 +565,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
           };
 
           Oauth2.open = function(options, userData) {
+            
             defaults = utils.merge(options, defaults);
 
             var url;
@@ -587,6 +588,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
 
             return openPopup
               .then(function(oauthData) {
+
                 if (defaults.responseType === 'token') {
                   return oauthData;
                 }
@@ -594,6 +596,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
                 if (oauthData.state && oauthData.state !== storage.get(stateName)) {
                   return $q.reject('OAuth "state" mismatch');
                 }
+                
                 return Oauth2.exchangeForToken(oauthData, userData);
               });
           };
