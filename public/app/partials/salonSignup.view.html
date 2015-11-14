@@ -1,0 +1,82 @@
+<div id="login-page" class="screen__bg">
+  <div class="container">
+    <form class="form-login" action="index.html">
+      <div class="login-wrap">
+        <h4 class="centered">Register as a Stylist</h4>
+        <hr>
+        <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input ng-model="username" type="text" class="form-control" placeholder="Username">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="firstname">First Name</label>
+              <input ng-model="first" type="text" class="form-control" placeholder="First Name">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="lastname">Last Name</label>
+              <input ng-model="last" type="text" name="email" placeholder="Last Name" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input ng-model="phone" type="text" class="form-control" placeholder="Phone Number">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input ng-model="email" type="text" class="form-control" placeholder="Email Address">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="salon-name">Salon Name</label>
+              <input ng-model="salonName" type="text" class="form-control" placeholder="Salon Name">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="salon-address">Salon Address</label>
+              <input ng-model="salonAddress" type="text" class="form-control" placeholder="Salon Address">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input ng-model="password" type="password" class="form-control" placeholder="Password">
+            </div>
+          </div>
+          <p class="verify_input_data centered pt2 enable_cursor" ng-click="signup()" type="button">SIGN UP <i class="fa fa-chevron-right"></i></p>
+        </div>
+      </div>
+      <!-- Modal -->
+      <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="modal" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">Forgot Password ?</h4>
+            </div>
+            <div class="modal-body">
+              <p>Enter your e-mail address below to reset your password.</p>
+              <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
+            </div>
+            <div class="modal-footer">
+              <span class="discard_input_data enable_cursor padding10" data-dismiss="modal" type="button">CANCEL</span>
+              <span class="verify_input_data enable_cursor padding10" type="button">SUBMIT <i class="fa fa-chevron-right"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
