@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
-// var Role = require('./role.model');
 var Salon = require('./salon.model');
 
 var userSchema = new Schema({
