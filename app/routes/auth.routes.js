@@ -6,7 +6,7 @@ function authRoutes(router) {
   router.route('/auth/facebook/')
     .post(authCtrl.facebookSignin);
 
- // twitter login route
+  // twitter login route
   router.route('/auth/twitter/')
     .post(authCtrl.twitterSignin);
 
@@ -17,10 +17,5 @@ function authRoutes(router) {
   // login
   router.route('/login')
     .post(authCtrl.login);
-
-// salon/stylists login
-  router.route('/salonlogin')
-    .post(authCtrl.loginSalon);
-};
-
+}
 module.exports = authRoutes;
