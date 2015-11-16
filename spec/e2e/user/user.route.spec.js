@@ -219,7 +219,7 @@ describe('User route test', function() {
 
     user.save(function(err) {
       if (err) {
-        console.log(err);
+        return err;
       };
     });
 
