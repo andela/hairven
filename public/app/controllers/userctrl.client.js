@@ -5,6 +5,8 @@ angular.module('hairvenApp')
     '$location', '$localStorage', '$auth', 'ngToast',
     function(UserService, SalonService, $rootScope, $window, $scope, $location, $localStorage, $auth, ngToast) {
 
+
+
       $scope.signin = function() {
 
         var data = {
@@ -19,7 +21,7 @@ angular.module('hairvenApp')
             $localStorage.activeUser = res.user.username;
             $localStorage.userId = res.user._id;
 
-            $location.path('/dashboard');
+            $location.path('/');
 
           } else {
             $auth.setToken(res.token);
@@ -30,6 +32,10 @@ angular.module('hairvenApp')
             $location.path('/salongallery');
 
           }
+
+          //change login status to true
+          $localStorage.loggedIn = true;
+          $rootScope.loggedIn = $localStorage.loggedIn;
 
           ngToast.create({
             className: 'success',
@@ -73,16 +79,14 @@ angular.module('hairvenApp')
 
           SalonService.addSalon(salon).success(function(res) {
 
-            data.salons = res.salon._id;
+            data.salons = res.salons._id;
             data.role = 'stylist';
 
             UserService.register(data).success(function(response) {
 
-              $location.path('/salonlogin');
-
               ngToast.create({
                 className: 'success',
-                content: response.message,
+                content: response.message + ' click on login to continue',
                 dismissOnTimeout: true,
                 dismissOnClick: true,
                 timeout: 3000
@@ -136,12 +140,15 @@ angular.module('hairvenApp')
         }
       };
 
-      $scope.logout = function() {
+      $rootScope.logout = function() {
         $auth.removeToken();
         $localStorage.$reset();
 
         UserService.logout(function() {
           $location.path('/');
+
+          //change login status to true
+          $rootScope.loggedIn = false;
 
           ngToast.create({
             className: 'success',
@@ -170,6 +177,10 @@ angular.module('hairvenApp')
             $localStorage.userId = response.data.user._id;
 
             $location.path('/home');
+
+            //change login status to true
+            $localStorage.loggedIn = true;
+            $rootScope.loggedIn = $localStorage.loggedIn;
 
             ngToast.create({
               className: 'success',
