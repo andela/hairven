@@ -151,6 +151,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
         }
       });
 
+    $authProvider.authHeader = 'x-access-token';
+  
     ngToastProvider.configure({
       animation: 'slide'
     });
@@ -166,7 +168,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
       url: '/api/auth/twitter'
     });
 
-    $authProvider.authHeader = 'x-access-token';
   }
 
 ]);
