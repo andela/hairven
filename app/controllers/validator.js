@@ -43,12 +43,12 @@ module.exports = {
 
     //validate role
     role: function(role) {
-      var val
+      var val;
       if (role !== 'user' && role !== 'stylist') {
         val = false;
 
       } else {
-        val = true
+        val = true;
       }
       return val;
     }
@@ -86,7 +86,7 @@ module.exports = {
 
       //check if all required details are provided
       if (!data.hasOwnProperty(field)) {
-        errors.push(this.errMessages[field])
+        errors.push(this.errMessages[field]);
 
       } else {
         //check values for each property
