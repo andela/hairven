@@ -33,7 +33,7 @@ exports.signup = function(req, res) {
       message: messages
     });
   } else {
-    newUser = new User(user)
+    var newUser = new User(user);
     newUser.save(function(err) {
       if (err) {
         console.log(err);
@@ -155,19 +155,19 @@ exports.twitterSignin = function(req, res) {
               var names = profile.name.split(' ');
 
               //create a new user account
-              var user = new User();
-              user.username = profile.screen_name;
-              user.email = user.username + 'unknown@unknown';
-              user.name = {
+              var newUser = new User();
+              newUser.username = profile.screen_name;
+              newUser.email = user.username + 'unknown@unknown';
+              newUser.name = {
                   first: names[0] || 'none',
                   last: names[1] || 'none'
                 },
-                user.role = 'user',
-                user.password = generatePassword();
+                newUser.role = 'user';
+                newUser.password = generatePassword();
 
-              user.save(function(err) {
+              newUser.save(function(err) {
                 if (err) {
-                  return err
+                  return err;
                 }
               });
             }
@@ -176,7 +176,7 @@ exports.twitterSignin = function(req, res) {
               token: jwt.sign(user, config.secret, {
                 expiresInMinutes: 1440
               }),
-              user: user
+              user: newUser
             });
 
           });
@@ -198,7 +198,6 @@ exports.twitterSignin = function(req, res) {
 //signin a user via facebook
 exports.facebookSignin = function(req, res) {
 
-  var fields = ['id', 'email', 'first_name', 'last_name', 'name'];
   var accessTokenUrl = 'https://graph.facebook.com/v2.3/oauth/access_token';
   var graphApiUrl = 'https://graph.facebook.com/v2.3/me';
 
@@ -244,19 +243,19 @@ exports.facebookSignin = function(req, res) {
           if (!user.username) {
 
             //create a new user account
-            var user = new User();
-            user.username = names[0];
-            user.email = user.username + 'unknown@unknown';
-            user.name = {
+            var newUser = new User();
+            newUser.username = names[0];
+            newUser.email = user.username + 'unknown@unknown';
+            newUser.name = {
                 first: names[0],
                 last: names[1]
-              },
-              user.role = 'user',
-              user.password = generatePassword();
+              };
+              newUser.role = 'user';
+              newUser.password = generatePassword();
 
-            user.save(function(err) {
+            newUser.save(function(err) {
               if (err) {
-                console.log(err);
+                return err;
               }
             });
           }
@@ -265,7 +264,7 @@ exports.facebookSignin = function(req, res) {
             token: jwt.sign(user, config.secret, {
               expiresInMinutes: 1440
             }),
-            user: user
+            user: newUser
           });
 
         });
