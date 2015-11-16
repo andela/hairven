@@ -12,12 +12,17 @@
     <ul class="nav navbar-nav pull-right top-menu">
       <li>
         <a href="/login">
-          <button class="login"> Login</button>
+          <button ng-show="!loggedIn" class="login"> Login</button>
         </a>
       </li>
       <li>
         <a href="/registersalon">
-          <button class="salon-login">Register Salon</button>
+          <button ng-show="!loggedIn" class="salon-login">Register Salon</button>
+        </a>
+      </li>
+      <li>
+        <a href="/">
+          <button ng-show="loggedIn" ng-click="logout()" class="login"> Log out</button>
         </a>
       </li>
     </ul>
