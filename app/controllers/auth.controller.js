@@ -144,7 +144,7 @@ exports.twitterSignin = function(req, res) {
         json: true
       }, function(err, response, profile) {
         // Step 5a. Link user accounts.
-        if (req.headers['x-access-token']) {
+        if (req.body['oauth_token']) {
 
           User.find({
             username: profile.screen_name
@@ -232,7 +232,8 @@ exports.facebookSignin = function(req, res) {
           message: profile.error.message
         });
       }
-      if (req.headers['x-access-token']) {
+      console.log(req.body);
+      if (req.body['code']) {
 
         var names = profile.name.split(' ');
 
