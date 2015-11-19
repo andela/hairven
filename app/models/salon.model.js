@@ -24,6 +24,13 @@ var Salons = new Schema({
 
 });
 
+Salons.pre('remove', function(next) {
+
+  //remove all hairstyles posted by salon on salon delete
+  this.model('Hairstyle').remove({
+    salon: this._id
+  }, next);
+});
 
 // The models for Hairstyles.
 module.exports = mongoose.model('Salon', Salons);
