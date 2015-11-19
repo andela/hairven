@@ -1,7 +1,7 @@
 'use strict'
 
 var app = angular.module('hairvenApp');
-app.factory('HairstyleService', ['$http', 'baseUrl', '$localStorage', function($http, baseUrl, $localStorage) {
+app.factory('HairstyleService', ['$http', 'baseUrl', '$localStorage', 'Upload', function($http, baseUrl, $localStorage, Upload) {
 
   var Hairstyle = {
 
@@ -12,8 +12,18 @@ app.factory('HairstyleService', ['$http', 'baseUrl', '$localStorage', function($
     getOneHairstyle: function(id) {
       return $http.get(baseUrl + '/api/hairstyles/' + id);
     },
-    addHairstyle: function(data) {
-      return $http.post(baseUrl + '/api/hairstyles/', data);
+    addHairstyle: function(file, data) {
+
+      return Upload.upload({
+        url: baseUrl + '/api/hairstyles',
+        data: {
+          hairPhoto: file,
+          name: data.name,
+          description: data.description,
+          salon: data.salon
+        },
+        method: 'POST'
+      });
     },
 
     updateHairstyle: function(id, data) {
