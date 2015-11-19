@@ -1,6 +1,6 @@
 <section id="container">
   <!--main content start-->
-  <section id="main-content">
+  <section id="main-content" data-ng-init="getAllHairstyles()">
     <section class="wrapper">
       <div class="row mt">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
@@ -21,39 +21,13 @@
         <!-- col-lg-4 -->
       </div>
       <div class="row mt">
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc" ng-repeat="hairstyle in hairstyles">
           <div class="project-wrapper">
             <div class="add-photo">
               <div class="photo">
-                <a class="fancybox" href="../assets/images/portfolio/port05.jpg"><img class="img-responsive" src="../assets/images/portfolio/port05.jpg" alt=""></a>
+                <a class="fancybox" href="hairstyle.image"><img class="img-responsive" src="{{hairstyle.image}}" alt="You have no Hairstyles, click above to add"></a>
               </div>
               <div class="overlay"></div>
-            </div>
-          </div>
-        </div>
-        <!-- col-lg-4 -->
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
-          <div class="project-wrapper">
-            <div class="project">
-              <div class="photo-wrapper">
-                <div class="photo">
-                  <a class="fancybox" href="../assets/images/portfolio/port05.jpg"><img class="img-responsive" src="../assets/images/portfolio/port05.jpg" alt=""></a>
-                </div>
-                <div class="overlay"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- col-lg-4 -->
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
-          <div class="project-wrapper">
-            <div class="project">
-              <div class="photo-wrapper">
-                <div class="photo">
-                  <a class="fancybox" href="../assets/images/portfolio/port06.jpg"><img class="img-responsive" src="../assets/images/portfolio/port06.jpg" alt=""></a>
-                </div>
-                <div class="overlay"></div>
-              </div>
             </div>
           </div>
         </div>
@@ -85,14 +59,14 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="password">Photo</label>
-                  <input id="hairPhoto" type="file" class="form-control">
+                  <label for="hairPhoto">Photo</label>
+                  <input name="hairPhoto" ngf-select ng-model="imageFile" id="hairPhoto" type="file" class="form-control" ngf-max-size="20MB" accept="image/*">
                 </div>
               </div>
             </div>
             <div class="modal-footer">
               <span class="discard_input_data enable_cursor padding10" data-dismiss="modal" type="button">CANCEL</span>
-              <span class="verify_input_data enable_cursor padding10" ng-click="addHairstyle('djdj2032043fkjflkfd3ck')" type="button">ADD <i class="fa fa-chevron-right"></i></span>
+              <span class="verify_input_data enable_cursor padding10" data-dismiss="modal" ng-click="addHairstyle()" type="button">ADD <i class="fa fa-chevron-right"></i></span>
             </div>
           </div>
         </div>
