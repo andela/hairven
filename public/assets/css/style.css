@@ -89,7 +89,7 @@ a:focus {
 }
 
 .mt {
-  margin-top: 25px;
+  margin-top: 35px;
 }
 
 .mb {
@@ -649,7 +649,6 @@ ul.sidebar-menu li a.active i {
   padding-right: 4px;
   font-size: 14px;
 }
-
 
 /* Gallery Configuration */
 
