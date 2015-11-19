@@ -1,6 +1,6 @@
 "use strict"
 
-var app = angular.module('hairvenApp', ['ui.router', 'ngStorage', 'satellizer', 'ngToast']);
+var app = angular.module('hairvenApp', ['ngFileUpload', 'ui.router', 'ngStorage', 'satellizer', 'ngToast']);
 
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authProvider', 'ngToastProvider',
   function($stateProvider, $urlRouterProvider, $locationProvider, $authProvider, ngToastProvider) {
@@ -10,7 +10,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
         url: "/",
         views: {
           '': {
-            templateUrl: 'app/partials/nav.view.html'
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
           },
           'theView@home': {
             templateUrl: 'app/partials/home.view.html',
@@ -22,7 +23,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
         url: "/hair",
         views: {
           '': {
-            templateUrl: 'app/partials/nav.view.html'
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
           },
           'theView@hair': {
             templateUrl: 'app/partials/hair.view.html',
@@ -34,7 +36,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
         url: "/dashboard",
         views: {
           '': {
-            templateUrl: 'app/partials/nav.view.html'
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
           },
           'theView@dashboard': {
             templateUrl: 'app/partials/dashboard.view.html'
@@ -45,7 +48,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
         url: "/contact",
         views: {
           '': {
-            templateUrl: 'app/partials/nav.view.html'
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
           },
           'theView@contact': {
             templateUrl: 'app/partials/contact.view.html'
@@ -56,7 +60,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
         url: "/userdashboard",
         views: {
           '': {
-            templateUrl: 'app/partials/nav.view.html'
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
           },
           'theView@Userdashboard': {
             templateUrl: 'app/partials/Userdashboard.view.html'
@@ -67,7 +72,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
         url: "/gallery",
         views: {
           '': {
-            templateUrl: 'app/partials/nav.view.html'
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
           },
           'theView@gallery': {
             templateUrl: 'app/partials/gallery.view.html'
@@ -78,7 +84,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
         url: "/usergallery",
         views: {
           '': {
-            templateUrl: 'app/partials/nav.view.html'
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
           },
           'theView@usergallery': {
             templateUrl: 'app/partials/usergallery.view.html'
@@ -89,7 +96,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
         url: "/booking",
         views: {
           '': {
-            templateUrl: 'app/partials/nav.view.html'
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
           },
           'theView@booking': {
             templateUrl: 'app/partials/booking.view.html'
@@ -100,7 +108,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
         url: "/salongallery",
         views: {
           '': {
-            templateUrl: 'app/partials/nav.view.html'
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
           },
           'theView@salongallery': {
             templateUrl: 'app/partials/shopOwnerGallery.view.html',
@@ -116,7 +125,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
         url: "/salon",
         views: {
           '': {
-            templateUrl: 'app/partials/nav.view.html'
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
           },
           'theView@salon': {
             templateUrl: 'app/partials/salonPage.view.html'
@@ -131,7 +141,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
         url: "/login",
         views: {
           '': {
-            templateUrl: 'app/partials/nav.view.html'
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
           },
           'theView@login': {
             templateUrl: 'app/partials/login.view.html',
@@ -142,7 +153,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
         url: "/registersalon",
         views: {
           '': {
-            templateUrl: 'app/partials/nav.view.html'
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
           },
           'theView@registersalon': {
             templateUrl: 'app/partials/salonSignup.view.html',
