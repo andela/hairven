@@ -3,6 +3,7 @@ var cloudinary = require('cloudinary');
 
 var config = require('../../config/config');
 var Hair = require('../models/hairstyle.model');
+var Salon = require('../models/salon.model');
 
 cloudinary.config({
   cloud_name: config.cloudinary.cloud_name,
@@ -14,7 +15,9 @@ module.exports = {
 
   //function for creation of hairstyle
   createHairStyle: function(req, res) {
+
     if (req.file) {
+
       var newHair = req.body;
       if (!newHair.name) {
         res.status(401).send({
@@ -40,14 +43,32 @@ module.exports = {
             if (err) {
               res.send(err);
             } else {
-              res.send({
-                success: true,
-                message: 'Hairstyle Saved!'
+              Salon.update({
+                _id: newHair.salon
+              }, {
+                $addToSet: {
+                  hairstyles: hairStyle
+                }
+              }, function(err, salon) {
+                if (err) {
+                  return err;
+                } else {
+
+                  res.send({
+                    success: true,
+                    message: 'Hairstyle Saved!'
+                  });
+                }
               });
+
             }
           });
         }, {
           use_filename: true
+        }, {
+          width: 400,
+          height: 600,
+          crop: "crop"
         });
       }
     } else {
@@ -121,16 +142,34 @@ module.exports = {
   // remove a hairstyle
   removeHairStyle: function(req, res) {
 
-    Hair.findById(req.params.id, req.body)
+    Hair.findById(req.params.id)
       .remove(function(err, hairstyle) {
 
         if (err) {
-          res.send(err);
-        } else {
+          console.log(err)
           res.send({
-            success: true,
-            message: 'Hairstyle Deleted Successfully!'
+            success: false,
+            message: 'error deleting hairstyle'
           });
+        } else {
+          Salon.update({
+            _id: hairstyle.salon
+          }, {
+            $pull: {
+              hairstyles: hairstyle._id
+            }
+          }, function(err, salon) {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send({
+                success: true,
+                message: 'Hairstyle Deleted Successfully!'
+              });
+
+            }
+          });
+
         }
       });
   }
