@@ -59,6 +59,17 @@ userSchema.pre('save', function(next) {
   });
 });
 
+userSchema.pre('remove', function(next) {
+
+  //remove all salons associated with a user on account delete
+  for (var i in this.salons) {
+    this.model('Salon').remove({
+      _id: this.salons[i]
+    });
+  }
+  next();
+});
+
 userSchema.methods.comparePassword = function(password) {
   var user = this;
   return bcrypt.compareSync(password, user.password);
