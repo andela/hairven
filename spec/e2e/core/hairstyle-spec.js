@@ -100,6 +100,7 @@ describe('api/hairstyles', function() {
 
   //create test data before each test.
   beforeEach(function(done) {
+     Hair.remove({}, function() {});
     var testHair = new Hair(hairstyleData[0]);
     testHair.save(function(err) {
       if (err) {
