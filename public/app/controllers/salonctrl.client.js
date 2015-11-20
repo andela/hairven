@@ -1,4 +1,4 @@
-"use strict"
+'use strict';
 
 angular.module('hairvenApp')
   .controller('SalonCtrl', ['SalonService', '$scope', '$state', '$rootScope', 'ngToast',
