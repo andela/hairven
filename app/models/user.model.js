@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
-// var Role = require('./role.model');
 var Salon = require('./salon.model');
 
 var userSchema = new Schema({
@@ -58,6 +57,17 @@ userSchema.pre('save', function(next) {
     user.password = hash;
     next();
   });
+});
+
+userSchema.pre('remove', function(next) {
+
+  //remove all salons associated with a user on account delete
+  for (var i in this.salons) {
+    this.model('Salon').remove({
+      _id: this.salons[i]
+    });
+  }
+  next();
 });
 
 userSchema.methods.comparePassword = function(password) {

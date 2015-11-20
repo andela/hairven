@@ -6,7 +6,7 @@ app.factory('UserService', ['$http', 'baseUrl', '$localStorage', function($http,
   var currentUser = getTokenInformation();
   var User = {
     register: function(data) {
-      
+
       return $http.post(baseUrl + '/api/signup', data);
     },
     login: function(data) {

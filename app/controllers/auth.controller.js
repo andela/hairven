@@ -4,7 +4,7 @@ var config = require('../../config/config');
 var auth = require('../../config/auth');
 var request = require('request');
 var qs = require('qs');
-
+var validator = require('./validator');
 
 // function to generate password
 var generatePassword = function() {
@@ -19,84 +19,47 @@ var generatePassword = function() {
   return password;
 };
 
+//signup a new user
 exports.signup = function(req, res) {
 
-  var user = new User(req.body);
+  var user = req.body;
 
-  user.save(function(err) {
-    if (!user.username || !user.email || !user.password) {
-      return res.status(401).send({
-        success: false,
-        message: 'Invalid Username or Email or Password!'
-      });
-    } else if (!user.name.first || !user.name.last) {
-      return res.status(401).send({
-        success: false,
-        message: 'Invalid First or Last Name!'
-      });
-    } else if (!user.role) {
-      return res.status(401).send({
-        success: false,
-        message: 'Invalid Role Provided!'
-      });
-    } else if (err) {
-      if (err.code === 11000) {
-        return res.status(401).send({
-          success: false,
-          message: 'Username already exists!'
-        });
+  //validate provided details
+  var check = validator.validate(user);
+  if (typeof check === typeof [] && check.length > 0) {
+    var messages = check.join(', ');
+    res.status(401).send({
+      success: false,
+      message: messages
+    });
+  } else {
+    var newUser = new User(user);
+    newUser.save(function(err) {
+      if (err) {
+        console.log(err);
+        if (err.code === 11000) {
+          return res.status(401).send({
+            success: false,
+            message: 'Username already exists!'
+          });
+        } else {
+          return res.status(401).send(err);
+        }
       } else {
-        return res.status(401).send(err);
+        res.send({
+          success: true,
+          message: 'Account created!'
+        });
       }
-    } else {
-      res.json({
-        message: 'User created!'
-      });
-    }
-  });
+    });
+  }
 };
 
+//login a user
 exports.login = function(req, res) {
   User.findOne({
       username: req.body.username
     })
-    .select('username password')
-    .exec(function(err, user) {
-      if (err) {
-        throw err;
-      }
-      if (!user) {
-        return res.status(401).send({
-          success: false,
-          message: 'Invalid Username or Password!'
-        });
-      } else {
-        var validPassword = user.comparePassword(req.body.password);
-        if (!validPassword) {
-          return res.status(401).send({
-            success: false,
-            message: 'Invalid Username or Password!'
-          });
-        } else {
-          var token = jwt.sign(user, config.secret, {
-            expiresInMinutes: 1440
-          });
-          res.send({
-            success: true,
-            message: 'You are logged in',
-            token: token,
-            user: user
-          });
-        }
-      }
-    });
-};
-
-exports.loginSalon = function(req, res) {
-  User.findOne({
-      username: req.body.username
-    })
-    .populate('salons')
     .select('username password role salons')
     .exec(function(err, user) {
       if (err) {
@@ -107,11 +70,6 @@ exports.loginSalon = function(req, res) {
           success: false,
           message: 'Invalid Username or Password!'
         });
-      } else if (user.role !== 'stylist') {
-        return res.status(401).send({
-          success: false,
-          message: 'Cannot find account,\n Please register as stylist or salon owner!'
-        });
       } else {
         var validPassword = user.comparePassword(req.body.password);
         if (!validPassword) {
@@ -134,7 +92,7 @@ exports.loginSalon = function(req, res) {
     });
 };
 
-
+//sigin in auser via twitter
 exports.twitterSignin = function(req, res) {
   var requestTokenUrl = 'https://api.twitter.com/oauth/request_token';
   var accessTokenUrl = 'https://api.twitter.com/oauth/access_token';
@@ -185,42 +143,61 @@ exports.twitterSignin = function(req, res) {
         oauth: profileOauth,
         json: true
       }, function(err, response, profile) {
-
         // Step 5a. Link user accounts.
-        if (req.headers.authorization) {
-          User.findOne({
-            firstname: profile.firstname
+        if (req.body['oauth_token']) {
+
+          User.find({
+            username: profile.screen_name
           }, function(err, user) {
-            if (!user) {
-              return res.status(400).send({
-                message: 'User not found'
+
+            if (!user.username) {
+
+              var names = profile.name.split(' ');
+
+              //create a new user account
+              var newUser = new User();
+              newUser.username = profile.screen_name;
+              newUser.email = user.username + 'unknown@unknown';
+              newUser.name = {
+                  first: names[0] || 'none',
+                  last: names[1] || 'none'
+                },
+                newUser.role = 'user';
+                newUser.password = generatePassword();
+
+              newUser.save(function(err) {
+                if (err) {
+                  return err;
+                }
               });
-            } else {
-              res.redirect('/');
             }
+            res.status(200).send({
+              success: true,
+              token: jwt.sign(user, config.secret, {
+                expiresInMinutes: 1440
+              }),
+              user: newUser
+            });
+
           });
 
         } else {
-          //create a new user account
-          var user = new User();
-          user.email = profile.email;
-          user.username = profile.name;
-          user.password = generatePassword();
-
-          user.save(function() {
-            res.send({
-              token: jwt.sign(user, config.secret, {
-                expiresInMinutes: 1440
-              })
-            });
+          res.status(400).send({
+            success: false,
+            message: 'Hoops! Error, try again.'
           });
+
         }
+
       });
+
     });
   }
 };
 
+//signin a user via facebook
 exports.facebookSignin = function(req, res) {
+
   var accessTokenUrl = 'https://graph.facebook.com/v2.3/oauth/access_token';
   var graphApiUrl = 'https://graph.facebook.com/v2.3/me';
 
@@ -254,37 +231,51 @@ exports.facebookSignin = function(req, res) {
           message: profile.error.message
         });
       }
-      if (req.headers.authorization) {
-        User.findOne({
-          firstname: profile.firstname
+      console.log(req.body);
+      if (req.body['code']) {
+
+        var names = profile.name.split(' ');
+
+        User.find({
+          username: names[0]
         }, function(err, user) {
-          if (!user) {
-            return res.status(400).send({
-              message: 'User not found'
+
+          if (!user.username) {
+
+            //create a new user account
+            var newUser = new User();
+            newUser.username = names[0];
+            newUser.email = user.username + 'unknown@unknown';
+            newUser.name = {
+                first: names[0],
+                last: names[1]
+              };
+              newUser.role = 'user';
+              newUser.password = generatePassword();
+
+            newUser.save(function(err) {
+              if (err) {
+                return err;
+              }
             });
-          } else {
-            res.redirect('/');
           }
+          res.status(200).send({
+            success: true,
+            token: jwt.sign(user, config.secret, {
+              expiresInMinutes: 1440
+            }),
+            user: newUser
+          });
+
         });
 
       } else {
-        // create new user
-
-        var user = new User();
-        user.email = profile.email;
-        user.username = profile.name;
-        user.password = generatePassword();
-
-        user.save(function() {
-          res.send({
-            token: jwt.sign(user, config.secret, {
-              expiresInMinutes: 1440
-            })
-          });
+        res.status(400).send({
+          success: false,
+          message: 'Hoops! Error, try again.'
         });
 
       }
-
     });
   });
 };
