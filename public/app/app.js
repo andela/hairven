@@ -1,4 +1,4 @@
-"use strict"
+'use strict';
 
 var app = angular.module('hairvenApp', ['ngFileUpload', 'ui.router', 'ngStorage', 'satellizer', 'ngToast']);
 
