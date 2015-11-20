@@ -9,6 +9,10 @@ app.factory('HairstyleService', ['$http', 'baseUrl', '$localStorage', 'Upload', 
       return $http.get(baseUrl + '/api/hairstyles/');
     },
 
+    getSalonHairstyles: function(salonId) {
+      return $http.get(baseUrl + '/api/salons/' + salonId + '/hairstyles');
+    },
+
     getOneHairstyle: function(id) {
       return $http.get(baseUrl + '/api/hairstyles/' + id);
     },
