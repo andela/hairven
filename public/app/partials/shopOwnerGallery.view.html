@@ -1,6 +1,6 @@
 <section id="container">
   <!--main content start-->
-  <section id="main-content" data-ng-init="getAllHairstyles()">
+  <section id="main-content" data-ng-init="getSalonHairstyles()">
     <section class="wrapper">
       <div class="row mt">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc">
@@ -20,12 +20,13 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc"></div>
         <!-- col-lg-4 -->
       </div>
+      <span class="mt centered"><h4> Your Hairstyles</h4></span>
       <div class="row mt">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 desc" ng-repeat="hairstyle in hairstyles">
           <div class="project-wrapper">
             <div class="add-photo">
               <div class="photo">
-                <a class="fancybox" href="hairstyle.image"><img class="img-responsive" src="{{hairstyle.image}}" alt="You have no Hairstyles, click above to add"></a>
+                <a class="fancybox" href="/hair"><img class="img-responsive" src="{{hairstyle.image}}" alt="You have no Hairstyles, click above to add"></a>
               </div>
               <div class="overlay"></div>
             </div>
