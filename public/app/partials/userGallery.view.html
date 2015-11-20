@@ -9,46 +9,11 @@
       </div>
     </div>
   </div>
-  <div class="container-fluid">
+  <div class="container-fluid" data-ng-init="getAllHairstyles()">
     <div class="row mt">
-      <div class="col-md-4 text-center">
+      <div class="col-md-4 text-center" ng-repeat="hairstyle in hairstyles">
         <div>
-          <a class="figure-image" href="/hair"><span class="roll"><h1 class="hair-caption" >Bohemian</h1></span><img class="gallery" src="assets/images/03.jpg">
-          </a>
-        </div>
-      </div>
-
-      <div class="col-md-4 text-center">
-        <div>
-          <a class="figure-image" href="/hair"><span class="roll"><h1 class="hair-caption" >Bold waves</h1></span><img class="gallery" src="assets/images/05.jpg">
-          </a>
-        </div>
-      </div>
-      <div class="col-md-4 text-center">
-        <div>
-          <a class="figure-image" href="/hair"><span class="roll"><h1 class="hair-caption">Naturalista</h1></span><img class="gallery" src="assets/images/01.jpg">
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div class="row mt">
-      <div class="col-md-4 text-center">
-        <div>
-          <a class="figure-image" href="/hair"> <span class="roll">
-          <h1 class="hair-caption">Hot Bun</h1></span><img class="gallery" src="../assets/images/04.jpg">
-          </a>
-        </div>
-      </div>
-      <div class="col-md-4 text-center">
-        <div>
-          <a class="figure-image" href="/hair"> <span class="roll"><h1 class="hair-caption">Blond curls</h1></span><img class="gallery"  src="assets/images/02.jpeg">
-          </a>
-        </div>
-      </div>
-      <div class="col-md-4 text-center">
-        <div>
-          <a class="figure-image" href="/hair"> <span class="roll"><h1 class="hair-caption">Blond curls</h1></span><img class="gallery" src="assets/images/02.jpeg">
+          <a class="figure-image" href="/hair"><span class="roll"><h1 class="hair-caption" >{{hairstyle.name}}</h1></span><img class="gallery" src="{{hairstyle.image}}">
           </a>
         </div>
       </div>
