@@ -1,17 +1,9 @@
-"use strict"
+'use strict';
 
 angular.module('hairvenApp')
-  .controller('HairCtrl', ['$scope', 'HairstyleService', '$state', '$rootScope', 'ngToast', 'Upload', 'baseUrl',
+  .controller('HairCtrl', ['$scope', 'HairstyleService', '$state',
+   '$rootScope', 'ngToast', 'Upload', 'baseUrl',
     function($scope, HairstyleService, $state, $rootScope, ngToast, Upload, baseUrl) {
-
-      // $scope.file;
-
-      // $scope.uploadFile = function(element) {
-      //   $scope.$apply(function($scope) {
-      //     $scope.file = element.file;
-      //     console.log('file', $scope.file);
-      //   });
-      // };
 
       $scope.addHairstyle = function() {
 
