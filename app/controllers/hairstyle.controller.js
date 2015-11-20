@@ -102,6 +102,31 @@ module.exports = {
       });
   },
 
+  //get the hairstyles of a given salon
+  getSalonHairStyles: function(req, res) {
+    // use mongoose to get all hairstyles in the database
+    Hair
+      .find({
+        salon: req.params.id
+      })
+      .populate('salon')
+      .exec(function(err, hairstyles) {
+        // if there is an error retrieving, send the error.
+        if (err) {
+          res.send(err);
+        } else if (!hairstyles) {
+          res.status(404).send({
+            success: false,
+            message: 'You currently have no Hairstyles'
+          });
+        } else {
+          // return all hairstyles in JSON format
+          res.json(hairstyles);
+        }
+      });
+  },
+
+
   //get a specific hairstyle
   getById: function(req, res) {
     Hair.findById(req.params.id)
