@@ -89,7 +89,7 @@ a:focus {
 }
 
 .mt {
-  margin-top: 25px;
+  margin-top: 35px;
 }
 
 .mb {
@@ -189,21 +189,21 @@ a.logo span {
 @media (min-width: 768px) {
   .centered_nav_opt {
     margin-top: 5px;
-    padding: 0 5% 0 10%;
+    padding: 0 0 0 0;
   }
 }
 
 @media (min-width: 998px) {
   .centered_nav_opt {
     margin-top: 5px;
-    padding: 0 5% 0 20%;
+    padding: 0 5% 0 10%;
   }
 }
 
 @media (min-width: 1200px) {
   .centered_nav_opt {
     margin-top: 5px;
-    padding: 0 15% 0 25%;
+    padding: 0 05% 0 25%;
   }
 }
 
@@ -649,7 +649,6 @@ ul.sidebar-menu li a.active i {
   padding-right: 4px;
   font-size: 14px;
 }
-
 
 /* Gallery Configuration */
 

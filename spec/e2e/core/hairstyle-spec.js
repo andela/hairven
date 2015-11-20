@@ -100,6 +100,7 @@ describe('api/hairstyles', function() {
 
   //create test data before each test.
   beforeEach(function(done) {
+    Hair.remove({}, function() {});
     var testHair = new Hair(hairstyleData[0]);
     testHair.save(function(err) {
       if (err) {
@@ -192,6 +193,53 @@ describe('api/hairstyles', function() {
 
   });
 
+  //salon's hairstyles get request test
+  it('should get hairstyle belonging to a salon', function(done) {
+
+    Salon.remove({}, function() {});
+    var salonSample = new Salon(salonData[1]);
+
+    salonSample.save(function(err) {
+      if (err) {
+        return err;
+      }
+    });
+
+    var salonId = salonSample.id;
+
+    hairstyleData[1].salon = salonSample.id;
+    var testHairTwo = new Hair(hairstyleData[1]);
+
+    testHairTwo.save(function(err) {
+      if (err) {
+        return err;
+      }
+    });
+
+    request(app)
+      .get('/api/salons/' + salonId + '/hairstyles')
+      .expect('Content-Type', /json/)
+      .end(function(err, response) {
+        expect(response.statusCode).toBe(200);
+        expect(response.body[0].name).toEqual('uglyHair');
+        expect(response.body[0].salon).toBeDefined();
+        expect(response.body[0].salon.name)
+          .toEqual('Beauty Place');
+        expect(response.body[0].salon.address)
+          .toEqual('334, Herbert Macaulay Way, Yaba Lagos');
+        if (err) {
+          return err;
+        }
+        done();
+      });
+
+    afterEach(function(done) {
+      Salon.remove({}, function() {});
+      done();
+    });
+
+  });
+
   //salon populate test
   it('should populate salon property of the hairstyle', function(done) {
 
@@ -274,9 +322,8 @@ describe('api/hairstyles', function() {
   });
 
   //hairstyle remove test
-  //salon remove test
   it('should delete successfully', function(done) {
-
+    
     request(app)
       .delete('/api/hairstyles/' + id)
       .end(function(err, response) {

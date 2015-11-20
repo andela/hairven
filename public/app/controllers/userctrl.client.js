@@ -2,8 +2,12 @@
 
 angular.module('hairvenApp')
   .controller('UserCtrl', ['UserService', 'SalonService', '$rootScope', '$window', '$scope',
-    '$location', '$localStorage', '$auth', 'ngToast',
-    function(UserService, SalonService, $rootScope, $window, $scope, $location, $localStorage, $auth, ngToast) {
+    '$state', '$localStorage', '$auth', 'ngToast',
+    function(UserService, SalonService, $rootScope, $window, $scope, $state, $localStorage, $auth, ngToast) {
+
+      $rootScope.$storage = $localStorage;
+
+      $scope.loggedIn = $localStorage.loggedIn;
 
       $scope.signin = function() {
 
@@ -14,55 +18,32 @@ angular.module('hairvenApp')
 
         UserService.login(data).success(function(res) {
 
-          $auth.setToken(res.token);
-          $localStorage.activeUser = res.user.username;
-          $localStorage.userId = res.user._id;
+          if (res.user.role === 'user') {
+            $auth.setToken(res.token);
+            $rootScope.$storage.activeUser = res.user.username;
+            $rootScope.$storage.userId = res.user._id;
 
-          $location.path('/dashboard');
+            $state.go('home');
 
-          ngToast.create({
-            className: 'success',
-            content: res.message,
-            dismissOnTimeout: true,
-            dismissOnClick: true,
-            timeout: 3000
-          });
-          
-        }).error(function(err) {
+          } else {
+            $auth.setToken(res.token);
+            $rootScope.$storage.activeStylist = res.user.username;
+            $rootScope.$storage.stylistId = res.user._id;
+            $rootScope.$storage.activeSalons = res.user.salons;
 
-          ngToast.create({
-            className: 'danger',
-            content: err.message,
-            dismissOnTimeout: true,
-            dismissOnClick: true,
-            timeout: 3000
-          });
+            $state.go('salongallery');
 
-        });
-      };
+          }
 
-      $scope.salonSignin = function() {
-
-        var data = {
-          username: $scope.username,
-          password: $scope.password
-        };
-
-        UserService.salonLogin(data).success(function(res) {
-
-          $auth.setToken(res.token);
-          $localStorage.activeStylist = res.user.username;
-          $localStorage.stylistId = res.user._id;
-          $localStorage.activeSalons = res.user.salons;
-
-          $location.path('/salongallery');
+          //change login status to true
+          $rootScope.$storage.loggedIn = true;
 
           ngToast.create({
             className: 'success',
             content: res.message,
             dismissOnTimeout: true,
             dismissOnClick: true,
-            timeout: 3000
+            timeout: 2000
           });
 
         }).error(function(err) {
@@ -72,7 +53,7 @@ angular.module('hairvenApp')
             content: err.message,
             dismissOnTimeout: true,
             dismissOnClick: true,
-            timeout: 3000
+            timeout: 2000
           });
 
         });
@@ -104,14 +85,12 @@ angular.module('hairvenApp')
 
             UserService.register(data).success(function(response) {
 
-              $location.path('/salonlogin');
-
               ngToast.create({
                 className: 'success',
-                content: response.message,
+                content: response.message + ' click on login to continue',
                 dismissOnTimeout: true,
                 dismissOnClick: true,
-                timeout: 3000
+                timeout: 2000
               });
 
             }).error(function(err) {
@@ -121,7 +100,7 @@ angular.module('hairvenApp')
                 content: err.message,
                 dismissOnTimeout: true,
                 dismissOnClick: true,
-                timeout: 3000
+                timeout: 2000
               });
 
             });
@@ -132,30 +111,31 @@ angular.module('hairvenApp')
               content: err.message,
               dismissOnTimeout: true,
               dismissOnClick: true,
-              timeout: 3000
+              timeout: 2000
             });
 
           });
         } else {
           UserService.register(data).success(function(res) {
 
-            $location.path('/login');
+            $state.go('login');
 
             ngToast.create({
               className: 'success',
-              content: res.message,
+              content: res.message + ' login to continue',
               dismissOnTimeout: true,
               dismissOnClick: true,
-              timeout: 3000
+              timeout: 2000
             });
 
           }).error(function(err) {
+
             ngToast.create({
               className: 'danger',
               content: err.message,
               dismissOnTimeout: true,
               dismissOnClick: true,
-              timeout: 3000
+              timeout: 2000
             });
           });
         }
@@ -163,17 +143,21 @@ angular.module('hairvenApp')
 
       $scope.logout = function() {
         $auth.removeToken();
-        $localStorage.$reset();
+        $rootScope.$storage.$reset();
 
         UserService.logout(function() {
-          $location.path('/');
+          if ($state.$current.name === 'home') {
+            $state.reload();
+          } else {
+            $state.go('home');
+          }
 
           ngToast.create({
             className: 'success',
             content: 'successfully logged out',
             dismissOnTimeout: true,
             dismissOnClick: true,
-            timeout: 3000
+            timeout: 2000
           });
         }, function() {
           ngToast.create({
@@ -181,7 +165,7 @@ angular.module('hairvenApp')
             content: 'failed to logout!',
             dismissOnTimeout: true,
             dismissOnClick: true,
-            timeout: 3000
+            timeout: 2000
           });
         });
       };
@@ -190,11 +174,35 @@ angular.module('hairvenApp')
         $auth.authenticate(provider)
           .then(function(response) {
 
-            $window.localStorage.currentUser = JSON.stringify(response.access_token);
-            $rootScope.currentUser = JSON.parse($window.localStorage.currentUser);
-            $location.path('/Userdashboard');
+            $auth.setToken(response.data.token);
+            $rootScope.$storage.activeUser = response.data.user.username;
+            $rootScope.$storage.userId = response.data.user._id;
+
+            $state.go('home');
+
+            //change login status to true
+            $rootScope.$storage.loggedIn = true;
+
+            ngToast.create({
+              className: 'success',
+              content: 'You are signed in',
+              dismissOnTimeout: true,
+              dismissOnClick: true,
+              timeout: 2000
+            });
+
           })
-          .catch(function(response) {});
+          .catch(function(err) {
+
+            ngToast.create({
+              className: 'danger',
+              content: err.data.message,
+              dismissOnTimeout: true,
+              dismissOnClick: true,
+              timeout: 2000
+            });
+
+          });
       };
 
       $scope.isAuthenticated = function() {

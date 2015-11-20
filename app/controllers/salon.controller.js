@@ -47,7 +47,7 @@ module.exports = {
             message: 'salon not found'
           });
         }
-        // return all salon
+        // return salon
         else {
           res.json(salon);
         }

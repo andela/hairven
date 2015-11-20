@@ -1,9 +1,9 @@
-"use strict"
+'use strict';
 
 angular.module('hairvenApp')
-  .controller('SalonCtrl', ['SalonService', '$scope', '$state', '$rootScope', '$localStorage',
-    function($scope, SalonService, $state, $rootScope, $localStorage) {
-
+  .controller('SalonCtrl', ['SalonService', '$scope', '$state', '$rootScope', 'ngToast',
+    function(SalonService, $scope, $state, $rootScope, ngToast) {
+      
       $scope.addSalon = function() {
 
         var data = {
@@ -13,24 +13,46 @@ angular.module('hairvenApp')
 
         SalonService.addSalon(data).success(function(res) {
 
-          console.log(res.message)
+          ngToast.create({
+            className: 'success',
+            content: res.message,
+            dismissOnTimeout: true,
+            dismissOnClick: true,
+            timeout: 2000
+          });
+
           state.go('salongallery');
         }).error(function(err) {
-          console.log(err.message)
 
+          ngToast.create({
+            className: 'danger',
+            content: err.message,
+            dismissOnTimeout: true,
+            dismissOnClick: true,
+            timeout: 2000
+          });
         })
 
       };
 
       $scope.getSalon = function(id) {
 
-        SalonService.getSalon(id).success(function(res) {
+        var salonId = id || $rootScope.$storage.activeSalons[0];
 
-          $localStorage.salon = res.body;
-          state.go('salongallery');
+        SalonService.getSalon(salonId).success(function(res) {
+        
+          $scope.salonName = res.name;
+          $scope.salonAddress = res.address;
+
         }).error(function(err) {
-          console.log(err.message)
 
+          ngToast.create({
+            className: 'danger',
+            content: err.message,
+            dismissOnTimeout: true,
+            dismissOnClick: true,
+            timeout: 2000
+          });
         })
 
       };
@@ -44,10 +66,24 @@ angular.module('hairvenApp')
 
         SalonService.updateSalon(id, data).success(function(res) {
 
-          console.log(res.message)
+          ngToast.create({
+            className: 'success',
+            content: res.message,
+            dismissOnTimeout: true,
+            dismissOnClick: true,
+            timeout: 2000
+          });
+
           state.go('salongallery');
         }).error(function(err) {
-          console.log(err.message)
+
+          ngToast.create({
+            className: 'danger',
+            content: err.message,
+            dismissOnTimeout: true,
+            dismissOnClick: true,
+            timeout: 2000
+          });
 
         })
 
@@ -57,10 +93,24 @@ angular.module('hairvenApp')
 
         SalonService.deleteSalon(id).success(function(res) {
 
-          console.log(res.message)
+          ngToast.create({
+            className: 'success',
+            content: res.message,
+            dismissOnTimeout: true,
+            dismissOnClick: true,
+            timeout: 2000
+          });
+
           state.go('salongallery');
         }).error(function(err) {
-          console.log(err.message)
+
+          ngToast.create({
+            className: 'danger',
+            content: err.message,
+            dismissOnTimeout: true,
+            dismissOnClick: true,
+            timeout: 2000
+          });
 
         })
 
