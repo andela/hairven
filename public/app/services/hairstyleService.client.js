@@ -1,7 +1,8 @@
-'use strict'
+'use strict';
 
 var app = angular.module('hairvenApp');
-app.factory('HairstyleService', ['$http', 'baseUrl', '$localStorage', 'Upload', function($http, baseUrl, $localStorage, Upload) {
+app.factory('HairstyleService', ['$http', 'baseUrl', '$localStorage', 'Upload',
+ function($http, baseUrl, $localStorage, Upload) {
 
   var Hairstyle = {
 
