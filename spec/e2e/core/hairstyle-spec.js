@@ -322,10 +322,7 @@ describe('api/hairstyles', function() {
   });
 
   //hairstyle remove test
-  //salon remove test
   it('should delete successfully', function(done) {
-    
-    Hair.remove({}, function() {});
     
     request(app)
       .delete('/api/hairstyles/' + id)
