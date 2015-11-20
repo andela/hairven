@@ -76,19 +76,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
             controller: 'UserCtrl'
           },
           'theView@gallery': {
-            templateUrl: 'app/partials/gallery.view.html'
-          }
-        }
-      })
-      .state('usergallery', {
-        url: "/usergallery",
-        views: {
-          '': {
-            templateUrl: 'app/partials/nav.view.html',
-            controller: 'UserCtrl'
-          },
-          'theView@usergallery': {
-            templateUrl: 'app/partials/usergallery.view.html'
+            templateUrl: 'app/partials/userGallery.view.html',
+            controller: 'HairCtrl'
           }
         }
       })
@@ -132,10 +121,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
             templateUrl: 'app/partials/salonPage.view.html'
           }
         }
-      })
-      .state('lock_screen', {
-        url: "/lock_screen",
-        templateUrl: "app/partials/lock_screen.view.html",
       })
       .state('login', {
         url: "/login",
