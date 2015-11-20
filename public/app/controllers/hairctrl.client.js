@@ -67,6 +67,26 @@ angular.module('hairvenApp')
         });
       };
 
+      $scope.getSalonHairstyles = function(id) {
+
+        var salonId = id || $rootScope.$storage.activeSalons[0];
+
+        HairstyleService.getSalonHairstyles(salonId).success(function(res) {
+          $scope.hairstyles = res.message || res;
+
+        }).error(function(err) {
+
+          ngToast.create({
+            className: 'danger',
+            content: err.message,
+            dismissOnTimeout: true,
+            dismissOnClick: true,
+            timeout: 2000
+          });
+
+        });
+      };
+
       $scope.getOneHairstyle = function(hairId) {
 
         HairstyleService.getOneHairstyle(hairId).success(function(res) {
