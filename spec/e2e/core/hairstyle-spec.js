@@ -212,7 +212,7 @@ describe('api/hairstyles', function() {
 
     testHairTwo.save(function(err) {
       if (err) {
-        console.log(err);
+        return err;
       }
     });
 
