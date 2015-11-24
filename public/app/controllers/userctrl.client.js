@@ -78,7 +78,7 @@ angular.module('hairvenApp')
             data.role = 'stylist';
 
             UserService.register(data).success(function(response) {
-              $state.reload();
+              $state.go('login');
               toast('success', response.message + ' click on login to continue');
             }).error(function(err) {
               toast('danger', err.message);
