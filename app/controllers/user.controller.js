@@ -1,6 +1,8 @@
 var jwt = require('jsonwebtoken');
 var User = require('../models/user.model');
 var config = require('../../config/config');
+var Salon = require('../models/salon.model');
+var Hair = require('../models/hairstyle.model');
 
 exports.authMiddleware = function(req, res, next) {
   var token = req.body.token ||
@@ -25,6 +27,30 @@ exports.authMiddleware = function(req, res, next) {
       message: 'No token provided.'
     });
   }
+};
+
+exports.search = function(req, res) {
+  var term = new RegExp(req.body.term, 'i');
+  var results = [];
+  Salon.find({$or:[{name:term}, {address:term}]}, function(err, salons) {
+    if (err) {
+      res.send({
+        success: false,
+        message: 'Ooops! An error occured.'
+      });
+    }
+    results.push(salons);
+    Hair.find({$or: [{name: term}, {description: term}]}, function(err, hairstyles) {
+      if (err) {
+        res.send({
+          success: false,
+          message: 'Ooops! An error occured.'
+        });
+      }
+      results.push(hairstyles);
+        res.json(results);
+    });
+  });
 };
 
 exports.getUser = function(req, res) {
