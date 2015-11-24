@@ -2,7 +2,7 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var app = require('./config/express');
-var port = process.env.PORT || 5000;
+var port = process.env.PORT || 3030;
 
 app.listen(port);
 

@@ -1,18 +1,56 @@
-<header class="header black-bg">
-  <!--logo start-->
-  <a ui-sref="index.html" class="logo">HAIRVEN</a>
-  <!--logo end-->
-  <div class="top-menu">
-    <ul class="nav navbar-nav centered_nav_opt top-menu">
-      <li><a href="#">Home</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <ul class="nav navbar-nav pull-right top-menu">
-      <li><a href="/login">Login</a></li>
-    </ul>
+<header class="header black-bg container-fluid">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-4 top-menu">
+      <ul class="nav navbar-nav pull-right">
+        <li>
+          <a href="/registersalon">
+            <button ng-show="!loggedIn" class="salon-login">Become a salon owner</button>
+          </a>
+        </li>
+        <li>
+          <a href="/login">
+            <button ng-show="!loggedIn" class="login"> Login</button>
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <button ng-show="loggedIn" ng-click="logout()" class="logout"> Log out</button>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="row mid-menu">
+      <div class="col-md-7 col-md-push-5">
+        <div class="input-group nav_search">
+          <input type="text" class="form-control" placeholder="Search for everything..." aria-describedby="basic-addon2">
+          <span class="input-group-addon nav_search_button">search</span>
+        </div>
+      </div>
+      <div class="col-md-5 col-md-pull-7 mid-menu-wrapper">
+        <ul class="nav navbar-nav">
+          <li class="logo-wrapper">
+            <a ui-sref="home" class="logo">HAIRVEN</a>
+          </li>
+          <li class="dropdown nav_dropdown">
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bars"></i></a>
+           <ul class="dropdown-menu">
+             <li><a href="#">Action</a></li>
+             <li><a href="#">Another action</a></li>
+             <li><a href="#">Something else here</a></li>
+             <li role="separator" class="divider"></li>
+             <li><a href="#">Separated link</a></li>
+             <li role="separator" class="divider"></li>
+             <li><a href="#">One more separated link</a></li>
+           </ul>
+         </li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
   </div>
 </header>
 
+<div ui-view="sideNav"></div>
 <div ui-view="theView"></div>

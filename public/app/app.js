@@ -1,145 +1,170 @@
-"use strict"
+'use strict';
 
-var app = angular.module('hairvenApp', ['ui.router']);
+var app = angular.module('hairvenApp', ['ngFileUpload', 'ui.router', 'ngStorage', 'satellizer', 'ngToast']);
 
-app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
-  $urlRouterProvider.otherwise("/");
+app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authProvider', 'ngToastProvider',
+  function($stateProvider, $urlRouterProvider, $locationProvider, $authProvider, ngToastProvider) {
 
-  $stateProvider
-    .state('home', {
-      url: "/",
-      views: {
-        '': {
-          templateUrl: 'app/partials/nav.view.html'
-        },
-        'theView@home': {
-          templateUrl: 'app/partials/home.view.html',
-          controller: 'HomeCtrl'
+    $stateProvider
+      .state('home', {
+        url: "/",
+        views: {
+          '': {
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
+          },
+          'theView@home': {
+            templateUrl: 'app/partials/home.view.html',
+            controller: 'HomeCtrl'
+          }
         }
-      }
-    })
-    .state('hair', {
-      url: "/hair",
-      views: {
-        '': {
-          templateUrl: 'app/partials/nav.view.html'
-        },
-        'theView@hair': {
-          templateUrl: 'app/partials/hair.view.html',
-          controller: 'HairCtrl'
+      })
+      .state('hair', {
+        url: "/hair",
+        views: {
+          '': {
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
+          },
+          'theView@hair': {
+            templateUrl: 'app/partials/hair.view.html',
+            controller: 'HairCtrl'
+          }
         }
-      }
-    })
-    .state('dashboard', {
-      url: "/dashboard",
-      views: {
-        '': {
-          templateUrl: 'app/partials/nav.view.html'
-        },
-        'theView@dashboard': {
-          templateUrl: 'app/partials/dashboard.view.html'
+      })
+      .state('dashboard', {
+        url: "/dashboard",
+        views: {
+          '': {
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
+          },
+          'theView@dashboard': {
+            templateUrl: 'app/partials/dashboard.view.html'
+          }
         }
-      }
-    })
-    .state('Userdashboard', {
-      url: "/Userdashboard",
-      views: {
-        '': {
-          templateUrl: 'app/partials/nav.view.html'
-        },
-        'theView@Userdashboard': {
-          templateUrl: 'app/partials/Userdashboard.view.html'
+      })
+      .state('contact', {
+        url: "/contact",
+        views: {
+          '': {
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
+          },
+          'theView@contact': {
+            templateUrl: 'app/partials/contact.view.html'
+          }
         }
-      }
-    })
-    .state('gallery', {
-      url: "/gallery",
-      views: {
-        '': {
-          templateUrl: 'app/partials/nav.view.html'
-        },
-        'theView@gallery': {
-          templateUrl: 'app/partials/gallery.view.html'
+      })
+      .state('Userdashboard', {
+        url: "/userdashboard",
+        views: {
+          '': {
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
+          },
+          'theView@Userdashboard': {
+            templateUrl: 'app/partials/Userdashboard.view.html'
+          }
         }
-      }
-    })
-    .state('usergallery', {
-      url: "/usergallery",
-      views: {
-        '': {
-          templateUrl: 'app/partials/nav.view.html'
-        },
-        'theView@usergallery': {
-          templateUrl: 'app/partials/usergallery.view.html'
+      })
+      .state('gallery', {
+        url: "/gallery",
+        views: {
+          '': {
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
+          },
+          'theView@gallery': {
+            templateUrl: 'app/partials/userGallery.view.html',
+            controller: 'HairCtrl'
+          }
         }
-      }
-    })
-    .state('booking', {
-      url: "/booking",
-      views: {
-        '': {
-          templateUrl: 'app/partials/nav.view.html'
-        },
-        'theView@booking': {
-          templateUrl: 'app/partials/booking.view.html'
+      })
+      .state('booking', {
+        url: "/booking",
+        views: {
+          '': {
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
+          },
+          'theView@booking': {
+            templateUrl: 'app/partials/booking.view.html'
+          }
         }
-      }
-    })
-    .state('salongallery', {
-      url: "/salongallery",
-      views: {
-        '': {
-          templateUrl: 'app/partials/nav.view.html'
-        },
-        'theView@salongallery': {
-          templateUrl: 'app/partials/shopOwnerGallery.view.html'
+      })
+      .state('salongallery', {
+        url: "/salongallery",
+        views: {
+          '': {
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
+          },
+          'theView@salongallery': {
+            templateUrl: 'app/partials/shopOwnerGallery.view.html',
+            controller: 'HairCtrl'
+          },
+          'sideNav@salongallery': {
+            templateUrl: 'app/partials/salonSidenav.view.html',
+            controller: 'SalonCtrl'
+          }
         }
-      }
-    })
-    .state('salon', {
-      url: "/salon",
-      views: {
-        '': {
-          templateUrl: 'app/partials/nav.view.html'
-        },
-        'theView@salon': {
-          templateUrl: 'app/partials/salonPage.view.html'
+      })
+      .state('salon', {
+        url: "/salon",
+        views: {
+          '': {
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
+          },
+          'theView@salon': {
+            templateUrl: 'app/partials/salonPage.view.html'
+          }
         }
-      }
-    })
-    .state('lock_screen', {
-      url: "/lock_screen",
-      templateUrl: "app/partials/lock_screen.view.html",
-    })
-    .state('login', {
-      url: "/login",
-      views: {
-        '': {
-          templateUrl: 'app/partials/nav.view.html'
-        },
-        'theView@login': {
-          templateUrl: 'app/partials/login.view.html'
+      })
+      .state('login', {
+        url: "/login",
+        views: {
+          '': {
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
+          },
+          'theView@login': {
+            templateUrl: 'app/partials/login.view.html',
+            controller: 'UserCtrl'
+          }
         }
-      }
+      }).state('registersalon', {
+        url: "/registersalon",
+        views: {
+          '': {
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
+          },
+          'theView@registersalon': {
+            templateUrl: 'app/partials/salonSignup.view.html',
+            controller: 'UserCtrl'
+          }
+        }
+      });
+
+    $authProvider.authHeader = 'x-access-token';
+  
+    ngToastProvider.configure({
+      animation: 'slide'
     });
 
-  $locationProvider.html5Mode(true);
-});
+    $urlRouterProvider.otherwise("/");
+    $locationProvider.html5Mode(true);
 
-$httpProvider.interceptors.push(['$q', '$location', '$localStorage', function($q, $location, $localStorage) {
-  return {
-    'request': function(config) {
-      config.headers = config.headers || {};
-      if ($localStorage.token) {
-        config.headers.Authorization = 'Bearer' + $localStorage.token;
-      }
-      return config;
-    },
-    'response': function(response) {
-      if (response.status === 401 || response.status === 403) {
-        $location.path('/login')
-      }
-      return $q.reject(response);
-    }
-  };
-}]);
+    $authProvider.facebook({
+      clientId: '1863446777214443'
+    });
+
+    $authProvider.twitter({
+      url: '/api/auth/twitter'
+    });
+
+  }
+
+]);
