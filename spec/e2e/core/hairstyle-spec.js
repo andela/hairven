@@ -313,17 +313,17 @@ describe('api/hairstyles', function() {
             if (err) {
               return err;
             }
+            done();
           });
         if (err) {
           return err;
         }
-        done();
       });
   });
 
   //hairstyle remove test
   it('should delete successfully', function(done) {
-    
+
     request(app)
       .delete('/api/hairstyles/' + id)
       .end(function(err, response) {
@@ -344,6 +344,7 @@ describe('api/hairstyles', function() {
             if (err) {
               return err;
             }
+            done();
           });
         if (err) {
           return err;
