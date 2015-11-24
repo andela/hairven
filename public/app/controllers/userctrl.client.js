@@ -5,6 +5,17 @@ angular.module('hairvenApp')
     '$state', '$localStorage', '$auth', 'ngToast',
     function(UserService, SalonService, $rootScope, $window, $scope, $state, $localStorage, $auth, ngToast) {
 
+      // Helper Function
+      function toast(status, message) {
+        ngToast.create({
+          className: status,
+          content: message,
+          dismissOnTimeout: true,
+          dismissOnClick: true,
+          timeout: 2000
+        });
+      };
+
       $rootScope.$storage = $localStorage;
 
       $scope.loggedIn = $localStorage.loggedIn;
@@ -12,8 +23,8 @@ angular.module('hairvenApp')
       $scope.signin = function() {
 
         var data = {
-          username: $scope.username,
-          password: $scope.password
+          username: $scope.user_username,
+          password: $scope.user_password
         };
 
         UserService.login(data).success(function(res) {
@@ -37,25 +48,9 @@ angular.module('hairvenApp')
 
           //change login status to true
           $rootScope.$storage.loggedIn = true;
-
-          ngToast.create({
-            className: 'success',
-            content: res.message,
-            dismissOnTimeout: true,
-            dismissOnClick: true,
-            timeout: 2000
-          });
-
+          toast('success', res.message);
         }).error(function(err) {
-
-          ngToast.create({
-            className: 'danger',
-            content: err.message,
-            dismissOnTimeout: true,
-            dismissOnClick: true,
-            timeout: 2000
-          });
-
+          toast('danger', err.message);
         });
       };
 
@@ -77,66 +72,26 @@ angular.module('hairvenApp')
         };
 
         if (salon.name && salon.address) {
-
           SalonService.addSalon(salon).success(function(res) {
 
             data.salons = res.salon._id;
             data.role = 'stylist';
 
             UserService.register(data).success(function(response) {
-
-              ngToast.create({
-                className: 'success',
-                content: response.message + ' click on login to continue',
-                dismissOnTimeout: true,
-                dismissOnClick: true,
-                timeout: 2000
-              });
-
+              $state.reload();
+              toast('success', response.message + ' click on login to continue');
             }).error(function(err) {
-
-              ngToast.create({
-                className: 'danger',
-                content: err.message,
-                dismissOnTimeout: true,
-                dismissOnClick: true,
-                timeout: 2000
-              });
-
+              toast('danger', err.message);
             });
           }).error(function(err) {
-
-            ngToast.create({
-              className: 'danger',
-              content: err.message,
-              dismissOnTimeout: true,
-              dismissOnClick: true,
-              timeout: 2000
-            });
-
+            toast('danger', err.message);
           });
         } else {
           UserService.register(data).success(function(res) {
-
-            $state.go('login');
-
-            ngToast.create({
-              className: 'success',
-              content: res.message + ' login to continue',
-              dismissOnTimeout: true,
-              dismissOnClick: true,
-              timeout: 2000
-            });
-
+            $state.reload();
+            toast('success', res.message + ' login to continue');
           }).error(function(err) {
-
-            ngToast.create({
-              className: 'danger',
-              content: err.message,
-              dismissOnTimeout: true,
-              dismissOnClick: true,
-              timeout: 2000
-            });
+            toast('danger', err.message);
           });
         }
       };
@@ -152,21 +107,9 @@ angular.module('hairvenApp')
             $state.go('home');
           }
 
-          ngToast.create({
-            className: 'success',
-            content: 'successfully logged out',
-            dismissOnTimeout: true,
-            dismissOnClick: true,
-            timeout: 2000
-          });
+          toast('success', 'successfully logged out');
         }, function() {
-          ngToast.create({
-            className: 'danger',
-            content: 'failed to logout!',
-            dismissOnTimeout: true,
-            dismissOnClick: true,
-            timeout: 2000
-          });
+          toast('danger', 'failed to logout!');
         });
       };
 
@@ -182,26 +125,10 @@ angular.module('hairvenApp')
 
             //change login status to true
             $rootScope.$storage.loggedIn = true;
-
-            ngToast.create({
-              className: 'success',
-              content: 'You are signed in',
-              dismissOnTimeout: true,
-              dismissOnClick: true,
-              timeout: 2000
-            });
-
+            toast('success', 'You are signed in');
           })
           .catch(function(err) {
-
-            ngToast.create({
-              className: 'danger',
-              content: err.data.message,
-              dismissOnTimeout: true,
-              dismissOnClick: true,
-              timeout: 2000
-            });
-
+            toast('danger', err.data.message);
           });
       };
 
