@@ -5,7 +5,18 @@ angular.module('hairvenApp')
    '$rootScope', 'ngToast', 'Upload', 'baseUrl',
     function($scope, HairstyleService, $state, $rootScope, ngToast, Upload, baseUrl) {
 
-      $scope.addHairstyle = function() {
+      // Helper Function
+      function toast(status, message) {
+        ngToast.create({
+          className: status,
+          content: message,
+          dismissOnTimeout: true,
+          dismissOnClick: true,
+          timeout: 2000
+        });
+      };
+
+       $scope.addHairstyle = function() {
 
         var hairPhoto = $scope.imageFile;
 
@@ -17,26 +28,11 @@ angular.module('hairvenApp')
 
 
         HairstyleService.addHairstyle(hairPhoto, data).success(function(res) {
+          toast('success', res.message);
 
-          ngToast.create({
-            className: 'success',
-            content: res.message,
-            dismissOnTimeout: true,
-            dismissOnClick: true,
-            timeout: 2000
-          });
-
-          $state.reload()
+          $state.reload();
         }).error(function(err) {
-
-          ngToast.create({
-            className: 'danger',
-            content: err.message,
-            dismissOnTimeout: true,
-            dismissOnClick: true,
-            timeout: 2000
-          });
-
+          toast('danger', err.message);
         });
       };
 
@@ -47,15 +43,7 @@ angular.module('hairvenApp')
           $scope.hairstyles = res;
 
         }).error(function(err) {
-
-          ngToast.create({
-            className: 'danger',
-            content: err.message,
-            dismissOnTimeout: true,
-            dismissOnClick: true,
-            timeout: 2000
-          });
-
+          toast('danger', err.message);
         });
       };
 
@@ -67,15 +55,7 @@ angular.module('hairvenApp')
           $scope.hairstyles = res.message || res;
 
         }).error(function(err) {
-
-          ngToast.create({
-            className: 'danger',
-            content: err.message,
-            dismissOnTimeout: true,
-            dismissOnClick: true,
-            timeout: 2000
-          });
-
+          toast('danger', err.message);
         });
       };
 
@@ -86,15 +66,7 @@ angular.module('hairvenApp')
           $rootScope.$storage.currentHairstyle = res.body;
 
         }).error(function(err) {
-
-          ngToast.create({
-            className: 'danger',
-            content: err.message,
-            dismissOnTimeout: true,
-            dismissOnClick: true,
-            timeout: 2000
-          });
-
+          toast('danger', err.message);
         });
 
       };
@@ -108,54 +80,21 @@ angular.module('hairvenApp')
         };
 
         HairstyleService.updateHairstyle(data).success(function(res) {
+          toast('success', res.message);
 
-          ngToast.create({
-            className: 'success',
-            content: res.message,
-            dismissOnTimeout: true,
-            dismissOnClick: true,
-            timeout: 2000
-          });
-
-          $state.go('salongallery')
+          $state.go('salongallery');
         }).error(function(err) {
-
-          ngToast.create({
-            className: 'danger',
-            content: err.message,
-            dismissOnTimeout: true,
-            dismissOnClick: true,
-            timeout: 2000
-          });
-
+          toast('danger', err.message);
         });
       };
 
       $scope.deleteHairstyle = function(hairId) {
 
         HairstyleService.deleteHairstyle(hairId).success(function(res) {
-
-          ngToast.create({
-            className: 'success',
-            content: res.message,
-            dismissOnTimeout: true,
-            dismissOnClick: true,
-            timeout: 2000
-          });
-
+          toast('success', res.message);
         }).error(function(err) {
-
-          ngToast.create({
-            className: 'danger',
-            content: err.message,
-            dismissOnTimeout: true,
-            dismissOnClick: true,
-            timeout: 2000
-          });
-
+          toast('danger', err.message);
         });
-
       };
-
     }
   ]);
