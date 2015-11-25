@@ -29,30 +29,6 @@ exports.authMiddleware = function(req, res, next) {
   }
 };
 
-exports.search = function(req, res) {
-  var term = new RegExp(req.body.term, 'i');
-  var results = [];
-  Salon.find({$or:[{name:term}, {address:term}]}, function(err, salons) {
-    if (err) {
-      res.send({
-        success: false,
-        message: 'Ooops! An error occured.'
-      });
-    }
-    results.push(salons);
-    Hair.find({$or: [{name: term}, {description: term}]}, function(err, hairstyles) {
-      if (err) {
-        res.send({
-          success: false,
-          message: 'Ooops! An error occured.'
-        });
-      }
-      results.push(hairstyles);
-        res.json(results);
-    });
-  });
-};
-
 exports.getUser = function(req, res) {
   User.find({
     username: req.params.username
