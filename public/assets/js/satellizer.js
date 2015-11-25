@@ -18,7 +18,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
       withCredentials: true,
       tokenRoot: null,
       cordova: false,
-      baseUrl: 'http://localhost:3030/',
+      baseUrl: '',
       loginUrl: '/api/login',
       signupUrl: '/api/signup',
       unlinkUrl: '/api/auth/unlink/',
@@ -30,7 +30,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
       providers: {
         facebook: {
           name: 'facebook',
-          url: 'http://localhost:3030/api/auth/facebook',
+          url: '/api/auth/facebook',
           authorizationEndpoint: 'https://www.facebook.com/v2.3/dialog/oauth',
           redirectUri: (window.location.origin || window.location.protocol + '//' + window.location.host) + '/',
           requiredUrlParams: ['display', 'scope'],
