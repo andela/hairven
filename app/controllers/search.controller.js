@@ -2,7 +2,8 @@ var Salon = require('../models/salon.model');
 var Hair = require('../models/hairstyle.model');
 
 exports.search = function(req, res) {
-  var term = new RegExp(req.body.term, 'i');
+  var searchTerm = req.query.term;
+  var term = new RegExp(searchTerm, 'i');
   var results = [];
   Salon.find({$or:[{name:term}, {address:term}]}, 
     function(err, salons) {
@@ -24,7 +25,7 @@ exports.search = function(req, res) {
           else if (salons.length === 0 && hairstyles.length === 0) {
             res.status(200).send({
               success: true,
-              message: 'Your search ' + req.body.term + 
+              message: 'Your search ' + searchTerm + 
                 ' does not match any Salons or Hairstyles.'
             });
           }
@@ -32,7 +33,7 @@ exports.search = function(req, res) {
             results.push(hairstyles);
             res.status(200).send({
               success: true,
-              message: 'Showing search results for ' + req.body.term,
+              message: 'Showing search results for ' + searchTerm,
               data: {
                 salons: results[0],
                 hairstyles: results[1]
