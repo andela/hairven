@@ -1,8 +1,6 @@
 var jwt = require('jsonwebtoken');
 var User = require('../models/user.model');
 var config = require('../../config/config');
-var Salon = require('../models/salon.model');
-var Hair = require('../models/hairstyle.model');
 
 exports.authMiddleware = function(req, res, next) {
   var token = req.body.token ||
