@@ -2,8 +2,8 @@
 
 angular.module('hairvenApp')
   .controller('HairCtrl', ['$scope', 'HairstyleService', '$state',
-   '$rootScope', 'ngToast', 'Upload', 'baseUrl',
-    function($scope, HairstyleService, $state, $rootScope, ngToast, Upload, baseUrl) {
+    '$rootScope', 'ngToast', 'Upload', 'baseUrl', '$location',
+    function($scope, HairstyleService, $state, $rootScope, ngToast, Upload, baseUrl, $location) {
 
       $scope.addHairstyle = function() {
 
@@ -14,7 +14,6 @@ angular.module('hairvenApp')
           description: $scope.description,
           salon: $rootScope.$storage.activeSalons[0]
         };
-
 
         HairstyleService.addHairstyle(hairPhoto, data).success(function(res) {
 
@@ -43,9 +42,7 @@ angular.module('hairvenApp')
       $scope.getAllHairstyles = function() {
 
         HairstyleService.getAllHairstyles().success(function(res) {
-
           $scope.hairstyles = res;
-
         }).error(function(err) {
 
           ngToast.create({
@@ -65,7 +62,6 @@ angular.module('hairvenApp')
 
         HairstyleService.getSalonHairstyles(salonId).success(function(res) {
           $scope.hairstyles = res.message || res;
-
         }).error(function(err) {
 
           ngToast.create({
@@ -79,12 +75,12 @@ angular.module('hairvenApp')
         });
       };
 
+      $rootScope.currentHairstyle = $rootScope.$storage.currentHairstyle;
+
       $scope.getOneHairstyle = function(hairId) {
-
         HairstyleService.getOneHairstyle(hairId).success(function(res) {
-
-          $rootScope.$storage.currentHairstyle = res.body;
-
+          $location.url("/edithair");
+          $rootScope.$storage.currentHairstyle = res;
         }).error(function(err) {
 
           ngToast.create({
@@ -100,14 +96,13 @@ angular.module('hairvenApp')
       };
 
       $scope.updateHairstyle = function(hairId) {
-
+        var hairPhoto = $scope.imageFile;
         var data = {
-          name: $scope.name,
-          description: $scope.description,
-          salon: salonId
+          name: $scope.currentHairstyle.name,
+          description: $scope.currentHairstyle.description,
+          salon: $rootScope.$storage.activeSalons[0]
         };
-
-        HairstyleService.updateHairstyle(data).success(function(res) {
+        HairstyleService.updateHairstyle(hairId, hairPhoto, data).success(function(res) {
 
           ngToast.create({
             className: 'success',

@@ -122,6 +122,19 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
           }
         }
       })
+      .state('edithair', {
+        url: '/edithair',
+        views: {
+          '': {
+            templateUrl: 'app/partials/nav.view.html',
+            controller: 'UserCtrl'
+          },
+          'theView@edithair': {
+            templateUrl: 'app/partials/editHairstyle.view.html',
+            controller: 'HairCtrl'
+          }
+        }
+      })
       .state('login', {
         url: "/login",
         views: {
@@ -149,7 +162,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$authP
       });
 
     $authProvider.authHeader = 'x-access-token';
-  
+
     ngToastProvider.configure({
       animation: 'slide'
     });

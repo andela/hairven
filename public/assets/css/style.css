@@ -236,7 +236,18 @@ a.logo span {
   background: #FFFFFF;
 }
 
+.form-updatehair {
+  max-width: 460px;
+  margin: auto;
+  margin-top: 80px;
+  background: #FFFFFF;
+}
+
 .login-wrap {
+  padding: 30px;
+}
+
+.updatehair-wrap {
   padding: 30px;
 }
 
@@ -650,6 +661,7 @@ ul.sidebar-menu li a.active i {
   font-size: 14px;
 }
 
+
 /* Gallery Configuration */
 
 .photo-wrapper {
@@ -886,4 +898,9 @@ li.reviews {
 .saloon-image {
   width: 22%;
   margin: auto;
+}
+
+.hair-img {
+  width: auto;
+  height: 50px;
 }

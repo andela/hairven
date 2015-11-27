@@ -1,7 +1,7 @@
 {
-  "name": "angular-animate",
+  "name": "angular-messages",
   "version": "1.4.8",
-  "main": "./angular-animate.js",
+  "main": "./angular-messages.js",
   "ignore": [],
   "dependencies": {
     "angular": "1.4.8"
