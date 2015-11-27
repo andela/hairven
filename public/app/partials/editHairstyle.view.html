@@ -1,0 +1,33 @@
+<div id="updatehair-page" class="screen__bg">
+  <div class="container">
+    <form class="form-updatehair" action="index.html">
+      <div class="updatehair-wrap">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="title">Name</label>
+              <input ng-model="currentHairstyle.name" type="text" class="form-control" placeholder="Title">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea ng-model="currentHairstyle.description" type="textArea" rows="6" class="form-control" placeholder="Description"></textarea>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="hairPhoto">Photo</label>
+              <input name="hairPhoto" ngf-select ng-model="imageFile" id="hairPhoto" ngf-change="fileSelected($files, $event)" type="file" class="form-control" ngf-max-size="20MB" accept="image/*">
+            </div>
+          </div>
+        </div>
+        <img class="hair-img" ngf-thumbnail="imageFile">
+        <div class="modal-footer">
+          <span class="discard_input_data enable_cursor padding10" data-dismiss="modal" type="button">CANCEL</span>
+          <span class="verify_input_data enable_cursor padding10" data-dismiss="modal" ng-click="updateHairstyle(currentHairstyle._id)" type="button">UPDATE<i class="fa fa-chevron-right"></i></span>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
