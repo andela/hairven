@@ -147,21 +147,61 @@ module.exports = {
 
   },
 
-  //edit details of a haistyle
+  //edit details of a hairstyle
   updateHairStyle: function(req, res) {
+    var hair = req.body;
+    if (req.file) {
+      var imageFile = req.file.path;
 
-    // use the Hair model to find the hairstyle
-    Hair.update(req.params.id, req.body, function(err, hairstyle) {
+      //upload file to the cloudinary web-server
+      cloudinary.uploader.upload(imageFile, function(response) {
 
-      if (err) {
-        res.send(err);
-      } else {
-        res.send({
-          success: true,
-          message: 'Hairstyle Details Updated!'
+        hair.image = response.secure_url;
+        // use the Hair model to find the hairstyle
+        Hair.update({
+          _id: req.params.id
+        }, hair, function(err) {
+          console.log(hair, "hair");
+          if (err) {
+            console.log(err, 'error');
+            res.status(400).send({
+              success: false,
+              message: 'Error updating hairstyle'
+            });
+          } else {
+            res.send({
+              success: true,
+              message: 'Hairstyle Updated!'
+            });
+          }
         });
-      }
-    });
+      }, {
+        use_filename: true
+      }, {
+        width: 400,
+        height: 600,
+        crop: "crop"
+      });
+    } else {
+      // use the Hair model to find the hairstyle
+      Hair.update({
+        _id: req.params.id
+      }, hair, function(err) {
+        console.log(hair, "hair");
+        if (err) {
+          console.log(err, 'error');
+          res.status(400).send({
+            success: false,
+            message: 'Error updating hairstyle'
+          });
+        } else {
+          res.send({
+            success: true,
+            message: 'Hairstyle Updated!'
+          });
+        }
+      });
+    }
   },
 
   // remove a hairstyle
